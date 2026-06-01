@@ -258,9 +258,13 @@
                             <span class="avatar-icon">🚀</span>
                         </div>
                         <div class="profile-info">
-                            <h3 id="profileName">Learner</h3>
-                            <p class="profile-level" id="profileLevel">Level 1 - Beginner</p>
-                            <p class="profile-join">Joined: <span id="joinDate">Today</span></p>
+                            <h3 id="profileSectionName">Learner</h3>
+                            <p id="profileLevel">Level 1 - Beginner</p>
+                            <p>Joined: <span id="joinDate"></span></p>
+                            
+                            <p>
+                                <span id="dashboard-current-date"></span>
+                            </p>
                         </div>
                         <button class="profile-edit-btn" id="profileEditBtn" title="Edit Profile">
                             <i class="fas fa-pen"></i>
@@ -638,7 +642,13 @@
                     <div class="profile-info">
                         <h3 id="profileSectionName">Learner</h3>
                         <p class="profile-level" id="profileLevel">Level 1 - Beginner</p>
-                        <p class="profile-join">Joined: <span id="joinDate">Today</span></p>
+                        <p class="profile-join">
+                            Joined: <span id="joinDate"></span>
+                        </p>
+                        <p class="profile-date">
+                            <i class="fas fa-calendar"></i>
+                            <span id="current-date"></span>
+                        </p>
                     </div>
                     <button class="profile-edit-btn" id="profileSectionEditBtn" title="Edit Profile">
                         <i class="fas fa-pen"></i>

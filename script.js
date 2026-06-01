@@ -543,6 +543,7 @@ let userProgress = {
     streak: 0,
     badges: [],
     lastActive: null,
+    joinDate: null, // Will be set on first load
     quizScores: {}, // topic -> { bestScore, attempts, totalXP }
 };
 
@@ -565,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDarkMode();
 
     // Update profile display after loading
-    updateProfile();
+    
     console.log('App initialization complete');
 
     // Language change handler for code editor
@@ -1262,15 +1263,47 @@ function initProfile() {
     if (profileName) {
         profileName.textContent = userProgress.name;
     }
+    
+    // Set joined date
     var joinDate = document.getElementById("joinDate");
     if (joinDate) {
-        var today = new Date();
-        joinDate.textContent = today.toLocaleDateString("en-US", {
+        let joinDateObj;
+        if (userProgress.joinDate) {
+            joinDateObj = new Date(userProgress.joinDate);
+        } else {
+            joinDateObj = new Date();
+            userProgress.joinDate = joinDateObj.toISOString();
+            saveUserData();
+        }
+        joinDate.textContent = joinDateObj.toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric"
         });
     }
+    
+    // Set current date in dashboard
+    var currentDateElement = document.getElementById("current-date");
+    if (currentDateElement) {
+        var today = new Date();
+        currentDateElement.textContent = "Today: " + today.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+    }
+    
+    // Set current date in dashboard card
+    var dashboardCurrentDateElement = document.getElementById("dashboard-current-date");
+    if (dashboardCurrentDateElement) {
+        var today = new Date();
+        dashboardCurrentDateElement.textContent = "Today: " + today.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+    }
+    
     var avatarIcon = document.querySelector('.avatar-icon');
     if (avatarIcon) {
         avatarIcon.textContent = userProgress.avatar || '🚀';
@@ -1670,6 +1703,12 @@ function loadUserData() {
             if (!userProgress.quizScores) {
                 userProgress.quizScores = {};
             }
+            
+            // Initialize joinDate if not set
+            if (!userProgress.joinDate) {
+                userProgress.joinDate = new Date().toISOString();
+                saveUserData();
+            }
 
             // Update streak if user was active yesterday
             if (userProgress.lastActive) {
@@ -1695,6 +1734,7 @@ function loadUserData() {
             userProgress.level = 2;
             userProgress.streak = 3;
             userProgress.badges = [1];
+            userProgress.joinDate = new Date().toISOString();
             userProgress.quizScores = {};
             saveUserData();
         }
@@ -1710,12 +1750,13 @@ function loadUserData() {
             streak: 0,
             badges: [],
             lastActive: null,
+            joinDate: new Date().toISOString(),
             quizScores: {}
         };
         saveUserData();
     }
     // Update profile display after loading
-    updateProfile();
+    initProfile();
 }
 
 // ===== QUIZ EDITOR =====
@@ -2142,4 +2183,44 @@ document.addEventListener('click', (e) => {
 window.addEventListener('load', () => {
     console.log('Algo Infinity Verse loaded successfully! 🚀');
 });
+function setJoinDate() {
+    const joinElement = document.getElementById("joinDate");
 
+    if (!joinElement) return;
+
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+
+    const today = new Date().toLocaleDateString(undefined, options);
+
+    joinElement.innerText = today;
+}
+
+setJoinDate();
+// ✅ FIX: Current Date feature for dashboard + profile
+
+function updateDate() {
+    const today = new Date();
+
+    const formattedDate = today.toLocaleDateString(undefined, {
+        weekday: "long",   // Monday
+        year: "numeric",   // 2026
+        month: "long",     // June
+        day: "numeric"     // 1
+    });
+
+    // ✅ FIX: dashboard date update
+    document.getElementById("dashboard-current-date").textContent = formattedDate;
+
+    // ✅ FIX: profile date update
+    document.getElementById("profile-current-date").textContent = formattedDate;
+}
+
+// run immediately
+updateDate();
+
+// optional: auto refresh every hour (safe for daily date change)
+setInterval(updateDate, 60 * 60 * 1000);
