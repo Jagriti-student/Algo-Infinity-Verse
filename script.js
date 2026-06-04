@@ -1096,6 +1096,19 @@ function finishQuiz() {
     const score = currentQuiz.score;
     const total = currentQuiz.questions.length;
     const percentage = Math.round((score / total) * 100);
+    function saveTopicPerformance(topicKey, percentage) {
+    const performance =
+        JSON.parse(localStorage.getItem("topicPerformance")) || {};
+
+    performance[topicKey] = percentage;
+
+    localStorage.setItem(
+        "topicPerformance",
+        JSON.stringify(performance)
+    );
+}
+    saveTopicPerformance(topicKey, percentage);
+    renderRecommendations();
 
     // Update user progress
     if (!userProgress.quizScores[topicKey]) {
@@ -1127,6 +1140,75 @@ function finishQuiz() {
         closeQuizModal();
         currentQuiz = null;
     }, 1500);
+}
+function generateRecommendations() {
+    const performance =
+        JSON.parse(localStorage.getItem("topicPerformance")) || {};
+
+    const recommendations = [];
+
+    Object.entries(performance).forEach(([topic, score]) => {
+
+        if (score < 50) {
+
+            const suggestedProblems = practiceProblems
+                .filter(problem => problem.category === topic)
+                .slice(0, 3)
+                .map(problem => problem.title);
+
+            recommendations.push({
+                topic,
+                score,
+                problems: suggestedProblems
+            });
+        }
+    });
+
+    return recommendations;
+}
+function renderRecommendations() {
+
+    const container =
+        document.getElementById("recommendationsContainer");
+
+    if (!container) return;
+
+    const recommendations =
+        generateRecommendations();
+
+    const performance =
+    JSON.parse(localStorage.getItem("topicPerformance")) || {};
+
+if (Object.keys(performance).length === 0) {
+    container.innerHTML = `
+        <p class="empty-state">
+            Complete a quiz to get personalized recommendations.
+        </p>
+    `;
+    return;
+}
+
+if (recommendations.length === 0) {
+    container.innerHTML = `
+        <p class="empty-state">
+            Great job! No weak areas found.
+        </p>
+    `;
+    return;
+}
+
+    container.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+            <h4>${rec.topic.toUpperCase()}</h4>
+            <p>
+                You scored below 50% in ${rec.topic}.
+            </p>
+            <p>
+                Try these next:
+                ${rec.problems.join(", ")}
+            </p>
+        </div>
+    `).join('');
 }
 
 function showQuizResults(score, total, percentage, xpEarned) {
@@ -1374,6 +1456,7 @@ function updateLevelProgress() {
 function initDashboard() {
     updateDashboard();
     updateProfile();
+    renderRecommendations();
 }
 
 function updateDashboard() {

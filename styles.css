@@ -3007,3 +3007,13 @@ body.light-mode {
 .delay-3 { animation-delay: 0.3s; }
 .delay-4 { animation-delay: 0.4s; }
 .delay-5 { animation-delay: 0.5s; }
+.recommendation-card{
+    margin-top:15px;
+    padding:15px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+}
+
+.recommendation-card h4{
+    margin-bottom:8px;
+}
