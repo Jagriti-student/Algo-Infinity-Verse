@@ -2335,13 +2335,16 @@ function initProfile() {
     profileName.textContent = userProgress.name;
   }
   var joinDate = document.getElementById("joinDate");
-  if (joinDate) {
+  var joinDateSection = document.getElementById("joinDateSection");
+  if (joinDate || joinDateSection) {
     var today = new Date();
-    joinDate.textContent = today.toLocaleDateString("en-US", {
+    var formattedDate = today.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric",
     });
+    if (joinDate) joinDate.textContent = formattedDate;
+    if (joinDateSection) joinDateSection.textContent = formattedDate;
   }
   var currentDate = document.getElementById("current-date");
   if (currentDate) {
@@ -2439,7 +2442,7 @@ function updateProfile() {
   }
 
   // Update profile name in dashboard
-  var dashboardProfileName = document.getElementById("dashboardProfileName");
+  var dashboardProfileName = document.getElementById("profileName");
   if (dashboardProfileName) {
     dashboardProfileName.textContent = userProgress.name;
   }
@@ -2451,10 +2454,9 @@ function updateProfile() {
   }
 
   // Update avatar
-  var avatarIcon = document.querySelector(".avatar-icon");
-  if (avatarIcon) {
-    avatarIcon.textContent = userProgress.avatar || "🚀";
-  }
+  document.querySelectorAll(".avatar-icon").forEach(el => {
+  el.textContent = userProgress.avatar || "🚀";
+});
 
   updateLevelProgress();
 }
@@ -2656,6 +2658,16 @@ function updateBadges() {
         userProgress.completedProblems.length >= 25 && userProgress.xp >= 2500,
     },
   ];
+
+  // Update userProgress badges
+  const newlyEarned = badges.filter((b) => b.earned).map((b) => b.id);
+  
+  // Only save if badges changed to avoid unnecessary saves
+  const badgesChanged = JSON.stringify(newlyEarned) !== JSON.stringify(userProgress.badges);
+  userProgress.badges = newlyEarned;
+  if (badgesChanged) {
+      saveUserData();
+  }
 
   // Dashboard badges
   container.innerHTML = badges
@@ -3049,6 +3061,14 @@ function initializeAnimations() {
   });
 }
 
+function getDaysDifference(date1, date2) {
+  const d1 = new Date(date1);
+  d1.setHours(0, 0, 0, 0);
+  const d2 = new Date(date2);
+  d2.setHours(0, 0, 0, 0);
+  return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+}
+
 // ===== LOCAL STORAGE =====
 function saveUserData() {
   try {
@@ -3138,9 +3158,7 @@ function loadUserData() {
       if (userProgress.lastActive) {
         const lastActive = new Date(userProgress.lastActive);
         const today = new Date();
-        const diffDays = Math.floor(
-          (today - lastActive) / (1000 * 60 * 60 * 24),
-        );
+        const diffDays = getDaysDifference(lastActive, today);
 
         if (diffDays === 0) {
           // Already active today
@@ -3611,7 +3629,7 @@ function updateStreak() {
     : null;
 
   if (lastActive) {
-    const diffDays = Math.floor((today - lastActive) / (1000 * 60 * 60 * 24));
+    const diffDays = getDaysDifference(lastActive, today);
     if (diffDays > 1) {
       userProgress.streak = 1;
     } else if (diffDays === 0) {
