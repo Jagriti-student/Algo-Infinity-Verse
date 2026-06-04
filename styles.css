@@ -3958,6 +3958,77 @@ body.light-mode {
 }
 
 .totd-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--gradient-1);
+}
+
+.totd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient-1);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.totd-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.totd-icon {
+  font-size: 3.5rem;
+  flex-shrink: 0;
+}
+
+.totd-info {
+  flex: 1;
+}
+
+.totd-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.totd-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.totd-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.totd-problems {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+}
+
+.totd-btn {
+  width: fit-content;
+}
+
+.totd-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -4084,6 +4155,17 @@ body.light-mode {
 /* Global utility flag to handle hide/show switches */
 .hidden {
     display: none !important;
+
+.recommendation-card{
+    margin-top:15px;
+    padding:15px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+}
+
+.recommendation-card h4{
+    margin-bottom:8px;
+
 }
 
 .totd-desc {
@@ -4170,5 +4252,26 @@ body.light-mode {
   align-items: center;
 
   justify-content: center;
+}
+
+
+@media (max-width: 768px) {
+  .totd-content {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .totd-icon {
+      font-size: 2.5rem;
+  }
+
+  .totd-title {
+      font-size: 1.4rem;
+  }
+
+  .totd-btn {
+      width: 100%;
+      text-align: center;
+  }
 }
 
