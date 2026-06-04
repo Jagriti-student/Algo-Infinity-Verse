@@ -187,7 +187,49 @@
     });
   }
 
+  function renderFileModeError() {
+    const form = document.querySelector("[data-auth-form]");
+    const container = form?.closest("main") || document.body;
+
+    const box = document.createElement("div");
+    box.style.margin = "16px 0";
+    box.style.padding = "12px 14px";
+    box.style.border = "1px solid #ef4444";
+    box.style.borderRadius = "10px";
+    box.style.background = "rgba(239,68,68,0.08)";
+    box.style.color = "#ef4444";
+    box.style.fontWeight = "600";
+    box.setAttribute("role", "alert");
+
+    const serverHint = `${location.origin || "http://127.0.0.1:3000"}`;
+
+    box.textContent =
+      "Authentication requires running the server. Open this app at http://127.0.0.1:3000 (run: npm start or node server.js).";
+
+    container.prepend(box);
+
+    // Disable form submission in file mode to avoid confusing errors.
+    if (form) {
+      const submitBtn = form.querySelector("button[type='submit']");
+      if (submitBtn) submitBtn.disabled = true;
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
+    // Explicitly handle file:// (auth.js can't set/verify cookie sessions there)
+    if (location.protocol === "file:") {
+      renderFileModeError();
+      currentSession = { authenticated: false, user: null };
+      window.algoAuth = currentSession;
+      renderAuthNav();
+      wireLogout();
+      wireAuthForm();
+      updateProfileNames(currentSession.user);
+      guardPrivateHash();
+      window.addEventListener("hashchange", guardPrivateHash);
+      return;
+    }
+
     currentSession = await getSession();
     window.algoAuth = currentSession;
 
@@ -204,3 +246,4 @@
     window.addEventListener("hashchange", guardPrivateHash);
   });
 })();
+

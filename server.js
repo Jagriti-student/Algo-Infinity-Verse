@@ -1,9 +1,12 @@
-const crypto = require("crypto");
-const fs = require("fs/promises");
-const http = require("http");
-const path = require("path");
-const { URL } = require("url");
+import crypto from "crypto";
+import fs from "fs/promises";
+import http from "http";
+import path from "path";
+import { fileURLToPath } from "url";
+import { initializeFirebase, getDb, COLLECTIONS } from "./firebase.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, "data");
 const USERS_FILE = path.join(DATA_DIR, "users.json");
@@ -148,6 +151,30 @@ function sessionCookie(token, req) {
 
 function clearSessionCookie() {
   return `${SESSION_COOKIE}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0`;
+}
+
+const db = initializeFirebase();
+const useFirestore = !!db;
+
+async function getUserByEmail(email) {
+  if (!useFirestore) {
+    const users = await readUsers();
+    return users.find((u) => u.email === email) || null;
+  }
+  const snapshot = await db.collection(COLLECTIONS.USERS).where("email", "==", email).limit(1).get();
+  if (snapshot.empty) return null;
+  return { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+}
+
+async function createUser(userData) {
+  if (!useFirestore) {
+    const users = await readUsers();
+    users.push(userData);
+    await writeUsers(users);
+    return userData;
+  }
+  const docRef = await db.collection(COLLECTIONS.USERS).add(userData);
+  return { id: docRef.id, ...userData };
 }
 
 async function ensureUserStore() {
@@ -359,19 +386,23 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-loadEnvFile()
-  .then(() => {
-    const port = Number(process.env.PORT || 3000);
-    const host = process.env.HOST || "127.0.0.1";
+export { server };
 
-    server.listen(port, host, () => {
-      if (!process.env.SESSION_SECRET) {
-        console.warn("Using a development SESSION_SECRET. Set SESSION_SECRET before deploying.");
-      }
-      console.log(`Algo Infinity Verse running at http://${host}:${port}`);
+if (process.env.VERCEL !== "1") {
+  loadEnvFile()
+    .then(() => {
+      const port = Number(process.env.PORT || 3000);
+      const host = process.env.HOST || "127.0.0.1";
+
+      server.listen(port, host, () => {
+        if (!process.env.SESSION_SECRET) {
+          console.warn("Using a development SESSION_SECRET. Set SESSION_SECRET before deploying.");
+        }
+        console.log(`Algo Infinity Verse running at http://${host}:${port}`);
+      });
+    })
+    .catch((error) => {
+      console.error("Failed to load environment configuration:", error);
+      process.exit(1);
     });
-  })
-  .catch((error) => {
-    console.error("Failed to load environment configuration:", error);
-    process.exit(1);
-  });
+}
