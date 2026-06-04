@@ -251,6 +251,14 @@
                 Your Dashboard
             </h2>
             <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>🔥 Daily Challenge</h3>
+                    <p id="dailyChallengeText">Loading...</p>
+
+                    <button id="completeChallengeBtn" class="btn btn-primary">
+                        Complete Challenge (+40 XP)
+                    </button>
+                </div>
                 <!-- Profile Card -->
                 <div class="dashboard-card profile-card">
                     <div class="profile-header">
@@ -445,6 +453,11 @@
     <!-- Quiz Editor Modal -->
     <div class="modal quiz-modal" id="quizEditorModal">
         <div class="quiz-modal-content">
+            <div id="quizLoadingScreen" class="quiz-loading hidden">
+                <div class="quiz-spinner"></div>
+                <h3 class="loading-text">Vectoring Challenge...</h3>
+                <p id="loadingTopicName"></p>
+            </div>
             <div class="quiz-modal-header">
                 <div class="quiz-problem-info">
                     <span class="quiz-topic-badge" id="quizTopicBadge"></span>
@@ -555,6 +568,12 @@
                     <!-- Quiz Panel -->
                     <div class="quiz-problem-panel">
                         <div class="quiz-container">
+                            <div id="recommendationBox" class="recommendation-box"></div>
+                            <div id="quizLoadingScreen" class="quiz-loading hidden">
+                                <div class="quiz-spinner"></div>
+                                <h3>Loading Quiz...</h3>
+                                <p id="loadingTopicName"></p>
+                            </div>
                             <div class="quiz-progress-bar-container">
                                 <div class="quiz-progress-bar" id="topicQuizProgress"></div>
                             </div>
@@ -643,7 +662,7 @@
                         <h3 id="profileSectionName">Learner</h3>
                         <p class="profile-level" id="profileLevel">Level 1 - Beginner</p>
                         <p class="profile-join">
-                            Joined: <span id="joinDate"></span>
+                            Joined: <span id="profile-joinDate"></span>
                         </p>
                         <p class="profile-date">
                             <i class="fas fa-calendar"></i>

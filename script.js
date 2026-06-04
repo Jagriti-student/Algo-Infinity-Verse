@@ -985,7 +985,46 @@ function startQuiz(topic) {
     }
 
     openQuizModal();
-    renderQuizQuestion();
+    console.log("Start Quiz running");
+
+    const loadingScreen = document.getElementById("quizLoadingScreen");
+    const loadingTopic = document.getElementById("loadingTopicName");
+
+    console.log("loadingScreen =", loadingScreen);
+    console.log("loadingTopic =", loadingTopic);
+
+ 
+    const progressBar = document.querySelector(".quiz-progress-bar-container");
+    const counter = document.getElementById("topicQuizCounter");
+    const question = document.getElementById("topicQuizQuestionText");
+    const options = document.getElementById("topicQuizOptions");
+    console.log("loadingScreen:", loadingScreen);
+    console.log("loadingTopic:", loadingTopic);
+
+    if (!loadingScreen || !loadingTopic) {
+        console.error("Loading elements not found");
+        return;
+    }
+
+    loadingTopic.textContent = `${topic.name} Quiz`;
+
+    loadingScreen.classList.remove("hidden");
+
+    if (progressBar) progressBar.style.display = "none";
+    if (counter) counter.style.display = "none";
+    if (question) question.style.display = "none";
+    if (options) options.style.display = "none";
+
+    setTimeout(() => {
+        loadingScreen.classList.add("hidden");
+
+        if (progressBar) progressBar.style.display = "";
+        if (counter) counter.style.display = "";
+        if (question) question.style.display = "";
+        if (options) options.style.display = "";
+
+        renderQuizQuestion();
+    }, 1500);
 }
 
 // Fisher-Yates shuffle
@@ -1048,11 +1087,29 @@ function renderQuizQuestion() {
         `).join('');
 
         // Add click handlers
-        optionsEl.querySelectorAll('.quiz-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                selectQuizAnswer(parseInt(opt.dataset.index));
+        // optionsEl.querySelectorAll('.quiz-option').forEach(opt => {
+        //     opt.addEventListener('click', () => {
+        //         selectQuizAnswer(parseInt(opt.dataset.index));
+        //     });
+        // });
+        document.addEventListener("DOMContentLoaded", () => {
+
+        const optionsContainer = document.getElementById("topicQuizOptions");
+
+    // 🔥 attach only once
+        if (optionsContainer && !optionsContainer.dataset.bound) {
+
+            optionsContainer.addEventListener("click", function (e) {
+                const option = e.target.closest(".quiz-option");
+                if (!option) return;
+
+            selectQuizAnswer(parseInt(option.dataset.index));
             });
-        });
+
+            optionsContainer.dataset.bound = "true"; // prevent double binding
+        }
+
+    });
     }
 }
 
@@ -1075,8 +1132,8 @@ function selectQuizAnswer(selectedIndex) {
     // Highlight selection
     const optionsEl = document.getElementById('topicQuizOptions');
     optionsEl.querySelectorAll('.quiz-option').forEach((opt, idx) => {
-        opt.classList.add('selected');
-        if (idx === question.correct) {
+        
+        if (parseInt(opt.dataset.index) === question.correct) {
             opt.classList.add('correct');
         } else if (idx === selectedIndex && !isCorrect) {
             opt.classList.add('incorrect');
@@ -1096,6 +1153,7 @@ function finishQuiz() {
     const score = currentQuiz.score;
     const total = currentQuiz.questions.length;
     const percentage = Math.round((score / total) * 100);
+    showRecommendation(currentQuiz.topic.name, percentage);
 
     // Update user progress
     if (!userProgress.quizScores[topicKey]) {
@@ -1265,9 +1323,12 @@ function initProfile() {
     }
     
     // Set joined date
-    var joinDate = document.getElementById("joinDate");
-    if (joinDate) {
-        let joinDateObj;
+    var dashboardJoinDateElem = document.getElementById("joinDate");
+    var profileJoinDateElem = document.getElementById("profile-joinDate");
+
+    function populateJoinDate(elem) {
+        if (!elem) return;
+        var joinDateObj;
         if (userProgress.joinDate) {
             joinDateObj = new Date(userProgress.joinDate);
         } else {
@@ -1275,12 +1336,15 @@ function initProfile() {
             userProgress.joinDate = joinDateObj.toISOString();
             saveUserData();
         }
-        joinDate.textContent = joinDateObj.toLocaleDateString("en-US", {
+        elem.textContent = joinDateObj.toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric"
         });
     }
+
+    populateJoinDate(dashboardJoinDateElem);
+    populateJoinDate(profileJoinDateElem);
     
     // Set current date in dashboard
     var currentDateElement = document.getElementById("current-date");
@@ -1774,14 +1838,60 @@ function openTopicModal(topic) {
     const problemsList = document.getElementById('modalProblems');
     problemsList.innerHTML = topic.problems.map(p => `<li>${p}</li>`).join('');
 
-    document.getElementById('startPracticeBtn').onclick = () => {
+    // Dynamic onclick handler ko smoothly bind karein
+    document.getElementById('startPracticeBtn').onclick = function() {
+        // 1. Pehle roadmap topic modal ko screen se hatao
         modal.classList.remove('active');
-        document.getElementById('practice').scrollIntoView({ behavior: 'smooth' });
-    };
+        
+        // 2. Loading screen wale elements select karein
+        const loadingScreen = document.getElementById('quizLoadingScreen');
+        const loadingTopicName = document.getElementById('loadingTopicName');
+        const quizEditorModal = document.getElementById('quizEditorModal');
+        
+        // 3. Loading screen par current topic ka naam fresh update karo
+        if (loadingTopicName) {
+            loadingTopicName.textContent = topic.name.toUpperCase();
+        }
+
+        // 4. Loading spinner show karo
+        if (loadingScreen) {
+            loadingScreen.classList.remove('hidden');
+        }
+        
+        // 5. Global variable set karein taaki coding platform ko pata chale kaunsa problem khula hai
+        // (Aapke script ke baki submit/run functions 'currentProblem' read karte hain)
+        if (topic.problems && topic.problems.length > 0) {
+            currentProblem = {
+                id: topic.id || 1, // Agar topic id nahi hai toh fallback 1
+                title: topic.name,
+                difficulty: topic.difficulty
+            };
+        }
+        
+        // 6. Exactly 1.5 Second (1500ms) ka timer delay
+        setTimeout(() => {
+            // Spinner ko chhupao
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+            }
+            
+            // Coding practice editor modal ko screen par active karo
+            if (quizEditorModal) {
+                quizEditorModal.classList.add('active');
+            }
+            
+            // Screen ko smoothly code editor/practice section par lekar jao
+            const practiceSection = document.getElementById('practice');
+            if (practiceSection) {
+                practiceSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            console.log(`🎯 Editor successfully mounted for: ${topic.name}`);
+        }, 1500); 
+    }; // Event listener safely yahan close ho gaya
 
     modal.classList.add('active');
 }
-
 function closeTopicModal() {
     document.getElementById('topicModal').classList.remove('active');
 }
@@ -2206,21 +2316,127 @@ function updateDate() {
     const today = new Date();
 
     const formattedDate = today.toLocaleDateString(undefined, {
-        weekday: "long",   // Monday
-        year: "numeric",   // 2026
-        month: "long",     // June
-        day: "numeric"     // 1
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
     });
 
-    // ✅ FIX: dashboard date update
-    document.getElementById("dashboard-current-date").textContent = formattedDate;
+    const dashboardDate = document.getElementById("dashboard-current-date");
+    const profileDate = document.getElementById("current-date");
 
-    // ✅ FIX: profile date update
-    document.getElementById("profile-current-date").textContent = formattedDate;
+    if (dashboardDate) {
+        dashboardDate.textContent = formattedDate;
+    }
+
+    if (profileDate) {
+        profileDate.textContent = formattedDate;
+    }
 }
 
-// run immediately
 updateDate();
-
-// optional: auto refresh every hour (safe for daily date change)
 setInterval(updateDate, 60 * 60 * 1000);
+const dailyChallenges = [
+    "Solve Two Sum Problem",
+    "Reverse a String",
+    "Find Max Element in Array",
+    "Check Palindrome",
+    "Implement Binary Search"
+];
+function getTodayDate() {
+    return new Date().toDateString();
+}
+
+function getDailyChallenge() {
+    const today = getTodayDate();
+
+    const saved = localStorage.getItem("dailyChallenge");
+
+    if (saved) {
+        const data = JSON.parse(saved);
+
+        if (data.date === today) {
+            return data.challenge;
+        }
+    }
+
+    const challenge =
+        dailyChallenges[Math.floor(Math.random() * dailyChallenges.length)];
+
+    localStorage.setItem(
+        "dailyChallenge",
+        JSON.stringify({
+            date: today,
+            challenge: challenge
+        })
+    );
+
+    return challenge;
+}
+document.addEventListener("DOMContentLoaded", () => {
+
+    console.log("Init started");
+
+    const el = document.getElementById("dailyChallengeText");
+
+    console.log("Challenge element:", el);
+
+    if (!el) {
+        console.error("❌ dailyChallengeText not found");
+        return;
+    }
+
+    const challenge = getDailyChallenge();
+    console.log("Challenge:", challenge);
+
+    el.textContent = challenge;
+
+    const btn = document.getElementById("completeChallengeBtn");
+
+    if (btn) {
+        btn.addEventListener("click", completeDailyChallenge);
+    }
+
+    updateXPDisplay();
+});
+function completeDailyChallenge() {
+    const today = getTodayDate();
+
+    const rewarded = localStorage.getItem("dailyXPRewarded");
+
+    if (rewarded === today) {
+        alert("You already claimed today's XP!");
+        return;
+    }
+
+    let xp = Number(localStorage.getItem("xp") || 0);
+    xp += 40;
+
+    localStorage.setItem("xp", xp);
+    localStorage.setItem("dailyXPRewarded", today);
+
+    alert("🎉 +40 XP added!");
+
+    updateXPDisplay();
+}
+function updateXPDisplay() {
+    const xp = localStorage.getItem("xp") || 0;
+
+    const elements = [
+        "totalXP",
+        "profileTotalXP",
+        "xpText"
+    ];
+
+    elements.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = xp;
+    });
+
+    // optional XP bar update (if exists)
+    const xpBar = document.getElementById("xpBar");
+    if (xpBar) {
+        const percent = Math.min((xp / 1000) * 100, 100);
+        xpBar.style.width = percent + "%";
+    }
+}
