@@ -44,6 +44,8 @@
         <li><a href="#practice">Practice</a></li>
         <li><a href="#roadmap">Roadmap</a></li>
         <li><a href="#interview">Interview Prep</a></li>
+        <li><a href="cheat-sheets.html">Cheat Sheets</a></li>
+        <li><a href="community.html">Community</a></li>
         <li><a href="#dashboard">Dashboard</a></li>
         <li><a href="#profile">Profile</a></li>
       </ul>
@@ -105,6 +107,7 @@
     <!-- Topic of the Day Section -->
     <section id="topic-of-the-day" class="section totd-section">
       <div class="container">
+        <div class="totd-card glass-card">
         <div class="totd-card glass-card big-box">
           <div class="totd-badge">
             <i class="fas fa-calendar-day"></i>
@@ -302,6 +305,16 @@
             <button class="card-btn" data-category="systemdesign">
               Start Learning
             </button>
+          </div>
+          <div class="interview-card">
+            <div class="card-icon">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <h3>DSA Cheat Sheets</h3>
+            <p>Quick reference guides with complexity tables and code templates</p>
+            <a href="cheat-sheets.html" class="card-btn" style="text-decoration: none; display: inline-block; text-align: center;">
+              Start Learning
+            </a>
           </div>
         </div>
       </div>
@@ -872,64 +885,6 @@
     <!-- Profile Section -->
     <section id="profile" class="section profile-section">
 
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">👤</span>
-                Profile
-            </h2>
-            <div class="profile-container">
-                <!-- Profile Header -->
-                <div class="profile-header">
-                    <div class="profile-avatar">
-                        <span class="avatar-icon">🚀</span>
-                    </div>
-                    <div class="profile-info">
-                        <h3 id="profileSectionName">Learner</h3>
-                        <p class="profile-level" id="profileLevel">Level 1 - Beginner</p>
-                        <p class="profile-join">
-                            Joined: <span id="joinDate"></span>
-                        </p>
-                        <p class="profile-date">
-                            <i class="fas fa-calendar"></i>
-                            <span id="current-date"></span>
-                        </p>
-                    </div>
-                    <button class="profile-edit-btn" id="profileSectionEditBtn" title="Edit Profile">
-                        <i class="fas fa-pen"></i>
-                    </button>
-                </div>
-                <!-- Profile Stats -->
-                <div class="profile-stats">
-                    <div class="profile-stat">
-                        <span class="profile-stat-value" id="profileTotalXP">0</span>
-                        <span class="profile-stat-label">Total XP</span>
-                    </div>
-                    <div class="profile-stat">
-                        <span class="profile-stat-value" id="profileProblems">0</span>
-                        <span class="profile-stat-label">Problems</span>
-                    </div>
-                    <div class="profile-stat">
-                        <span class="profile-stat-value" id="profileStreak">0</span>
-                        <span class="profile-stat-label">Day Streak</span>
-                    </div>
-                    <div class="profile-stat">
-                        <span class="profile-stat-value" id="profileBadges">0</span>
-                        <span class="profile-stat-label">Badges</span>
-                    </div>
-                </div>
-                <!-- Profile Progress -->
-                <div class="profile-progress">
-                    <div class="progress-bar-container">
-                        <div class="progress-label">
-                            <span>Level Progress</span>
-                            <span id="profileLevelProgress">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="profileProgressBar"></div>
-                        </div>
-                    </div>
-                </div>
-
       <div class="container">
         <h2 class="section-title">
           <span class="title-icon">👤</span>
@@ -1071,6 +1026,7 @@
               <li><a href="#">Documentation</a></li>
               <li><a href="#">Blog</a></li>
               <li><a href="community.html">Community</a></li>
+              <li><a href="cheat-sheets.html">DSA Cheat Sheets</a></li>
               <li><a href="support-page/index.html">Support</a></li>
             </ul>
           </div>
@@ -1171,6 +1127,8 @@
 <button id="backToTopBtn" class="back-to-top" aria-label="Back to Top">
   <i class="fas fa-arrow-up"></i>
 </button>
+    <script src="auth.js"></script>
     <script src="script.js"></script>
+  </body>
 </body>
 </html>
