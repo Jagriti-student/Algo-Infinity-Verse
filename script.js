@@ -431,6 +431,44 @@ const quizQuestions = {
             correct: 1,
             explanation: "Edit distance computes minimum insertions, deletions, substitutions to transform string A into B."
         }
+    ],
+    greedy: [
+        {
+            id: "greedy-1",
+            question: "What is the main idea behind Greedy Algorithms?",
+            options: [
+                "Solve all subproblems first",
+                "Choose the locally optimal choice at each step",
+                "Use recursion only",
+                "Try every possible solution"
+            ],
+            correct: 1,
+            explanation: "Greedy algorithms make the best local choice at each step hoping to achieve a global optimum."
+        },
+    {
+        id: "greedy-2",
+        question: "Which problem is commonly solved using a Greedy approach?",
+        options: [
+            "Merge Sort",
+            "Activity Selection",
+            "Tower of Hanoi",
+            "Binary Search"
+        ],
+        correct: 1,
+        explanation: "Activity Selection is a classic Greedy Algorithm problem."
+    },
+    {
+        id: "greedy-3",
+        question: "Which Knapsack problem can be solved optimally using Greedy Algorithms?",
+        options: [
+            "0/1 Knapsack",
+            "Fractional Knapsack",
+            "Both",
+            "Neither"
+        ],
+        correct: 1,
+        explanation: "Fractional Knapsack can be solved greedily using value/weight ratio."
+    }
     ]
 };
 
@@ -489,6 +527,57 @@ const dsaTopics = [
         difficulty: "Hard",
         theory: "DP breaks problems into overlapping subproblems. Stores solutions to avoid recomputation. Approaches: top-down (memoization) and bottom-up (tabulation).",
         problems: ["Climbing Stairs", "Coin Change", "Longest Increasing Subsequence", "Edit Distance", "House Robber"]
+    },
+    {
+        id: 7,
+        name: "Greedy Algorithms",
+        icon: "💡",
+        description: "Learn greedy strategy, optimization techniques, and common real-world applications.",
+        difficulty: "Medium",
+        theory: `
+            Introduction:
+            Greedy Algorithms build a solution step by step by always choosing the locally optimal choice at each stage.
+
+            Greedy Approach:
+            • Choose the best available option.
+            • Add it to the solution.
+            • Never reconsider previous choices.
+            • Repeat until the solution is complete.
+
+            Advantages:
+            • Easy to understand and implement.
+            • Fast execution.
+            • Memory efficient.
+            • Useful for optimization problems.
+
+            Limitations:
+            • Does not always guarantee the optimal solution.
+            • Works only for problems with the greedy-choice property.
+            • Requires proof of correctness.
+
+            Common Problems:
+            • Activity Selection
+            • Fractional Knapsack
+            • Huffman Coding
+            • Job Sequencing
+            • Prim's Algorithm
+            • Kruskal's Algorithm
+
+            Practice Exercises:
+            1. Solve Activity Selection Problem.
+            2. Implement Fractional Knapsack.
+            3. Implement Huffman Coding.
+            4. Solve Job Sequencing Problem.
+            5. Find MST using Kruskal's Algorithm.
+            `,
+            problems: [
+                "Activity Selection",
+                "Fractional Knapsack",
+                "Huffman Coding",
+                "Job Sequencing",
+                "Prim's Algorithm",
+                "Kruskal's Algorithm"
+            ]
     }
 ];
 
@@ -507,7 +596,48 @@ const practiceProblems = [
     { id: 12, title: "Validate BST", difficulty: "medium", tags: ["Trees", "Recursion"], acceptance: "28.4%", category: "trees" },
     { id: 13, title: "Number of Islands", difficulty: "medium", tags: ["Graphs", "DFS"], acceptance: "54.8%", category: "graphs" },
     { id: 14, title: "House Robber", difficulty: "medium", tags: ["DP", "Arrays"], acceptance: "42.3%", category: "dp" },
-    { id: 15, title: "Course Schedule", difficulty: "medium", tags: ["Graphs", "Topological Sort"], acceptance: "44.7%", category: "graphs" }
+    { id: 15, title: "Course Schedule", difficulty: "medium", tags: ["Graphs", "Topological Sort"], acceptance: "44.7%", category: "graphs" },
+    {
+    id: 16,
+    title: "Activity Selection",
+    difficulty: "medium",
+    tags: ["Greedy", "Scheduling"],
+    acceptance: "52.4%",
+    category: "greedy"
+},
+{
+    id: 17,
+    title: "Fractional Knapsack",
+    difficulty: "medium",
+    tags: ["Greedy", "Optimization"],
+    acceptance: "58.7%",
+    category: "greedy"
+},
+{
+    id: 18,
+    title: "Job Sequencing with Deadlines",
+    difficulty: "hard",
+    tags: ["Greedy", "Scheduling"],
+    acceptance: "41.2%",
+    category: "greedy"
+},
+{
+    id: 19,
+    title: "Huffman Coding",
+    difficulty: "hard",
+    tags: ["Greedy", "Trees"],
+    acceptance: "46.8%",
+    category: "greedy"
+},
+{
+    id: 20,
+    title: "Minimum Spanning Tree",
+    difficulty: "medium",
+    tags: ["Greedy", "Graphs"],
+    acceptance: "55.1%",
+    category: "greedy"
+}
+
 ];
 
 const chatbotResponses = {
@@ -875,7 +1005,8 @@ function getQuizTopicKey(topic) {
         'linked list': 'linkedlist',
         'trees': 'trees',
         'graphs': 'graphs',
-        'dynamic programming': 'dp'
+        'dynamic programming': 'dp',
+        'greedy algorithms': 'greedy'
     };
     return keyMap[name] || name.replace(/\s+/g, '');
 }
@@ -921,22 +1052,29 @@ function initQuizSection() {
             updateQuizProgressDisplay(topic);
 
             // Add click handler
-            const startBtn = card.querySelector('.start-quiz-btn');
-            if (startBtn) {
-                startBtn.addEventListener('click', () => {
-                    console.log(`Start Quiz clicked for ${topic.name}`);
-                    startQuiz(topic);
-                });
-            } else {
-                console.error('Start quiz button not found for topic:', topic.name);
-            }
+            
         });
         console.log('Quiz Section initialization complete');
     } catch (error) {
         console.error('Error initializing quiz section:', error);
     }
+    
 }
+document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.start-quiz-btn');
+    if (!btn) return;
 
+    e.preventDefault();
+    e.stopPropagation();
+
+    const topicKey = btn.dataset.topic;
+    const topic = dsaTopics.find(t => getQuizTopicKey(t) === topicKey);
+
+    if (!topic) return;
+
+    console.log("QUIZ OPEN:", topic.name);
+    startQuiz(topic);
+}, true);
 function updateQuizProgressDisplay(topic) {
     const topicKey = getQuizTopicKey(topic);
     const progressFill = document.getElementById(`progress-${topicKey}`);
@@ -970,21 +1108,23 @@ function startQuiz(topic) {
         answers: []
     };
 
-    // Set modal header info
-    try {
-        document.getElementById('topicQuizBadge').textContent = topic.name;
-        document.getElementById('topicQuizDifficulty').textContent = topic.difficulty;
-        document.getElementById('topicQuizTitle').textContent = `${topic.name} Quiz`;
+    // Header update
+    document.getElementById('topicQuizBadge').textContent = topic.name;
+    document.getElementById('topicQuizDifficulty').textContent = topic.difficulty;
+    document.getElementById('topicQuizTitle').textContent = `${topic.name} Quiz`;
 
-        // Hide previous results
-        const prevResult = document.getElementById('topicQuizResult');
-        if (prevResult) prevResult.classList.add('hidden');
-    } catch (e) {
-        console.error('Error setting quiz modal header:', e);
-        return;
-    }
+    const prevResult = document.getElementById('topicQuizResult');
+    if (prevResult) prevResult.classList.add('hidden');
 
+    // 🔥 FIX IMPORTANT STATE RESET
     openQuizModal();
+
+    const loader = document.getElementById('quizLoader');
+    const panel = document.querySelector('.quiz-problem-panel');
+
+    if (loader) loader.classList.add('hidden');
+    if (panel) panel.style.display = 'block';
+
     renderQuizQuestion();
 }
 
@@ -2206,21 +2346,22 @@ function updateDate() {
     const today = new Date();
 
     const formattedDate = today.toLocaleDateString(undefined, {
-        weekday: "long",   // Monday
-        year: "numeric",   // 2026
-        month: "long",     // June
-        day: "numeric"     // 1
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
     });
 
-    // ✅ FIX: dashboard date update
-    document.getElementById("dashboard-current-date").textContent = formattedDate;
+    const dashboardDate = document.getElementById("dashboard-current-date");
+    if (dashboardDate) {
+        dashboardDate.textContent = formattedDate;
+    }
 
-    // ✅ FIX: profile date update
-    document.getElementById("profile-current-date").textContent = formattedDate;
+    const profileDate = document.getElementById("profile-current-date");
+    if (profileDate) {
+        profileDate.textContent = formattedDate;
+    }
 }
 
-// run immediately
 updateDate();
-
-// optional: auto refresh every hour (safe for daily date change)
 setInterval(updateDate, 60 * 60 * 1000);
