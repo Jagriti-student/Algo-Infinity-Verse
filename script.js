@@ -520,13 +520,69 @@ const dsaTopics = [
         problems: ["Clone Graph", "Number of Islands", "Course Schedule", "Word Ladder", "Network Delay Time"]
     },
     {
-        id: 6,
-        name: "Dynamic Programming",
-        icon: "🎯",
-        description: "Recursion, memoization, tabulation, and optimization problems",
-        difficulty: "Hard",
-        theory: "DP breaks problems into overlapping subproblems. Stores solutions to avoid recomputation. Approaches: top-down (memoization) and bottom-up (tabulation).",
-        problems: ["Climbing Stairs", "Coin Change", "Longest Increasing Subsequence", "Edit Distance", "House Robber"]
+        
+    id: 6,
+    name: "Dynamic Programming",
+    icon: "🎯",
+    description: "Learn optimization techniques using Memoization, Tabulation, and common Dynamic Programming patterns.",
+    difficulty: "Hard",
+    theory: `
+        <h4>Introduction</h4>
+        <p>
+            Dynamic Programming (DP) is an optimization technique used to solve problems by breaking them into smaller overlapping subproblems and storing their solutions.
+        </p>
+
+        <h4>Key Concepts</h4>
+        <ul>
+            <li>Optimal Substructure</li>
+            <li>Overlapping Subproblems</li>
+            <li>State Representation</li>
+            <li>Transition Formula</li>
+        </ul>
+
+        <h4>Memoization (Top-Down)</h4>
+        <p>
+            Memoization uses recursion and stores previously computed results to avoid repeated calculations.
+        </p>
+
+        <h4>Tabulation (Bottom-Up)</h4>
+        <p>
+            Tabulation builds solutions iteratively using a table starting from base cases.
+        </p>
+
+        <h4>Common DP Patterns</h4>
+        <ul>
+            <li>Fibonacci Pattern</li>
+            <li>0/1 Knapsack</li>
+            <li>Longest Common Subsequence</li>
+            <li>Longest Increasing Subsequence</li>
+            <li>Coin Change</li>
+            <li>Matrix Chain Multiplication</li>
+        </ul>
+
+        <h4>Visual Flow</h4>
+        <p>
+            Problem → Subproblems → Store Results → Reuse Results → Optimal Solution
+        </p>
+
+        <h4>Practice Exercises</h4>
+        <ol>
+            <li>Climbing Stairs</li>
+            <li>House Robber</li>
+            <li>Coin Change</li>
+            <li>Longest Common Subsequence</li>
+            <li>Edit Distance</li>
+        </ol>
+    `,
+    problems: [
+        "Climbing Stairs",
+        "House Robber",
+        "Coin Change",
+        "Longest Common Subsequence",
+        "Edit Distance",
+        "Longest Increasing Subsequence"
+    ]
+
     },
     {
         id: 7,
@@ -720,6 +776,38 @@ const practiceProblems = [
     tags: ["Backtracking", "DFS"],
     acceptance: "58.3%",
     category: "backtracking"
+},
+{
+    id: 24,
+    title: "Climbing Stairs",
+    difficulty: "easy",
+    tags: ["DP"],
+    acceptance: "63.4%",
+    category: "dp"
+},
+{
+    id: 25,
+    title: "Coin Change",
+    difficulty: "medium",
+    tags: ["DP"],
+    acceptance: "45.7%",
+    category: "dp"
+},
+{
+    id: 26,
+    title: "Edit Distance",
+    difficulty: "hard",
+    tags: ["DP"],
+    acceptance: "39.1%",
+    category: "dp"
+},
+{
+    id: 27,
+    title: "Longest Common Subsequence",
+    difficulty: "hard",
+    tags: ["DP", "Strings"],
+    acceptance: "42.8%",
+    category: "dp"
 }
 
 
