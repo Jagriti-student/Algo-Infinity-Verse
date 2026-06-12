@@ -6539,7 +6539,7 @@ function updateDate() {
         dashboardDate.textContent = formattedDate;
     }
 
-    const profileDate = document.getElementById("profile-current-date");
+    const profileDate = document.getElementById("current-date");
     if (profileDate) {
         profileDate.textContent = formattedDate;
     }
