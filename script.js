@@ -578,7 +578,67 @@ const dsaTopics = [
                 "Prim's Algorithm",
                 "Kruskal's Algorithm"
             ]
-    }
+    },
+    {
+    id: 8,
+    name: "Backtracking",
+    icon: "🔙",
+    description: "Explore backtracking technique, decision trees, and classic problems like N Queens and Sudoku.",
+    difficulty: "Intermediate",
+    theory: `
+        <h4>Introduction</h4>
+        <p>
+            Backtracking is a systematic search technique that builds solutions incrementally and abandons invalid paths.
+        </p>
+
+        <h4>Decision Tree Concept</h4>
+        <p>
+            Each decision creates branches in a decision tree. Invalid branches are pruned early.
+        </p>
+
+        <h4>State Space Search</h4>
+        <p>
+            Backtracking explores the state space using depth-first search.
+        </p>
+        <h4>Example: N-Queens Problem</h4>
+<p>
+Place 4 queens on a 4×4 chessboard so that no two queens attack each other.
+Backtracking places queens row by row and removes a queen whenever a conflict is found.
+</p>
+
+<ul>
+    <li>Try placing Queen in Row 1</li>
+    <li>Move to Row 2 and check safety</li>
+    <li>If conflict occurs, backtrack</li>
+    <li>Try another position</li>
+    <li>Continue until a valid solution is found</li>
+</ul>
+
+        <h4>Classic Problems</h4>
+        <ul>
+            <li>N Queens</li>
+            <li>Sudoku Solver</li>
+            <li>Rat in a Maze</li>
+            <li>Subset Sum</li>
+            <li>Permutations</li>
+        </ul>
+
+        <h4>Practice Exercises</h4>
+        <ol>
+            <li>Solve 4 Queens Problem</li>
+            <li>Generate all permutations of ABC</li>
+            <li>Solve Sudoku</li>
+            <li>Implement Rat in a Maze</li>
+        </ol>
+    `,
+    problems: [
+        "N Queens",
+        "Sudoku Solver",
+        "Rat in a Maze",
+        "Subset Sum",
+        "Permutations"
+    ]
+}
 ];
 
 const practiceProblems = [
@@ -636,7 +696,32 @@ const practiceProblems = [
     tags: ["Greedy", "Graphs"],
     acceptance: "55.1%",
     category: "greedy"
+},
+{
+    id: 21,
+    title: "N Queens",
+    difficulty: "medium",
+    tags: ["Backtracking", "Recursion"],
+    acceptance: "52.4%",
+    category: "backtracking"
+},
+{
+    id: 22,
+    title: "Sudoku Solver",
+    difficulty: "hard",
+    tags: ["Backtracking"],
+    acceptance: "41.8%",
+    category: "backtracking"
+},
+{
+    id: 23,
+    title: "Rat in a Maze",
+    difficulty: "medium",
+    tags: ["Backtracking", "DFS"],
+    acceptance: "58.3%",
+    category: "backtracking"
 }
+
 
 ];
 
@@ -1006,7 +1091,8 @@ function getQuizTopicKey(topic) {
         'trees': 'trees',
         'graphs': 'graphs',
         'dynamic programming': 'dp',
-        'greedy algorithms': 'greedy'
+        'greedy algorithms': 'greedy',
+        'backtracking': 'backtracking'
     };
     return keyMap[name] || name.replace(/\s+/g, '');
 }
@@ -1907,7 +1993,7 @@ let currentProblem = null;
 function openTopicModal(topic) {
     const modal = document.getElementById('topicModal');
     document.getElementById('modalTitle').textContent = topic.name;
-    document.getElementById('modalTheory').textContent = topic.theory;
+    document.getElementById('modalTheory').innerHTML = topic.theory;
     document.getElementById('modalDifficulty').innerHTML =
         `<span class="difficulty-badge ${getDifficultyClass(topic.difficulty)}">${topic.difficulty}</span>`;
 
