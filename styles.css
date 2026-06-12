@@ -3064,3 +3064,42 @@ body.light-mode {
 .quiz-card * {
     position: relative;
 }
+.tree-box {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.tree-visual {
+    font-family: "Fira Code", monospace;
+    background: #0f172a;
+    color: #00ffcc;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    font-size: 15px;
+    line-height: 1.6;
+
+    white-space: pre;
+    display: inline-block;
+
+    min-width: 260px;
+    text-align: center;
+}
+.tree-box{
+    display:flex;
+    justify-content:center;
+    margin:20px 0;
+}
+
+.tree-visual{
+    font-family: "Fira Code", monospace;
+    background:#0f172a;
+    color:#00ffcc;
+    padding:16px;
+    border-radius:10px;
+    border:1px solid #334155;
+    white-space:pre;
+    line-height:1.6;
+    font-size:15px;
+}

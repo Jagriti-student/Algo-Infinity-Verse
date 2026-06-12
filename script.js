@@ -469,7 +469,229 @@ const quizQuestions = {
         correct: 1,
         explanation: "Fractional Knapsack can be solved greedily using value/weight ratio."
     }
-    ]
+    ],
+    dsu: [
+    {
+        question: "What is another name for Disjoint Set Union?",
+        options: [
+            "Union-Find",
+            "Binary Search Tree",
+            "Heap Structure",
+            "Hash Table"
+        ],
+        answer: "Union-Find"
+    },
+
+    {
+        question: "Which operation is used to find the representative element of a set in DSU?",
+        options: [
+            "Merge",
+            "Find",
+            "Delete",
+            "Traverse"
+        ],
+        answer: "Find"
+    },
+
+    {
+        question: "Which operation combines two different sets in DSU?",
+        options: [
+            "Find",
+            "Union",
+            "Sort",
+            "Search"
+        ],
+        answer: "Union"
+    },
+
+    {
+        question: "What is the purpose of path compression in DSU?",
+        options: [
+            "Reduce tree height and optimize Find operation",
+            "Sort elements faster",
+            "Delete duplicate elements",
+            "Increase memory usage"
+        ],
+        answer: "Reduce tree height and optimize Find operation"
+    },
+
+    {
+        question: "The optimized time complexity of DSU operations with path compression and union by rank is:",
+        options: [
+            "O(n)",
+            "O(log n)",
+            "O(α(n))",
+            "O(n²)"
+        ],
+        answer: "O(α(n))"
+    },
+
+    {
+        question: "DSU is commonly used in which graph algorithm?",
+        options: [
+            "Kruskal's Algorithm",
+            "Binary Search",
+            "Merge Sort",
+            "Floyd Warshall"
+        ],
+        answer: "Kruskal's Algorithm"
+    },
+
+    {
+        question: "Which technique helps keep DSU trees balanced?",
+        options: [
+            "Union by Rank",
+            "DFS Traversal",
+            "Dynamic Programming",
+            "Greedy Method"
+        ],
+        answer: "Union by Rank"
+    },
+
+    {
+        question: "DSU is mainly used to manage:",
+        options: [
+            "Disjoint sets",
+            "Sorted arrays",
+            "Linked lists",
+            "Stacks"
+        ],
+        answer: "Disjoint sets"
+    },
+
+    {
+        question: "In DSU, each set has a unique:",
+        options: [
+            "Representative/Root",
+            "Maximum value",
+            "Minimum value",
+            "Length"
+        ],
+        answer: "Representative/Root"
+    },
+
+    {
+        question: "Which problem can be solved using DSU?",
+        options: [
+            "Cycle detection in undirected graphs",
+            "Binary tree traversal",
+            "String matching",
+            "Array rotation"
+        ],
+        answer: "Cycle detection in undirected graphs"
+    }
+],
+segmentTree: [
+    {
+        question: "What is the primary use of Segment Tree?",
+        options: [
+            "Sorting arrays",
+            "Range queries and updates",
+            "Stack operations",
+            "Graph traversal"
+        ],
+        answer: "Range queries and updates"
+    },
+
+    {
+        question: "What is the time complexity of query operation in Segment Tree?",
+        options: [
+            "O(1)",
+            "O(log n)",
+            "O(n)",
+            "O(n log n)"
+        ],
+        answer: "O(log n)"
+    },
+
+    {
+        question: "Segment Tree is based on which data structure?",
+        options: [
+            "Binary Tree",
+            "Graph",
+            "Stack",
+            "Queue"
+        ],
+        answer: "Binary Tree"
+    },
+
+    {
+        question: "What is stored in leaf nodes of Segment Tree?",
+        options: [
+            "Single array elements",
+            "Sum of all elements",
+            "Maximum value of array",
+            "Random values"
+        ],
+        answer: "Single array elements"
+    },
+
+    {
+        question: "Time complexity to build a Segment Tree is:",
+        options: [
+            "O(n)",
+            "O(log n)",
+            "O(n log n)",
+            "O(n²)"
+        ],
+        answer: "O(n)"
+    },
+
+    {
+        question: "Which operation updates a value in Segment Tree?",
+        options: [
+            "Update",
+            "Merge",
+            "Sort",
+            "Search"
+        ],
+        answer: "Update"
+    },
+
+    {
+        question: "Segment Tree is mainly useful for:",
+        options: [
+            "Static arrays only",
+            "Dynamic range queries",
+            "Sorting problems",
+            "String matching"
+        ],
+        answer: "Dynamic range queries"
+    },
+
+    {
+        question: "Which technique improves range update efficiency in Segment Tree?",
+        options: [
+            "Lazy Propagation",
+            "Binary Search",
+            "Recursion only",
+            "Hashing"
+        ],
+        answer: "Lazy Propagation"
+    },
+
+    {
+        question: "Space complexity of Segment Tree is:",
+        options: [
+            "O(n)",
+            "O(log n)",
+            "O(n log n)",
+            "O(1)"
+        ],
+        answer: "O(n)"
+    },
+
+    {
+        question: "Which of the following can Segment Tree NOT efficiently do?",
+        options: [
+            "Range Sum Query",
+            "Range Minimum Query",
+            "Point Update",
+            "Linear sorting of array"
+        ],
+        answer: "Linear sorting of array"
+    }
+]
 };
 
 // ===== DATA OBJECTS =====
@@ -694,6 +916,114 @@ Backtracking places queens row by row and removes a queen whenever a conflict is
         "Subset Sum",
         "Permutations"
     ]
+},
+{
+    id: "dsu",
+    name: "Disjoint Set Union (DSU)",
+    icon: "🔗",
+    description: "Learn about Disjoint Set Union (DSU) data structure, its operations, and applications in graph algorithms.",
+
+    theory: `
+        <h3>Introduction to DSU</h3>
+
+        <p>
+        Disjoint Set Union (DSU), also known as Union-Find,
+        is a data structure used to maintain a collection
+        of non-overlapping sets.
+        </p>
+
+
+        <h3>Find Operation</h3>
+
+        <p>
+        Find operation determines the representative/root
+        element of a set.
+        </p>
+
+
+        <h3>Union Operation</h3>
+
+        <p>
+        Union operation combines two different sets into
+        a single set.
+        </p>
+
+
+        <h3>Path Compression</h3>
+
+        <p>
+        Path compression optimizes the Find operation by
+        making every node point directly to the root.
+        </p>
+
+
+        <h3>Applications</h3>
+
+        <ul>
+            <li>Kruskal's Algorithm</li>
+            <li>Cycle Detection in Graphs</li>
+            <li>Network Connectivity</li>
+            <li>Connected Components</li>
+        </ul>
+    `,
+
+    problems:[
+        "Implement DSU with Find and Union",
+        "Detect cycle using DSU",
+        "Solve Kruskal Algorithm using DSU"
+    ],
+
+    difficulty:"Medium"
+},
+{
+    id: "segment-tree",
+    name: "Segment Tree",
+    icon: "🌳",
+    description: "Learn Segment Tree for efficient range queries and updates in O(log n).",
+
+    theory: `
+        <h3>Introduction to Segment Tree</h3>
+
+        <p>
+        A Segment Tree is a binary tree used for answering range queries
+        like sum, minimum, maximum efficiently in O(log n).
+        </p>
+
+        <h3>Construction</h3>
+
+        <p>
+        The array is recursively divided into segments and stored in a tree structure.
+        </p>
+
+        <h3>Query Operation</h3>
+
+        <p>
+        Range queries are answered by combining results of relevant segments.
+        </p>
+
+        <h3>Update Operation</h3>
+
+        <p>
+        Updates modify a value and propagate changes up the tree.
+        </p>
+
+        <h3>Applications</h3>
+        <ul>
+            <li>Range Sum Query</li>
+            <li>Range Minimum/Maximum Query</li>
+            <li>Competitive Programming Problems</li>
+            <li>Data Analysis Queries</li>
+        </ul>
+    `,
+
+    problems: [
+        "Build Segment Tree",
+        "Range Sum Query",
+        "Range Minimum Query",
+        "Point Update in Segment Tree"
+    ],
+
+    difficulty: "Hard"
 }
 ];
 
@@ -808,6 +1138,74 @@ const practiceProblems = [
     tags: ["DP", "Strings"],
     acceptance: "42.8%",
     category: "dp"
+},
+{
+    id: 28,
+    title: "Implement Disjoint Set Union",
+    difficulty: "medium",
+    tags: ["DSU", "Union Find", "Data Structure"],
+    acceptance: "65.4%",
+    category: "dsu"
+},
+
+{
+    id: 29,
+    title: "Number of Connected Components",
+    difficulty: "medium",
+    tags: ["DSU", "Graphs"],
+    acceptance: "61.2%",
+    category: "dsu"
+},
+
+{
+    id: 30,
+    title: "Redundant Connection",
+    difficulty: "medium",
+    tags: ["DSU", "Graph", "Cycle Detection"],
+    acceptance: "68.7%",
+    category: "dsu"
+},
+
+{
+    id: 31,
+    title: "Kruskal's Algorithm using DSU",
+    difficulty: "hard",
+    tags: ["DSU", "Minimum Spanning Tree", "Graphs"],
+    acceptance: "54.3%",
+    category: "dsu"
+},
+
+{
+    id: 32,
+    title: "Accounts Merge",
+    difficulty: "medium",
+    tags: ["DSU", "Hash Map", "Graph"],
+    acceptance: "58.9%",
+    category: "dsu"
+},
+{
+    id: 33,
+    title: "Build Segment Tree",
+    difficulty: "hard",
+    tags: ["Segment Tree", "Data Structure"],
+    acceptance: "60.2%",
+    category: "segment-tree"
+},
+{
+    id: 34,
+    title: "Range Sum Query",
+    difficulty: "medium",
+    tags: ["Segment Tree", "Query"],
+    acceptance: "55.1%",
+    category: "segment-tree"
+},
+{
+    id: 35,
+    title: "Point Update in Segment Tree",
+    difficulty: "medium",
+    tags: ["Segment Tree", "Update"],
+    acceptance: "57.8%",
+    category: "segment-tree"
 }
 
 
