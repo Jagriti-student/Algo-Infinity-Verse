@@ -3103,3 +3103,36 @@ body.light-mode {
     line-height:1.6;
     font-size:15px;
 }
+/* Welcome Banner */
+.welcome-banner {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 10000;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.welcome-banner button {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.welcome-banner button:hover {
+    opacity: 0.8;
+}
+
+.hidden {
+    display: none;
+}

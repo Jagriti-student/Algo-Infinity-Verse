@@ -1423,6 +1423,19 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfile();
     initScrollEffects();
     initDarkMode();
+     const welcomeBanner = document.getElementById('welcomeBanner');
+    const closeBanner = document.getElementById('closeBanner');
+
+    if (!localStorage.getItem('welcomeShown')) {
+        welcomeBanner.classList.remove('hidden');
+        localStorage.setItem('welcomeShown', 'true');
+    }
+
+    if (closeBanner && welcomeBanner) {
+    closeBanner.addEventListener('click', () => {
+        welcomeBanner.classList.add('hidden');
+    });
+}
 
     // Update profile display after loading
     
