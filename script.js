@@ -6288,23 +6288,6 @@ if (document.readyState === 'loading') {
 // Initialize some animations after page load
 window.addEventListener("load", () => {
 });
-function setJoinDate() {
-    const joinElement = document.getElementById("joinDate");
-
-    if (!joinElement) return;
-
-    const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-
-    const today = new Date().toLocaleDateString(undefined, options);
-
-    joinElement.innerText = today;
-}
-
-setJoinDate();
 // ✅ FIX: Current Date feature for dashboard + profile
 
 function updateDate() {
