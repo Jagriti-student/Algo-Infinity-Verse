@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -134,6 +135,61 @@
             </div>
         </div>
     </section>
+
+    <!-- Perl Code Editor Section -->
+<!-- Perl Code Editor Section -->
+<section id="perl-editor" class="section perl-section">
+  <div class="container">
+
+    <h2 class="section-title">
+      <span class="title-icon">🐪</span>
+      Perl Code Playground
+    </h2>
+
+    <div class="perl-wrapper">
+
+      <!-- LEFT: EDITOR -->
+      <div class="perl-editor-card">
+
+        <div class="editor-topbar">
+          <div class="status-dot"></div>
+          <span>Perl Sandbox</span>
+
+          <div class="lang-tag">PERL</div>
+        </div>
+
+        <textarea id="perlEditor" class="editor-box">
+# Welcome to Perl Playground 🚀
+
+print "Hello World\n";
+
+my $name = "DSA Learner";
+print "Welcome $name\n";
+        </textarea>
+        <div class="perl-buttons">
+  <button type="button" id="runBtn" class="run-btn">▶ Run</button>
+  <button type="button" id="resetBtn" class="reset-btn">↻ Reset</button>
+  <button type="button" id="sampleBtn" class="sample-btn">✨ Sample</button>
+</div>
+
+      </div>
+
+      <!-- RIGHT: OUTPUT -->
+      <div class="perl-output-card">
+
+        <div class="output-header">
+          <span>Output Console</span>
+          <span class="live-indicator">● live</span>
+        </div>
+
+        <pre id="perlOutput">Ready to execute Perl code...</pre>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
     <!-- Quiz Section -->
     <section id="quiz" class="section quiz-section">
@@ -555,6 +611,11 @@
                     <!-- Quiz Panel -->
                     <div class="quiz-problem-panel">
                         <div class="quiz-container">
+                            <div id="quizLoadingScreen" class="quiz-loading-screen hidden">
+                                <div class="quiz-loader"></div>
+                                <h3>Loading Quiz...</h3>
+                                <p id="quizLoadingTopic">Topic Name</p>
+                            </div>
                             <div class="quiz-progress-bar-container">
                                 <div class="quiz-progress-bar" id="topicQuizProgress"></div>
                             </div>
@@ -647,7 +708,7 @@
                         </p>
                         <p class="profile-date">
                             <i class="fas fa-calendar"></i>
-                            <span id="current-date"></span>
+                            <span id="profile-current-date"></span>
                         </p>
                     </div>
                     <button class="profile-edit-btn" id="profileSectionEditBtn" title="Edit Profile">

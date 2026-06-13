@@ -1,3 +1,23 @@
+
+document.addEventListener("submit", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
+}, true);
+window.addEventListener("load", () => {
+  document.addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.ctrlKey) {
+      if (document.activeElement.tagName === "TEXTAREA") {
+        e.stopPropagation();
+      }
+    }
+  });
+});
+
 // ===== QUIZ DATA =====
 const quizQuestions = {
     arrays: [
@@ -952,7 +972,40 @@ function updateQuizProgressDisplay(topic) {
     bestScoreEl.textContent = `${quizData.bestScore}%`;
     attemptsEl.textContent = quizData.attempts;
 }
+function showQuizLoading(topicName) {
+    const loader = document.getElementById('quizLoadingScreen');
+    const topic = document.getElementById('quizLoadingTopic');
 
+    if (topic) {
+        topic.textContent = `Loading ${topicName} Quiz`;
+    }
+
+    if (loader) {
+        loader.classList.remove('hidden');
+    }
+
+    document.getElementById('topicQuizQuestionText').style.display = 'none';
+    document.getElementById('topicQuizOptions').style.display = 'none';
+    document.getElementById('topicQuizCounter').style.display = 'none';
+
+    const progress = document.querySelector('.quiz-progress-bar-container');
+    if (progress) progress.style.display = 'none';
+}
+
+function hideQuizLoading() {
+    const loader = document.getElementById('quizLoadingScreen');
+
+    if (loader) {
+        loader.classList.add('hidden');
+    }
+
+    document.getElementById('topicQuizQuestionText').style.display = '';
+    document.getElementById('topicQuizOptions').style.display = '';
+    document.getElementById('topicQuizCounter').style.display = '';
+
+    const progress = document.querySelector('.quiz-progress-bar-container');
+    if (progress) progress.style.display = '';
+}
 function startQuiz(topic) {
     const topicKey = getQuizTopicKey(topic);
     const questions = quizQuestions[topicKey];
@@ -2206,17 +2259,22 @@ function updateDate() {
     const today = new Date();
 
     const formattedDate = today.toLocaleDateString(undefined, {
-        weekday: "long",   // Monday
-        year: "numeric",   // 2026
-        month: "long",     // June
-        day: "numeric"     // 1
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
     });
 
-    // ✅ FIX: dashboard date update
-    document.getElementById("dashboard-current-date").textContent = formattedDate;
+    const dashboardDate = document.getElementById("dashboard-current-date");
+    const profileDate = document.getElementById("profile-current-date");
 
-    // ✅ FIX: profile date update
-    document.getElementById("profile-current-date").textContent = formattedDate;
+    if (dashboardDate) {
+        dashboardDate.textContent = formattedDate;
+    }
+
+    if (profileDate) {
+        profileDate.textContent = formattedDate;
+    }
 }
 
 // run immediately
@@ -2224,3 +2282,60 @@ updateDate();
 
 // optional: auto refresh every hour (safe for daily date change)
 setInterval(updateDate, 60 * 60 * 1000);
+let isRunning = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const codeEl = document.getElementById("perlEditor");
+  const outputEl = document.getElementById("perlOutput");
+
+  document.getElementById("runBtn").addEventListener("click", runPerl);
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    codeEl.value = "";
+    outputEl.textContent = "Run code to see output...";
+  });
+
+  document.getElementById("sampleBtn").addEventListener("click", () => {
+    codeEl.value =
+`print "Hello World\\n";
+
+my $name = "DSA Learner";
+print "Welcome $name\\n";`;
+  });
+});
+
+async function runPerl() {
+  if (isRunning) return;
+  isRunning = true;
+
+  const editor = document.getElementById("perlEditor");
+  const output = document.getElementById("perlOutput");
+
+  const code = editor ? editor.value.trim() : "";
+
+  console.log("DEBUG CODE:", code); // 👈 important debug
+
+  if (!code) {
+    output.textContent = "❌ No code provided";
+    isRunning = false;
+    return;
+  }
+
+  output.textContent = "Running... ⏳";
+
+  try {
+    const res = await fetch("http://localhost:5000/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code })
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    output.textContent = data.output || data.error || "No output";
+  } catch (err) {
+    output.textContent = "Error: " + err.message;
+  }
+
+  isRunning = false;
+}
