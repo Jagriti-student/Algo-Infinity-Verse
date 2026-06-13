@@ -3897,6 +3897,8 @@ body {
     overflow: hidden;
     cursor: pointer;
     pointer-events: auto !important;
+
+
     display: flex;
   flex-direction: column;
   min-height: 320px;

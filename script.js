@@ -2167,6 +2167,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  // Apply saved theme only after DOM is ready to avoid touching document.body too early
+  applySavedTheme();
+
   loadUserData();
   initLoadingScreen();
   initNavbar();
@@ -5985,6 +5988,15 @@ public:
         
     }
 };`,
+    swift: `class Solution {
+    func solution(_ params: ParamsType) -> ReturnType {
+        // Your code here
+    }
+}
+
+// Test your solution
+// let sol = Solution()
+// print(sol.solution(params))`,
   };
   return templates[lang] || templates.javascript;
 }
@@ -5999,6 +6011,22 @@ function executeCode(code, lang) {
     }
     return "Code executed (simulation).";
   }
+
+  if (lang === "swift") {
+    // Simulate Swift compilation and execution
+    return `Swift execution simulation:
+Compiling solution...
+Swift compiler (swiftc) version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.1.1)
+Target: x86_64-apple-macosx14.0
+
+[1/1] Compiling main.swift
+Build complete!
+
+Output:
+Swift solution executed successfully.
+(No errors reported in console)`;
+  }
+
   return `Code executed in ${lang.toUpperCase()} (simulation).`;
 }
 
@@ -6334,6 +6362,8 @@ function updateSyntaxHighlight() {
     .map((line) => {
       if (lang === "javascript") {
         return highlightJS(line);
+      } else if (lang === "swift") {
+        return highlightSwift(line);
       }
       return escapeHtml(line);
     })
@@ -6361,6 +6391,19 @@ function highlightJS(line) {
     });
 
     return highlighted;
+}
+
+function highlightSwift(line) {
+  const regex = /(<[^>]+>)|(\/\/.*$)|("[^"]*")|(\b(func|var|let|if|else|for|while|return|class|struct|enum|protocol|extension|import|switch|case|default|break|continue|guard|nil|true|false|self|init|deinit|static|mutating|throws|try|catch|do|defer|typealias|where|is|as|in|Any|Int|String|Double|Float|Bool|Array|Dictionary|Set)\b)|((?<!\.[a-zA-Z])\b(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?\b(?!\.[a-zA-Z]))/g;
+  let result = escapeHtml(line);
+  return result.replace(regex, (m, tag, comment, str, kw, num) => {
+    if (tag) return tag;
+    if (comment) return '<span class="token comment">' + comment + '</span>';
+    if (str) return '<span class="token string">' + str + '</span>';
+    if (kw) return '<span class="token keyword">' + kw + '</span>';
+    if (num) return '<span class="token number">' + num + '</span>';
+    return m;
+  });
 }
 
 
@@ -6439,7 +6482,7 @@ function toggleLineComment() {
   const textBefore = editor.value.substring(0, cursorPos);
   const currentLine = textBefore.split("\n").length - 1;
 
-  const commentChars = { javascript: "//", python: "#", java: "//", cpp: "//" };
+  const commentChars = { javascript: "//", python: "#", java: "//", cpp: "//", swift: "//" };
   const char = commentChars[lang] || "//";
 
   const line = lines[currentLine];
