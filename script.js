@@ -397,14 +397,14 @@ const quizQuestions = {
       id: "trees-4",
       question: "What property must a Binary Search Tree (BST) satisfy?",
       options: [
-        "All left descendants <= node < all right descendants",
+        "All left descendants ≤ node < all right descendants",
         "All levels fully filled",
         "No cycles",
         "All nodes have two children",
       ],
       correct: 0,
       explanation:
-        "BST invariant: left subtree values <= node value < right subtree values.",
+        "BST invariant: left subtree values ≤ node value < right subtree values.",
     },
     {
       id: "trees-5",
@@ -465,7 +465,7 @@ const quizQuestions = {
       question: "What does it mean for a tree to be 'balanced'?",
       options: [
         "All leaf nodes at same level",
-        "Height difference of subtrees <= 1 for every node",
+        "Height difference of subtrees ≤ 1 for every node",
         "No cycles",
         "All nodes have 0 or 2 children",
       ],
@@ -1048,7 +1048,7 @@ const dsaTopics = [
 <ul style="list-style:none; padding:0; margin-bottom:1rem;">
   <li style="padding:0.3rem 0;">• Start with brute force → add memoization → optimize</li>
   <li style="padding:0.3rem 0;">• Draw recursion tree to spot overlapping subproblems</li>
-  <li style="padding:0.3rem 0;">• Most 2D DP can reduce space from O(n^2) to O(n)</li>
+  <li style="padding:0.3rem 0;">• Most 2D DP can reduce space from O(n²) to O(n)</li>
   <li style="padding:0.3rem 0;">• If you see "minimum/maximum/count ways" → think DP!</li>
 </ul>
 
@@ -1078,7 +1078,7 @@ const dsaTopics = [
       <tr style="background:var(--dark-card);"><th style="padding:0.5rem 1rem; text-align:left; border:1px solid var(--glass-border);">Operation</th><th style="padding:0.5rem 1rem; text-align:left; border:1px solid var(--glass-border);">Time</th></tr>
       <tr><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">Access element</td><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border); color:#22c55e;">O(1) ✅</td></tr>
       <tr style="background:var(--dark-card);"><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">Linear traversal</td><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">O(M×N)</td></tr>
-      <tr><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">Transpose / Rotate</td><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">O(N^2)</td></tr>
+      <tr><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">Transpose / Rotate</td><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">O(N²)</td></tr>
       <tr style="background:var(--dark-card);"><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border);">Search (sorted matrix)</td><td style="padding:0.5rem 1rem; border:1px solid var(--glass-border); color:#22c55e;">O(M+N) ✅</td></tr>
     </table>
     <h4 style="color:var(--primary); margin:1rem 0 0.5rem;">🎯 Must-Know Interview Patterns</h4>
@@ -1106,8 +1106,8 @@ const practiceProblems = [
     description:
       "Given an array of integers nums and an integer target, return indices of the two numbers that add up to target. You may assume exactly one solution exists, and you may not use the same element twice. Return the answer in any order.",
     constraints: [
-      "2 <= nums.length <= 10^4",
-      "-10^9 <= nums[i] <= 10^9",
+      "2 ≤ nums.length ≤ 10⁴",
+      "-10⁹ ≤ nums[i] ≤ 10⁹",
       "Only one valid answer exists",
     ],
     followUp: "Can you solve it in O(n) time complexity?",
@@ -1122,7 +1122,7 @@ const practiceProblems = [
     description:
       "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. A string is valid if every open bracket is closed by the same type of bracket in the correct order.",
     constraints: [
-      "1 <= s.length <= 10^4",
+      "1 ≤ s.length ≤ 10⁴",
       "s consists of parentheses only '()[]{}'",
     ],
     followUp: "Can you solve it in O(n) time and O(n) space?",
@@ -1340,8 +1340,8 @@ const practiceProblems = [
     description:
       "Given an array prices where prices[i] is the price of a given stock on the iᵗʰ day, return the maximum profit you can achieve by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. If no profit is possible, return 0.",
     constraints: [
-      "1 <= prices.length <= 10^5",
-      "0 <= prices[i] <= 10^4",
+      "1 ≤ prices.length ≤ 10⁵",
+      "0 ≤ prices[i] ≤ 10⁴",
     ],
     followUp: "Can you solve it in O(n) time and O(1) space?",
   },
@@ -1355,8 +1355,8 @@ const practiceProblems = [
     description:
       "Given an integer array nums, move all 0s to the end of it while maintaining the relative order of the non-zero elements. You must do this in-place without making a copy of the array.",
     constraints: [
-      "1 <= nums.length <= 10^4",
-      "-2^31 <= nums[i] <= 2^31 - 1",
+      "1 ≤ nums.length ≤ 10⁴",
+      "−2³¹ ≤ nums[i] ≤ 2³¹ − 1",
     ],
     followUp: "Can you minimize the total number of operations?",
   },
@@ -1370,7 +1370,7 @@ const practiceProblems = [
     description:
       "Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.",
     constraints: [
-      "1 <= s.length, t.length <= 5 × 10^4",
+      "1 ≤ s.length, t.length ≤ 5 × 10⁴",
       "s and t consist of lowercase English letters only",
     ],
     followUp: "What if the inputs contain Unicode characters? How would you adapt your solution?",
@@ -1385,8 +1385,8 @@ const practiceProblems = [
     description:
       "Given a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with O(n) time complexity and O(1) space complexity.",
     constraints: [
-      "1 <= nums.length <= 3 × 10^4",
-      "-3 × 10^4 <= nums[i] <= 3 × 10^4",
+      "1 ≤ nums.length ≤ 3 × 10⁴",
+      "-3 × 10⁴ ≤ nums[i] ≤ 3 × 10⁴",
       "Each element appears exactly twice except for one element which appears exactly once",
     ],
     followUp: "Can you solve it without using extra memory, using XOR bit manipulation?",
@@ -1401,8 +1401,8 @@ const practiceProblems = [
     description:
       "Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique, and the result can be returned in any order.",
     constraints: [
-      "1 <= nums1.length, nums2.length <= 1000",
-      "0 <= nums1[i], nums2[i] <= 1000",
+      "1 ≤ nums1.length, nums2.length ≤ 1000",
+      "0 ≤ nums1[i], nums2[i] ≤ 1000",
       "Result must contain only unique elements",
     ],
     followUp: "What if the arrays are already sorted? What if one array is much larger than the other?",
@@ -1417,8 +1417,8 @@ const practiceProblems = [
     description:
       "Given an array of integers nums, return true if it is sorted in non-decreasing order, and false otherwise.",
     constraints: [
-      "1 <= nums.length <= 10^4",
-      "-10^9 <= nums[i] <= 10^9",
+      "1 ≤ nums.length ≤ 10⁴",
+      "−10⁹ ≤ nums[i] ≤ 10⁹",
     ],
     followUp: "Can you solve it in O(n) time complexity and O(1) space complexity?",
   },
@@ -1432,7 +1432,7 @@ const practiceProblems = [
     description:
       "Given n, return the nth Fibonacci number.",
     constraints: [
-      "0 <= n <= 30",
+      "0 ≤ n ≤ 30",
     ],
 followUp: "Can you solve it using recursion, memoization, and bottom-up tabulation?",
   },
@@ -1445,9 +1445,9 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "arrays",
     description: "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
     constraints: [
-      "1 <= intervals.length <= 10^4",
+      "1 ≤ intervals.length ≤ 10⁴",
       "intervals[i].length == 2",
-      "0 <= starti <= endi <= 10^4",
+      "0 ≤ starti ≤ endi ≤ 10⁴",
     ],
     followUp: "Can you solve it in O(n log n) time?",
   },
@@ -1460,8 +1460,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "arrays",
     description: "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i]. You must solve it without using the division operation and in O(n) time.",
     constraints: [
-      "2 <= nums.length <= 10^5",
-      "-30 <= nums[i] <= 30",
+      "2 ≤ nums.length ≤ 10⁵",
+      "-30 ≤ nums[i] ≤ 30",
       "The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer",
     ],
     followUp: "Can you solve it in O(1) extra space (excluding output array)?",
@@ -1477,8 +1477,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     constraints: [
       "m == matrix.length",
       "n == matrix[0].length",
-      "1 <= m, n <= 10",
-      "-100 <= matrix[i][j] <= 100",
+      "1 ≤ m, n ≤ 10",
+      "-100 ≤ matrix[i][j] ≤ 100",
     ],
     followUp: "Can you solve it without using extra space?",
   },
@@ -1491,7 +1491,7 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "strings",
     description: "Given a string s, find the length of the longest substring without repeating characters.",
     constraints: [
-      "0 <= s.length <= 5 × 10^4",
+      "0 ≤ s.length ≤ 5 × 10⁴",
       "s consists of English letters, digits, symbols and spaces",
     ],
     followUp: "Can you solve it in O(n) using sliding window?",
@@ -1505,8 +1505,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "strings",
     description: "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
     constraints: [
-      "1 <= strs.length <= 10^4",
-      "0 <= strs[i].length <= 100",
+      "1 ≤ strs.length ≤ 10⁴",
+      "0 ≤ strs[i].length ≤ 100",
       "strs[i] consists of lowercase English letters",
     ],
     followUp: "Can you solve it without sorting each string?",
@@ -1520,8 +1520,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "linkedlist",
     description: "Given head, the head of a linked list, determine if the linked list has a cycle in it. Return true if there is a cycle, otherwise return false.",
     constraints: [
-      "The number of nodes is in range [0, 10^4]",
-      "-10^5 <= Node.val <= 10^5",
+      "The number of nodes is in range [0, 10⁴]",
+      "-10⁵ ≤ Node.val ≤ 10⁵",
     ],
     followUp: "Can you solve it using Floyd's cycle detection algorithm in O(1) space?",
   },
@@ -1535,9 +1535,9 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     description: "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
     constraints: [
       "The number of nodes in the list is sz",
-      "1 <= sz <= 30",
-      "0 <= Node.val <= 100",
-      "1 <= n <= sz",
+      "1 ≤ sz ≤ 30",
+      "0 ≤ Node.val ≤ 100",
+      "1 ≤ n ≤ sz",
     ],
     followUp: "Can you solve it in one pass using two pointers?",
   },
@@ -1552,7 +1552,7 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     constraints: [
       "The number of nodes of listA is in the m",
       "The number of nodes of listB is in the n",
-      "1 <= m, n <= 3 × 10^4",
+      "1 ≤ m, n ≤ 3 × 10⁴",
     ],
     followUp: "Can you solve it in O(m+n) time and O(1) space?",
   },
@@ -1565,8 +1565,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "trees",
     description: "Given the root of a binary tree, return its maximum depth. The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.",
     constraints: [
-      "The number of nodes is in range [0, 10^4]",
-      "-100 <= Node.val <= 100",
+      "The number of nodes is in range [0, 10⁴]",
+      "-100 ≤ Node.val ≤ 100",
     ],
     followUp: "Can you solve it both recursively and iteratively using BFS?",
   },
@@ -1579,8 +1579,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "trees",
     description: "Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST. The LCA is defined as the lowest node that has both p and q as descendants.",
     constraints: [
-      "The number of nodes is in range [2, 10^5]",
-      "-10^9 <= Node.val <= 10^9",
+      "The number of nodes is in range [2, 10⁵]",
+      "-10⁹ ≤ Node.val ≤ 10⁹",
       "All Node.val are unique",
     ],
     followUp: "Can you solve it for a general binary tree (not just BST)?",
@@ -1595,8 +1595,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     description: "Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.",
     constraints: [
       "The number of nodes is in range [0, 5000]",
-      "-1000 <= Node.val <= 1000",
-      "-1000 <= targetSum <= 1000",
+      "-1000 ≤ Node.val ≤ 1000",
+      "-1000 ≤ targetSum ≤ 1000",
     ],
     followUp: "Can you find all paths that sum to target? (Path Sum II)",
   },
@@ -1609,8 +1609,8 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "graphs",
     description: "You are given a network of n nodes, labeled from 1 to n. You are also given times, a list of travel times as directed edges times[i] = (ui, vi, wi), where ui is the source node, vi is the target node, and wi is the time it takes for a signal to travel from source to target. Return the minimum time it takes for all n nodes to receive the signal. If it is impossible, return -1.",
     constraints: [
-      "1 <= k <= n <= 100",
-      "1 <= times.length <= 6000",
+      "1 ≤ k ≤ n ≤ 100",
+      "1 ≤ times.length ≤ 6000",
       "times[i].length == 3",
     ],
     followUp: "Can you solve it using Dijkstra's algorithm?",
@@ -1624,7 +1624,7 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "dp",
     description: "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
     constraints: [
-      "1 <= n <= 45",
+      "1 ≤ n ≤ 45",
     ],
     followUp: "Can you generalize to k steps at a time?",
   },
@@ -1637,9 +1637,9 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "dp",
     description: "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount cannot be made up by any combination of the coins, return -1.",
     constraints: [
-      "1 <= coins.length <= 12",
-      "1 <= coins[i] <= 2^31 - 1",
-      "0 <= amount <= 10^4",
+      "1 ≤ coins.length ≤ 12",
+      "1 ≤ coins[i] ≤ 2³¹ - 1",
+      "0 ≤ amount ≤ 10⁴",
     ],
     followUp: "Can you solve it using both top-down and bottom-up DP?",
   },
@@ -1652,7 +1652,7 @@ followUp: "Can you solve it using recursion, memoization, and bottom-up tabulati
     category: "dp",
     description: "Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2. You have three operations: Insert, Delete, Replace a character.",
     constraints: [
-      "0 <= word1.length, word2.length <= 500",
+      "0 ≤ word1.length, word2.length ≤ 500",
       "word1 and word2 consist of lowercase English letters",
     ],
     followUp: "Can you optimize the space complexity from O(m*n) to O(min(m,n))?",
@@ -1715,14 +1715,14 @@ const dailyChallenges = [
 
 const chatbotResponses = {
   "time complexity":
-    "Time complexity measures how an algorithm's runtime grows with input size. Common complexities: O(1) constant, O(log n) logarithmic, O(n) linear, O(n log n) linearithmic, O(n^2) quadratic, O(2^n) exponential.",
+    "Time complexity measures how an algorithm's runtime grows with input size. Common complexities: O(1) constant, O(log n) logarithmic, O(n) linear, O(n log n) linearithmic, O(n²) quadratic, O(2^n) exponential.",
   "space complexity":
     "Space complexity measures memory usage relative to input size. Aim for O(1) or O(n) space. In-place algorithms modify input directly.",
   arrays:
     "Arrays provide O(1) random access but fixed size. Use when you need fast lookups and index-based access. Key operations: insert O(n), delete O(n), search O(n) unsorted / O(log n) binary search on sorted arrays.",
   "linked list":
     "Linked lists offer O(1) insertion/deletion at any position but O(n) access time. Use when frequent insertions/deletions needed. Types: singly (one pointer), doubly (two pointers), circular (last points to first).",
-  tree: "Trees are hierarchical. Binary trees: each node has <=2 children. BST: left < root < right. Balanced (AVL, Red-Black) ensure O(log n) operations. Traversals: inorder (left-root-right), preorder (root-left-right), postorder (left-right-root).",
+  tree: "Trees are hierarchical. Binary trees: each node has ≤2 children. BST: left < root < right. Balanced (AVL, Red-Black) ensure O(log n) operations. Traversals: inorder (left-root-right), preorder (root-left-right), postorder (left-right-root).",
   graph:
     "Graphs represent networks. Directed vs undirected, weighted vs unweighted, cyclic vs acyclic. Representations: adjacency list (space-efficient) vs adjacency matrix (O(1) edge lookup). Traversals: BFS (shortest path on unweighted graphs), DFS (cycle detection, topological sort).",
   "dynamic programming":
@@ -1730,13 +1730,13 @@ const chatbotResponses = {
   greedy:
     "Greedy algorithms make locally optimal choices hoping for global optimum. Works when greedy choice property holds. Examples: Dijkstra's shortest path, Huffman coding, activity selection.",
   sorting:
-    "Common sorting algorithms: Bubble O(n^2), Selection O(n^2), Insertion O(n^2) (good for small/nearly sorted), Merge O(n log n) stable, Quick O(n log n) average, Heap O(n log n) in-place, Counting O(n+k) for bounded range, Radix O(d(n+b)).",
+    "Common sorting algorithms: Bubble O(n²), Selection O(n²), Insertion O(n²) (good for small/nearly sorted), Merge O(n log n) stable, Quick O(n log n) average, Heap O(n log n) in-place, Counting O(n+k) for bounded range, Radix O(d(n+b)).",
   "binary search":
-    "Binary search on sorted arrays: repeatedly divide search interval in half. Time O(log n). Template: low=0, high=n-1; while low<=high: mid=(low+high)/2; if target=arr[mid] return; else adjust bounds.",
+    "Binary search on sorted arrays: repeatedly divide search interval in half. Time O(log n). Template: low=0, high=n-1; while low≤high: mid=(low+high)/2; if target=arr[mid] return; else adjust bounds.",
   recursion:
     "Recursion solves problems by breaking into smaller subproblems. Base case stops recursion. Recursive case calls function with smaller input. Use for tree traversals, backtracking, divide & conquer. Watch stack overflow for deep recursion.",
   "big o":
-    "Big O describes upper bound of growth rate. Best, average, worst cases differ. Common: O(1) < O(log n) < O(n) < O(n log n) < O(n^2) < O(2^n) < O(n!). Space complexity also matters.",
+    "Big O describes upper bound of growth rate. Best, average, worst cases differ. Common: O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2^n) < O(n!). Space complexity also matters.",
   bfs: "Breadth-First Search explores all neighbors before moving deeper. Use queue. Applications: shortest path (unweighted), level-order traversal, web crawling, social networks (degrees of separation).",
   dfs: "Depth-First Search goes deep before backtracking. Use stack (explicit or recursion). Applications: cycle detection, topological sort, connected components, maze solving. Three tree traversals: inorder, preorder, postorder.",
   "system design":
@@ -1769,6 +1769,13 @@ let userProgress = {
   avatar: "🚀",
   completedProblems: [],
   completedDailyChallenges: [],
+  codingPersonality: {
+    type: "brute-force first",
+    bruteForceCount: 1,
+    slowAccurateCount: 0,
+    greedyCount: 0,
+    overOptimizerCount: 0
+  },
 
   favoriteProblems: [], //here i have added a new property to store the user's favorite problems
   recentProblems: [], //here i have added a new property to store the user's recent problems
@@ -1792,6 +1799,13 @@ let userProgress = {
 // Declared early to avoid TDZ issues when referenced by event handlers.
 let currentProblem = null;
 
+/**
+ * @function initApplication
+ * @description Wraps core application startup logic, UI rendering, and global DOM event 
+ * listeners to ensure safe execution only after the HTML DOM is fully parsed.
+ * Fixes unexpected initialization crashes on production deployment environments (e.g., Vercel).
+ * @see {@link https://github.com/Eshajha19/Algo-Infinity-Verse/issues/258}
+ */
 // ===== INITIALIZATION =====
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1827,10 +1841,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+  });
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // Apply saved theme only after DOM is ready to avoid touching document.body too early
-  applySavedTheme();
 
   loadUserData();
   initLoadingScreen();
@@ -1846,7 +1861,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initDailyChallenge();
   initChatbot();
   initProfile();
-  initDarkMode();
   initNewsletterValidation();
   initScrollEffects();
   initFooterCurrentDate();
@@ -1992,7 +2006,6 @@ function initNavbar() {
     });
   }
 
-  // Dropdown functionality
   const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
   const isMobile = () => window.matchMedia("(max-width: 1024px)").matches;
 
@@ -2016,14 +2029,12 @@ function initNavbar() {
       }, 250);
     };
 
-    // Desktop: hover to open
     parent.addEventListener("mouseenter", () => { if (!isMobile()) showMenu(); });
     parent.addEventListener("mouseleave", () => { if (!isMobile()) hideMenu(); });
     toggle.addEventListener("focus", () => { if (!isMobile()) showMenu(); });
     menu.addEventListener("focusin", () => { if (!isMobile()) showMenu(); });
     parent.addEventListener("focusout", () => { if (!isMobile()) hideMenu(); });
 
-    // Mobile: click to toggle
     toggle.addEventListener("click", (e) => {
       if (isMobile()) {
         e.preventDefault();
@@ -2033,7 +2044,6 @@ function initNavbar() {
       }
     });
 
-    // Close dropdown on item click (mobile)
     menu.querySelectorAll(".dropdown-item").forEach((item) => {
       item.addEventListener("click", () => {
         if (isMobile()) {
@@ -2044,7 +2054,6 @@ function initNavbar() {
     });
   });
 
-  // Reset open state on resize
   window.addEventListener("resize", () => {
     if (!isMobile()) {
       if (navLinks.classList.contains("active")) {
@@ -2058,24 +2067,13 @@ function initNavbar() {
       });
     }
   });
-
-  // Scroll effect
-  window.addEventListener("scroll", () => {
-    const navbar = document.querySelector(".navbar");
-    if (navbar) {
-      if (window.scrollY > 100) {
-        navbar.style.background = "rgba(10, 10, 26, 0.95)";
-      } else {
-        navbar.style.background = "rgba(10, 10, 26, 0.85)";
-      }
-    }
-  });
 }
 
 // ===== HERO SECTION =====
 function initHeroSection() {
   // Typing animation
   const typingElement = document.getElementById("typingText");
+  if (!typingElement) return;
   const texts = [
     "Arrays",
     "Linked Lists",
@@ -2300,7 +2298,10 @@ function initTopicOfTheDay() {
   const topic = getDailyTopic();
   if (!topic) return;
 
-  document.getElementById("totdIcon").textContent = topic.icon;
+  const totdIcon = document.getElementById("totdIcon");
+  if (!totdIcon) return;
+
+  totdIcon.textContent = topic.icon;
   document.getElementById("totdTitle").textContent = topic.name;
   document.getElementById("totdDesc").textContent = topic.description;
 
@@ -2319,6 +2320,7 @@ function initTopicOfTheDay() {
 
 function initTopicsSection() {
   const topicsGrid = document.querySelector(".topics-grid");
+  if (!topicsGrid) return;
   topicsGrid.innerHTML = "";
   dsaTopics.forEach((topic, index) => {
     const card = document.createElement("div");
@@ -2486,17 +2488,7 @@ function updateQuizProgressDisplay(topic) {
   attemptsEl.textContent = quizData.attempts;
 }
 
-function startQuiz(topicKey) {
 
-  // Normalize topicKey defensively in case caller passes name/variant.
-  const normalizedTopicKey = getQuizTopicKey(String(topicKey));
-  const topicQuiz = quizQuestions[normalizedTopicKey];
-
-
-    progressFill.style.width = `${progressPercent}%`;
-    bestScoreEl.textContent = `${quizData.bestScore}%`;
-    attemptsEl.textContent = quizData.attempts;
-}
 function showQuizLoading(topicName) {
     const loader = document.getElementById('quizLoadingScreen');
     const topic = document.getElementById('quizLoadingTopic');
@@ -2539,18 +2531,6 @@ function startQuiz(topic) {
         showNotification('No quiz questions available for this topic yet!', 'error');
         return;
     }
-
-  if (!topicQuiz || topicQuiz.length === 0) {
-    console.error("Quiz data not found for:", {
-      rawTopicKey: topicKey,
-      normalizedTopicKey,
-      availableKeys: Object.keys(quizQuestions),
-    });
-    return;
-  }
-
-  // Ensure we use the normalized key everywhere below.
-  topicKey = normalizedTopicKey;
 
 
 
@@ -3036,48 +3016,78 @@ function renderProblems(filter = "all", searchQuery = "") {
     totalCountEl.textContent = practiceProblems.length;
   }
 
+  const cpType = userProgress.codingPersonality ? userProgress.codingPersonality.type : "brute-force first";
+
   problemsGrid.innerHTML = filteredProblems
     .map(
-      (problem) => `
-        <div class="problem-card animate-in" data-id="${problem.id}">
-            <div class="problem-header">
-              <h3 class="problem-title">${problem.title}</h3>
-               <div class="problem-actions">
-               <button class="favorite-btn ${
-                 //here we check if the problem is in the user's favorites and add the 'active' class to the button if it is
-                 userProgress.favoriteProblems.includes(problem.id)
-                   ? "active"
-                   : ""
-               }"
-data-id="${problem.id}">
-        <i class="fas fa-heart"></i>
-    </button>
-               <button class="notes-btn ${
-      userProgress.problemNotes[problem.id] ? "has-notes" : ""
-    }" data-id="${problem.id}">
-  <i class="fas fa-sticky-note"></i>
-</button>
+      (problem) => {
+        let isRec = false;
+        let recLabel = "";
+        
+        if (cpType === "brute-force first") {
+          if (problem.difficulty === "easy" || problem.tags.includes("Arrays")) {
+            isRec = true;
+            recLabel = "Plan First!";
+          }
+        } else if (cpType === "over-optimizer") {
+          if (problem.difficulty === "hard" || problem.tags.includes("Dynamic Programming") || problem.tags.includes("Hash Table")) {
+            isRec = true;
+            recLabel = "Optimize Metrics";
+          }
+        } else if (cpType === "slow but accurate") {
+          if (problem.difficulty === "medium") {
+            isRec = true;
+            recLabel = "Speed Practice";
+          }
+        } else if (cpType === "greedy thinker") {
+          if (problem.tags.includes("Greedy") || problem.tags.includes("Divide and Conquer") || problem.tags.includes("Recursion")) {
+            isRec = true;
+            recLabel = "Heuristic Check";
+          }
+        }
+        
+        const recBadge = isRec ? `<span class="rec-personality-badge"><i class="fas fa-brain"></i> ${recLabel}</span>` : "";
 
-
-                 <span class="difficulty-badge ${getDifficultyClass(problem.difficulty)}">${problem.difficulty}</span>
-             </div>
-            </div>
-            <div class="problem-tags">
-                ${problem.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
-            </div>
-            <div class="problem-meta">
-                <span class="acceptance-rate">
-                    <i class="fas fa-users"></i> ${problem.acceptance} acceptance
-                </span>
-                ${
-                  userProgress.completedProblems.includes(problem.id)
-                    ? '<span class="completed-badge"><i class="fas fa-check"></i> Completed</span>'
-                    : ""
-                }
-            </div>
-        </div>
-    `,
-    )
+        return `
+          <div class="problem-card animate-in" data-id="${problem.id}">
+              <div class="problem-header">
+                <h3 class="problem-title">${recBadge}${problem.title}</h3>
+                 <div class="problem-actions">
+                 <button class="favorite-btn ${
+                   //here we check if the problem is in the user's favorites and add the 'active' class to the button if it is
+                   userProgress.favoriteProblems.includes(problem.id)
+                     ? "active"
+                     : ""
+                 }"
+  data-id="${problem.id}" aria-label="Favorite problem">
+          <i class="fas fa-heart"></i>
+      </button>
+                 <button class="notes-btn ${
+        userProgress.problemNotes[problem.id] ? "has-notes" : ""
+      }" data-id="${problem.id}" aria-label="Problem notes">
+    <i class="fas fa-sticky-note"></i>
+  </button>
+  
+  
+                   <span class="difficulty-badge ${getDifficultyClass(problem.difficulty)}">${problem.difficulty}</span>
+               </div>
+              </div>
+              <div class="problem-tags">
+                  ${problem.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+              </div>
+              <div class="problem-meta">
+                  <span class="acceptance-rate">
+                      <i class="fas fa-users"></i> ${problem.acceptance} acceptance
+                  </span>
+                  ${
+                    userProgress.completedProblems.includes(problem.id)
+                      ? '<span class="completed-badge"><i class="fas fa-check"></i> Completed</span>'
+                      : ""
+                  }
+              </div>
+          </div>
+      `;
+    })
     .join("");
 
   // Favorite button handlers
@@ -3177,7 +3187,7 @@ const roadmapSteps = [
         <li><strong>O(log N) - Logarithmic:</strong> The problem size is divided in half at each step (e.g., Binary Search).</li>
         <li><strong>O(N) - Linear:</strong> Time increases proportionally with input size (e.g., traversing an array or linked list, linear search).</li>
         <li><strong>O(N log N) - Linearithmic:</strong> Efficient sorting algorithms (e.g., Merge Sort, Quick Sort).</li>
-        <li><strong>O(N^2) - Quadratic:</strong> Nested loops over the input (e.g., Bubble Sort, Insertion Sort).</li>
+        <li><strong>O(N²) - Quadratic:</strong> Nested loops over the input (e.g., Bubble Sort, Insertion Sort).</li>
       </ul>
       <p><strong>Space Complexity:</strong> The amount of memory an algorithm needs relative to the input size. Creating a new array of size N requires O(N) space, while modifying a structure in-place requires O(1) space.</p>
     `,
@@ -4187,12 +4197,17 @@ function initDashboard() {
 }
 
 function updateDashboard() {
-  document.getElementById("completedProblems").textContent =
-    userProgress.completedProblems.length;
-  document.getElementById("currentStreak").textContent = userProgress.streak;
+  const completedProblemsEl = document.getElementById("completedProblems");
+  if (completedProblemsEl) completedProblemsEl.textContent = userProgress.completedProblems.length;
+
+  const currentStreakEl = document.getElementById("currentStreak");
+  if (currentStreakEl) currentStreakEl.textContent = userProgress.streak;
+
   var currentFreezes = document.getElementById("currentFreezes");
   if (currentFreezes) currentFreezes.textContent = userProgress.freezes || 0;
-  document.getElementById("totalXP").textContent = userProgress.xp;
+
+  const totalXPEl = document.getElementById("totalXP");
+  if (totalXPEl) totalXPEl.textContent = userProgress.xp;
 
   updateCurrentDate();
   updateActivityList();
@@ -4203,6 +4218,21 @@ function updateDashboard() {
   updateBadges();
   updateRecentProblems(); // Recently Viewed Problems
   updateLeaderboard();
+
+  // Dynamic Coding Personality Card Injection
+  const grid = document.querySelector(".dashboard-grid");
+  if (grid && !document.getElementById("personalityCard")) {
+    const pCard = document.createElement("div");
+    pCard.className = "dashboard-card personality-card";
+    pCard.id = "personalityCard";
+    const profileCard = grid.querySelector(".profile-card");
+    if (profileCard) {
+      profileCard.after(pCard);
+    } else {
+      grid.prepend(pCard);
+    }
+  }
+  renderPersonalityCard();
 }
 
 function updateCurrentDate() {
@@ -4220,6 +4250,8 @@ function updateCurrentDate() {
 
 function updateActivityList() {
   const activityList = document.getElementById("activityList");
+
+  if (!activityList) return;
 
   if (userProgress.completedProblems.length === 0) {
     activityList.innerHTML =
@@ -4383,6 +4415,7 @@ function updateBadges() {
   }
 
   // Dashboard badges
+  if (container) {
   container.innerHTML = badges
     .map(
       (badge) =>
@@ -4396,8 +4429,10 @@ function updateBadges() {
         </div>`,
     )
     .join("");
+  }
 
   // Gamification section badges
+  if (grid) {
   grid.innerHTML = badges
     .map(
       (badge) =>
@@ -4411,6 +4446,7 @@ function updateBadges() {
         </div>`,
     )
     .join("");
+  }
 }
 
 function updateLeaderboard() {
@@ -4672,9 +4708,124 @@ function initChatbot() {
   const send = document.getElementById("chatbotSend");
   const quickQs = document.querySelectorAll(".quick-q");
 
+  if (!toggle || !windowEl || !close || !input || !send) return;
+
+  // Inject Doubt Generator toggle switch dynamically into header
+  const header = windowEl.querySelector(".chatbot-header");
+  if (header && !document.getElementById("doubtGenToggle")) {
+    if (!document.getElementById("doubt-gen-styles")) {
+      const styleEl = document.createElement("style");
+      styleEl.id = "doubt-gen-styles";
+      styleEl.textContent = `
+        .doubt-gen-toggle-container {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-left: auto;
+          margin-right: 12px;
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.7);
+          user-select: none;
+          background: rgba(255, 255, 255, 0.05);
+          padding: 4px 8px;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .doubt-gen-toggle-container span {
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
+        .doubt-gen-switch {
+          position: relative;
+          display: inline-block;
+          width: 32px;
+          height: 18px;
+        }
+        .doubt-gen-switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        .doubt-gen-slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(255, 255, 255, 0.15);
+          transition: .3s ease;
+          border-radius: 34px;
+        }
+        .doubt-gen-slider:before {
+          position: absolute;
+          content: "";
+          height: 12px;
+          width: 12px;
+          left: 3px;
+          bottom: 3px;
+          background-color: #fff;
+          transition: .3s ease;
+          border-radius: 50%;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        .doubt-gen-switch input:checked + .doubt-gen-slider {
+          background-color: var(--primary, #8b5cf6);
+          box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+        }
+        .doubt-gen-switch input:checked + .doubt-gen-slider:before {
+          transform: translateX(14px);
+        }
+      `;
+      document.head.appendChild(styleEl);
+    }
+
+    const toggleContainer = document.createElement("div");
+    toggleContainer.className = "doubt-gen-toggle-container";
+    toggleContainer.innerHTML = `
+      <span>Doubt Gen</span>
+      <label class="doubt-gen-switch">
+        <input type="checkbox" id="doubtGenToggle" aria-label="Toggle self-debugging doubt generator mode">
+        <span class="doubt-gen-slider"></span>
+      </label>
+    `;
+    header.insertBefore(toggleContainer, close);
+
+    const toggleInput = document.getElementById("doubtGenToggle");
+    const headerTitle = header.querySelector("h4");
+    if (toggleInput && headerTitle) {
+      toggleInput.addEventListener("change", () => {
+        if (toggleInput.checked) {
+          headerTitle.textContent = "Doubt Generator";
+          showNotification("Self-Debugging Mode Activated! Ask questions to get guided debugging hints.", "success");
+          addChatMessage(
+            `<div style="font-size: 0.85rem; color: #a7f3d0; background: rgba(16, 185, 129, 0.1); border: 1px dashed #10b981; padding: 8px 12px; border-radius: 8px; margin-bottom: 5px;">
+              🔍 <strong>Doubt Generator Enabled</strong><br>
+              Instead of giving you code solutions, I will ask reflective Socratic questions to help you spot and fix bugs yourself!
+             </div>`,
+            "bot",
+            { html: true }
+          );
+        } else {
+          headerTitle.textContent = "Algo Assistant";
+          showNotification("Standard Algo Assistant Mode Activated.", "info");
+          addChatMessage(
+            `<div style="font-size: 0.85rem; color: #c084fc; background: rgba(139, 92, 246, 0.1); border: 1px dashed #a855f7; padding: 8px 12px; border-radius: 8px; margin-bottom: 5px;">
+              💡 <strong>Standard Assistant Enabled</strong><br>
+              I will now provide direct code templates, algorithm explanations, and time/space complexity analysis!
+             </div>`,
+            "bot",
+            { html: true }
+          );
+        }
+      });
+    }
+  }
+
   toggle.addEventListener("click", () => {
     windowEl.classList.toggle("hidden");
-    toggle.querySelector(".chatbot-badge").style.display = "none";
+    const badge = toggle.querySelector(".chatbot-badge");
+    if (badge) badge.style.display = "none";
   });
 
   close.addEventListener("click", () => {
@@ -4754,6 +4905,74 @@ function addChatMessage(message, sender, { html = false } = {}) {
 function getBotResponse(question) {
   const q = question.toLowerCase();
 
+  const doubtGenToggle = document.getElementById("doubtGenToggle");
+  const isDoubtGenActive = doubtGenToggle && doubtGenToggle.checked;
+
+  if (isDoubtGenActive) {
+    let category = "General";
+    let doubtQuestion = "";
+    let debuggingTip = "";
+
+    // Code snippet detection
+    const isCode = q.includes("{") || q.includes("}") || q.includes("function") || q.includes("def ") || q.includes("for(") || q.includes("while(") || q.includes("let ") || q.includes("const ") || q.includes("var ");
+
+    if (isCode) {
+      category = "Code Analysis";
+      doubtQuestion = "Look closely at your loop/recursion variables. Are they guaranteed to change in every iteration to meet the termination condition, or is there a path that leads to an infinite loop?";
+      debuggingTip = "Trace the value of your loop counters or recursive inputs for the first 3 iterations. Do they move closer to the base/termination case?";
+    } else if (q.includes("sort") || q.includes("bubble") || q.includes("selection") || q.includes("insertion") || q.includes("merge") || q.includes("quick") || q.includes("heap") || q.includes("swap")) {
+      category = "Sorting Algorithms";
+      doubtQuestion = "What happens to equal elements during comparisons? Is your sorting condition preserving their relative order (stable), or could it swap them unnecessarily?";
+      debuggingTip = "Dry-run your sorting condition with a small, duplicate array (e.g., `[2, 2, 1]`) and check if it swaps duplicate elements.";
+    } else if (q.includes("recursion") || q.includes("recursive") || q.includes("fibonacci") || q.includes("factorial") || q.includes("backtrack") || q.includes("stack overflow")) {
+      category = "Recursion & Call Stack";
+      doubtQuestion = "Is your recursion guaranteed to reach the base case? What happens with negative, extremely large, or empty inputs?";
+      debuggingTip = "Add console logs at the very top of your function to print the input values. This lets you trace the sequence of recursive calls.";
+    } else if (q.includes("dp") || q.includes("dynamic programming") || q.includes("memoization") || q.includes("tabulation") || q.includes("knapsack") || q.includes("lcs") || q.includes("coin change")) {
+      category = "Dynamic Programming";
+      doubtQuestion = "How are you defining your subproblem states? Are the base cases of your DP array/table correctly initialized before you start filling it?";
+      debuggingTip = "Draw a small DP table on paper and fill in the first 3 cells manually. Does your transition equation yield the correct values?";
+    } else if (q.includes("tree") || q.includes("bst") || q.includes("graph") || q.includes("node") || q.includes("edge") || q.includes("cycle") || q.includes("bfs") || q.includes("dfs") || q.includes("dijkstra")) {
+      category = "Trees & Graphs";
+      doubtQuestion = "Does your traversal check for cycles or visited nodes? What happens if you run this on a graph with disconnected components or a tree with a null root?";
+      debuggingTip = "Verify that you have initialized a 'visited' set/array to track processed nodes, and verify if root/null checks are at the very beginning.";
+    } else if (q.includes("array") || q.includes("list") || q.includes("index") || q.includes("bounds") || q.includes("empty") || q.includes("null") || q.includes("out of bounds") || q.includes("pointer")) {
+      category = "Arrays & Memory Bounds";
+      doubtQuestion = "What happens if the input is empty or has only one element? Are your loop boundaries (e.g., i < length vs i <= length) safe from off-by-one errors?";
+      debuggingTip = "Manually check the index calculation on the last iteration. Does it access an index equal to the array's length?";
+    } else {
+      category = "General Self-Debugging";
+      doubtQuestion = "What are the exact inputs and outputs you expect? Have you dry-run the logic step-by-step with a pencil and paper?";
+      debuggingTip = "Try explaining your algorithm line-by-line to a 'rubber duck' or writing the steps in simple English comments first.";
+    }
+
+    return `
+      <div class="assistant-response doubt-gen-response">
+        <h4 style="color: var(--accent, #a78bfa);"><i class="fas fa-question-circle"></i> Doubt Generator Mode</h4>
+        
+        <div class="response-section" style="margin-top: 8px;">
+          <strong>Category:</strong> <span class="category-badge" style="background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.3); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; color: #c084fc;">${category}</span>
+        </div>
+        
+        <div class="response-section" style="margin-top: 12px; border-left: 3px solid var(--primary, #8b5cf6); padding-left: 10px;">
+          <h5 style="margin: 0 0 4px 0; font-size: 0.9rem; color: var(--accent, #a78bfa);">🔍 Socratic Question:</h5>
+          <p class="socratic-question" style="font-style: italic; color: #f1f5f9; margin: 0; line-height: 1.4;">
+            "${doubtQuestion}"
+          </p>
+        </div>
+
+        <div class="response-section" style="margin-top: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 8px 12px; border-radius: 6px;">
+          <h5 style="margin: 0 0 4px 0; font-size: 0.9rem; color: #10b981;">🛠️ Debugging Tip:</h5>
+          <p style="margin: 0; font-size: 0.85rem; line-height: 1.4; color: #cbd5e1;">${debuggingTip}</p>
+        </div>
+
+        <div class="response-section" style="margin-top: 14px; font-size: 0.75rem; color: var(--text-muted, #94a3b8); border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 8px;">
+          <i class="fas fa-info-circle"></i> <em>Answer the question above to locate the bug. Turn off "Doubt Gen" in the header to get direct solutions.</em>
+        </div>
+      </div>
+    `;
+  }
+
   let response = chatbotResponses["default"];
 
   for (const key in chatbotResponses) {
@@ -4761,6 +4980,34 @@ function getBotResponse(question) {
       response = chatbotResponses[key];
       break;
     }
+  }
+
+  const cpType = userProgress.codingPersonality ? userProgress.codingPersonality.type : "brute-force first";
+  let personalityHint = "";
+  if (cpType === "brute-force first") {
+    personalityHint = `
+      <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); border-left: 3px solid #ef4444; padding: 8px 12px; border-radius: 6px; margin-top: 15px; font-size: 0.8rem; line-height: 1.4; color: #f87171;">
+        ⚠️ <strong>Behavior Tip (Brute-Force First)</strong>: Remember to write down edge checks (like empty/null inputs) before typing logic loops!
+      </div>
+    `;
+  } else if (cpType === "over-optimizer") {
+    personalityHint = `
+      <div style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.2); border-left: 3px solid #a855f7; padding: 8px 12px; border-radius: 6px; margin-top: 15px; font-size: 0.8rem; line-height: 1.4; color: #c084fc;">
+        ⚡ <strong>Behavior Tip (Over-Optimizer)</strong>: Focus on clean code readability and verify if the performance gain warrants complex structures.
+      </div>
+    `;
+  } else if (cpType === "slow but accurate") {
+    personalityHint = `
+      <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-left: 3px solid #3b82f6; padding: 8px 12px; border-radius: 6px; margin-top: 15px; font-size: 0.8rem; line-height: 1.4; color: #60a5fa;">
+        ⏱️ <strong>Behavior Tip (Slow but Accurate)</strong>: You write correct code! Try setting a timer for 15 minutes to practice coding under pressure.
+      </div>
+    `;
+  } else if (cpType === "greedy thinker") {
+    personalityHint = `
+      <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-left: 3px solid #10b981; padding: 8px 12px; border-radius: 6px; margin-top: 15px; font-size: 0.8rem; line-height: 1.4; color: #34d399;">
+        🎯 <strong>Behavior Tip (Greedy Thinker)</strong>: Ensure a greedy choice guarantees a global optimum before finalizing your algorithm.
+      </div>
+    `;
   }
 
   return `
@@ -4782,6 +5029,8 @@ function solveProblem() {
       <h4>📊 Complexity Analysis</h4>
       <p>Time Complexity: O(n)</p>
       <p>Space Complexity: O(1)</p>
+      
+      ${personalityHint}
     </div>
   `;
 }
@@ -4842,38 +5091,6 @@ function initScrollEffects() {
     .forEach((el) => {
       observer.observe(el);
     });
-}
-
-// ===== DARK MODE =====
-
-function applySavedTheme() {
-  const savedMode = localStorage.getItem("darkMode");
-
-  if (savedMode === "light") {
-    document.body.classList.add("light-mode");
-  }
-}
-
-function initDarkMode() {
-  const toggle = document.getElementById("darkModeToggle");
-  if (!toggle) return;
-  const icon = toggle.querySelector("i");
-
-  // Check saved preference
-  const savedMode = localStorage.getItem("darkMode");
-  if (savedMode === "light") {
-    document.body.classList.add("light-mode");
-    icon.classList.remove("fa-moon");
-    icon.classList.add("fa-sun");
-  }
-
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("light-mode");
-    const isLight = document.body.classList.contains("light-mode");
-    icon.classList.toggle("fa-moon");
-    icon.classList.toggle("fa-sun");
-    localStorage.setItem("darkMode", isLight ? "light" : "dark");
-  });
 }
 
 // ===== UTILITIES =====
@@ -4996,6 +5213,8 @@ async function getAuthenticatedSession() {
 
 function loadUserData() {
 
+
+
     try {
         const saved = localStorage.getItem('algoInfinityVerse');
         if (saved) {
@@ -5024,43 +5243,32 @@ function loadUserData() {
         userProgress.quizScores = {};
       }
 
-      // Ensure completedRoadmapSteps exists
-      if (!userProgress.completedRoadmapSteps) {
-        userProgress.completedRoadmapSteps = [];
-      }
 
-      // Sanitize recently viewed problems (can be corrupted in localStorage)
-      const practiceProblemIds = new Set(practiceProblems.map((p) => p.id));
-      const rawRecent = Array.isArray(userProgress.recentProblems)
-        ? userProgress.recentProblems
-        : [];
+    try {
+        const saved = localStorage.getItem("algoInfinityVerse");
+        if (saved) {
+            const data = JSON.parse(saved);
+            userProgress = {
+                ...userProgress,
+                ...data
+            };
 
-      const sanitizedRecent = rawRecent
-        .map((id) => Number(id))
-        .filter((id) => Number.isFinite(id) && practiceProblemIds.has(id));
 
-      const hadCorruption =
-        !Array.isArray(userProgress.recentProblems) ||
-        sanitizedRecent.length !== rawRecent.length;
 
-      userProgress.recentProblems = sanitizedRecent.slice(0, 5);
-
-      if (hadCorruption) {
-        saveUserData();
-      }
-      if (!userProgress.activityData) {
-        userProgress.activityData = {};
-      }
 
 
       // Backfill activity heatmap from existing completed problems
       backfillActivityData();
 
-      // Update streak if user was active yesterday
-      if (userProgress.lastActive) {
-        const lastActive = new Date(userProgress.lastActive);
-        const today = new Date();
-        const diffDays = getDaysDifference(lastActive, today);
+            if (!userProgress.quizScores) {
+                userProgress.quizScores = {};
+            }
+
+
+
+            if (!userProgress.completedRoadmapSteps) {
+                userProgress.completedRoadmapSteps = [];
+            }
 
 
         if (diffDays === 0) {
@@ -5111,61 +5319,98 @@ function loadUserData() {
             if (userProgress.streak > 0 && userProgress.streak % 7 === 0) {
               userProgress.freezes += 1;
               showNotification("Milestone reached! You earned a Streak Freeze!", "success");
+
+
+            if (!userProgress.quizScores) {
+                userProgress.quizScores = {};
             }
-          }
+            if (!userProgress.completedRoadmapSteps) {
+                userProgress.completedRoadmapSteps = [];
+            }
+
+            if (!userProgress.activityData) {
+                userProgress.activityData = {};
+
+            }
+            // Ensure codingPersonality exists
+            if (!userProgress.codingPersonality) {
+                userProgress.codingPersonality = {
+                    type: "brute-force first",
+                    bruteForceCount: 1,
+                    slowAccurateCount: 0,
+                    greedyCount: 0,
+                    overOptimizerCount: 0
+                };
+            }
+            backfillActivityData();
+        } else {
+            userProgress.name = "Learner";
+            userProgress.avatar = "🚀";
+            userProgress.completedProblems = [1,2,10];
+            userProgress.xp = 350;
+            userProgress.level = 2;
+            userProgress.streak = 3;
+            userProgress.badges = [1];
+            userProgress.quizScores = {};
+            userProgress.activityData = {};
+            userProgress.codingPersonality = {
+                type: "brute-force first",
+                bruteForceCount: 1,
+                slowAccurateCount: 0,
+                greedyCount: 0,
+                overOptimizerCount: 0
+            };
+            saveUserData();
         }
+    } catch(error) {
+        console.error("Error loading user data:", error);
+        userProgress = {
+            name:"Learner",
+            avatar:"🚀",
+            completedProblems:[],
+            xp:0,
+            level:1,
+            streak:0,
+            badges:[],
+            lastActive:null,
+            quizScores:{},
+            activityData:{},
+            codingPersonality: {
+                type: "brute-force first",
+                bruteForceCount: 1,
+                slowAccurateCount: 0,
+                greedyCount: 0,
+                overOptimizerCount: 0
+            }
+        };
 
         saveUserData();
-      }
-    } else {
-      // Initialize with some demo data
-      userProgress.name = "Learner";
-      userProgress.avatar = "🚀";
-      userProgress.completedProblems = [1, 2, 10];
-      userProgress.xp = 350;
-      userProgress.level = 2;
-      userProgress.streak = 3;
-      userProgress.badges = [1];
-      userProgress.quizScores = {};
-      userProgress.activityData = {};
-      backfillActivityData();
-      saveUserData();
     }
-  } catch (error) {
-    console.error("Error loading user data, resetting to defaults:", error);
-    // Reset to defaults
-    userProgress = {
-      name: "Learner",
-      avatar: "🚀",
-      completedProblems: [],
-      xp: 0,
-      level: 1,
-      streak: 0,
-      favoriteProblems: [],
-      problemNotes: {},
-      badges: [],
-      lastActive: null,
-      quizScores: {},
-      bestQuizTimes: {},
-      activityData: {},
-    };
-    saveUserData();
-  }
-  // Update profile display after loading
-  updateProfile();
-  
-  // Also fetch session to get real name
-  getAuthenticatedSession().then(session => {
-    if (session && session.user && session.user.name) {
-      userProgress.name = session.user.name;
-      updateProfile();
-      saveUserData();
-    }
+
+
 
     // Update profile display after loading
     initProfile();
 
   });
+
+
+
+    updateProfile();
+
+    getAuthenticatedSession()
+    .then(session=>{
+        if(
+          session &&
+          session.user &&
+          session.user.name
+        ){
+            userProgress.name = session.user.name;
+            updateProfile();
+            saveUserData();
+        }
+        initProfile();
+    });
 
 }
 
@@ -5403,7 +5648,7 @@ function generateExamples(problem) {
     7: `<strong>Example 1:</strong><br>Input: nums = [10,9,2,5,3,7,101,18]<br>Output: 4<br>Explanation: [2,3,7,101] is the longest increasing subsequence<br><br>
         <strong>Example 2:</strong><br>Input: nums = [0,1,0,3,2,3]<br>Output: 4<br><br>
         <strong>Edge Cases:</strong><br>• All elements same → LIS = 1<br>• Already sorted → LIS = n<br><br>
-        <strong>Follow-up:</strong> Can you improve from O(n^2) DP to O(n log n) using Binary Search?`,
+        <strong>Follow-up:</strong> Can you improve from O(n²) DP to O(n log n) using Binary Search?`,
 
     8: `<strong>Example 1:</strong><br>Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]<br>Output: 5<br>Explanation: hit→hot→dot→dog→cog<br><br>
         <strong>Example 2:</strong><br>Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log"]<br>Output: 0<br>Explanation: endWord not in wordList<br><br>
@@ -5474,7 +5719,7 @@ function generateExamples(problem) {
         <strong>Edge Cases:</strong><br>• No common elements → return []<br>• All elements in common → return unique elements of either array<br>• One array is empty → return []<br>• Both arrays identical → return unique elements of the array<br><br>
         <strong>Key Insight (Hash Set):</strong><br>• Convert nums1 into a Set for O(1) lookups<br>• Iterate nums2 and check membership in the Set<br>• Store matches in a result Set to avoid duplicates<br><br>
         <strong>Follow-up:</strong> Can you solve it in O(n + m) time using two Hash Sets? What changes if both arrays are pre-sorted?`,
-    21: `<strong>Example 1:</strong><br>Input: nums = [1,2,3,4]<br>Output: true<br>Explanation: The array is sorted in non-decreasing order: 1 <= 2 <= 3 <= 4.<br><br>
+    21: `<strong>Example 1:</strong><br>Input: nums = [1,2,3,4]<br>Output: true<br>Explanation: The array is sorted in non-decreasing order: 1 ≤ 2 ≤ 3 ≤ 4.<br><br>
         <strong>Example 2:</strong><br>Input: nums = [5,4,3,2,1]<br>Output: false<br>Explanation: The array is not sorted.<br><br>
         <strong>Example 3:</strong><br>Input: nums = [1,1,2,2,3]<br>Output: true<br>Explanation: The array is sorted (duplicates are allowed and still sorted).<br><br>
         <strong>Edge Cases:</strong><br>• Empty array or single element array → true by default<br>• Negative values<br><br>
@@ -5632,15 +5877,6 @@ public:
         
     }
 };`,
-    swift: `class Solution {
-    func solution(_ params: ParamsType) -> ReturnType {
-        // Your code here
-    }
-}
-
-// Test your solution
-// let sol = Solution()
-// print(sol.solution(params))`,
   };
   return templates[lang] || templates.javascript;
 }
@@ -5655,22 +5891,6 @@ function executeCode(code, lang) {
     }
     return "Code executed (simulation).";
   }
-
-  if (lang === "swift") {
-    // Simulate Swift compilation and execution
-    return `Swift execution simulation:
-Compiling solution...
-Swift compiler (swiftc) version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.1.1)
-Target: x86_64-apple-macosx14.0
-
-[1/1] Compiling main.swift
-Build complete!
-
-Output:
-Swift solution executed successfully.
-(No errors reported in console)`;
-  }
-
   return `Code executed in ${lang.toUpperCase()} (simulation).`;
 }
 
@@ -6006,8 +6226,6 @@ function updateSyntaxHighlight() {
     .map((line) => {
       if (lang === "javascript") {
         return highlightJS(line);
-      } else if (lang === "swift") {
-        return highlightSwift(line);
       }
       return escapeHtml(line);
     })
@@ -6035,19 +6253,6 @@ function highlightJS(line) {
     });
 
     return highlighted;
-}
-
-function highlightSwift(line) {
-  const regex = /(<[^>]+>)|(\/\/.*$)|("[^"]*")|(\b(func|var|let|if|else|for|while|return|class|struct|enum|protocol|extension|import|switch|case|default|break|continue|guard|nil|true|false|self|init|deinit|static|mutating|throws|try|catch|do|defer|typealias|where|is|as|in|Any|Int|String|Double|Float|Bool|Array|Dictionary|Set)\b)|((?<!\.[a-zA-Z])\b(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?\b(?!\.[a-zA-Z]))/g;
-  let result = escapeHtml(line);
-  return result.replace(regex, (m, tag, comment, str, kw, num) => {
-    if (tag) return tag;
-    if (comment) return '<span class="token comment">' + comment + '</span>';
-    if (str) return '<span class="token string">' + str + '</span>';
-    if (kw) return '<span class="token keyword">' + kw + '</span>';
-    if (num) return '<span class="token number">' + num + '</span>';
-    return m;
-  });
 }
 
 
@@ -6126,7 +6331,7 @@ function toggleLineComment() {
   const textBefore = editor.value.substring(0, cursorPos);
   const currentLine = textBefore.split("\n").length - 1;
 
-  const commentChars = { javascript: "//", python: "#", java: "//", cpp: "//", swift: "//" };
+  const commentChars = { javascript: "//", python: "#", java: "//", cpp: "//" };
   const char = commentChars[lang] || "//";
 
   const line = lines[currentLine];
@@ -6196,8 +6401,6 @@ document.addEventListener("click", (e) => {
 });
 
 // Footer question handlers for quiz editor
-// NOTE: keep this block contiguous to avoid accidental stray tokens
-// (fix/clarity for contributors/CI)
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("footer-question")) {
     const question = e.target.getAttribute("data-question");
@@ -6525,6 +6728,35 @@ function initBackToTopButtons() {
 }
 
 initBackToTopButtons();
+
+
+// Centralized SPA State Router for Native Browser Navigation
+window.addEventListener('hashchange', () => {
+    const currentHash = window.location.hash || '#home';
+    console.log(`[Router] Navigation hash shifted to: ${currentHash}`);
+
+    if (currentHash === '#home' || currentHash === '') {
+        // 1. Scan the entire page dynamically for any layout changes
+        document.querySelectorAll('*').forEach(element => {
+            // A. If an element is a quiz or assistant component, hide it completely
+            if (element.id?.toLowerCase().includes('quiz') || 
+                element.className?.toString().toLowerCase().includes('quiz') ||
+                element.id?.toLowerCase().includes('assistant')) {
+                element.style.display = 'none';
+            } 
+            // B. If it's a main structural container that was hidden, bring it back
+            else if (element.classList.contains('hidden') && element.id !== 'loading-screen') {
+                element.classList.remove('hidden');
+                element.style.display = ''; // Resets style to default stylesheet value
+            }
+        });
+
+        // 2. Clear any active runtime quiz instances safely
+        if (typeof tQuiz !== 'undefined') {
+            tQuiz = null;
+        }
+    }
+});
 // ===== GAME SYSTEM =====
 let currentGame = {
   type: null,
@@ -6774,3 +7006,250 @@ function resetGame() {
   };
 }
 
+// ===== CODING PERSONALITY QUIZ & RENDERING =====
+const QUIZ_QUESTIONS = [
+  {
+    q: "When starting a new coding problem, what do you do first?",
+    options: [
+      { text: "Start typing the code immediately to see if it works.", type: "brute-force first" },
+      { text: "Analyze constraints, define edge cases, and write pseudocode.", type: "slow but accurate" },
+      { text: "Design a fast greedy heuristic to get a quick correct result.", type: "greedy thinker" },
+      { text: "Search for hash tables or auxiliary space shortcuts to minimize complexity.", type: "over-optimizer" }
+    ]
+  },
+  {
+    q: "How do you evaluate time/space complexity?",
+    options: [
+      { text: "I don't think about it until it gets a Time Limit Exceeded (TLE) error.", type: "brute-force first" },
+      { text: "I trace the iterations and count nested variables step-by-step.", type: "slow but accurate" },
+      { text: "I trust locally optimal choices to run fast enough.", type: "greedy thinker" },
+      { text: "I always structure for O(N) or O(1) space, even if it requires complex code.", type: "over-optimizer" }
+    ]
+  },
+  {
+    q: "Your solution fails on an empty input. What is your reaction?",
+    options: [
+      { text: "I patch it with a quick 'if empty return' condition.", type: "brute-force first" },
+      { text: "I dry-run the loop bounds on paper to understand why it cracked.", type: "slow but accurate" },
+      { text: "I use simple helper fallback returns.", type: "greedy thinker" },
+      { text: "I rewrite the index math to prevent empty pointer states altogether.", type: "over-optimizer" }
+    ]
+  },
+  {
+    q: "What is your main goal when coding?",
+    options: [
+      { text: "Get green checkmarks as fast as possible.", type: "brute-force first" },
+      { text: "Write bug-free, clean, and highly readable code.", type: "slow but accurate" },
+      { text: "Find the simplest, most intuitive logical shortcut.", type: "greedy thinker" },
+      { text: "Optimize space-time metrics to beat 100% of submissions.", type: "over-optimizer" }
+    ]
+  }
+];
+
+let currentQuizIndex = 0;
+let quizSelections = [];
+
+function openPersonalityQuiz() {
+  let modal = document.getElementById("personalityQuizModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.className = "modal";
+    modal.id = "personalityQuizModal";
+    modal.innerHTML = `
+      <div class="modal-content personality-quiz-modal-content">
+        <div class="modal-header">
+          <h3>Coding Personality Profiler</h3>
+          <button class="modal-close" id="personalityQuizClose">&times;</button>
+        </div>
+        <div class="modal-body" id="personalityQuizBody">
+          <!-- Quiz steps render here -->
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    document.getElementById("personalityQuizClose").addEventListener("click", () => {
+      modal.classList.remove("active");
+    });
+  }
+
+  currentQuizIndex = 0;
+  quizSelections = [];
+  modal.classList.add("active");
+  renderPersonalityQuizQuestion();
+}
+
+function renderPersonalityQuizQuestion() {
+  const container = document.getElementById("personalityQuizBody");
+  if (!container) return;
+
+  if (currentQuizIndex >= QUIZ_QUESTIONS.length) {
+    finishPersonalityQuiz();
+    return;
+  }
+
+  const quest = QUIZ_QUESTIONS[currentQuizIndex];
+  container.innerHTML = `
+    <div class="quiz-question-container">
+      <div class="quiz-question-header">
+        <span>Question ${currentQuizIndex + 1} of ${QUIZ_QUESTIONS.length}</span>
+        <span>Coding Style Quiz</span>
+      </div>
+      <p class="quiz-question-text">${quest.q}</p>
+      <div class="quiz-answer-options">
+        ${quest.options.map((opt, i) => `
+          <div class="quiz-answer-option" data-type="${opt.type}">
+            <div class="quiz-answer-letter">${String.fromCharCode(65 + i)}</div>
+            <div class="quiz-answer-text">${opt.text}</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  // Attach option event listeners
+  container.querySelectorAll(".quiz-answer-option").forEach(item => {
+    item.addEventListener("click", () => {
+      item.classList.add("selected");
+      const type = item.dataset.type;
+      quizSelections.push(type);
+
+      setTimeout(() => {
+        currentQuizIndex++;
+        renderPersonalityQuizQuestion();
+      }, 300);
+    });
+  });
+}
+
+function finishPersonalityQuiz() {
+  const counts = {
+    "brute-force first": 0,
+    "over-optimizer": 0,
+    "slow but accurate": 0,
+    "greedy thinker": 0
+  };
+
+  quizSelections.forEach(type => {
+    counts[type] = (counts[type] || 0) + 1;
+  });
+
+  // Find dominant type
+  let dominantType = "brute-force first";
+  let maxCount = -1;
+  for (const type in counts) {
+    if (counts[type] > maxCount) {
+      maxCount = counts[type];
+      dominantType = type;
+    }
+  }
+
+  // Update counts in userProgress
+  if (!userProgress.codingPersonality) {
+    userProgress.codingPersonality = {};
+  }
+  userProgress.codingPersonality.type = dominantType;
+  userProgress.codingPersonality.bruteForceCount = counts["brute-force first"] + 1;
+  userProgress.codingPersonality.overOptimizerCount = counts["over-optimizer"] + 1;
+  userProgress.codingPersonality.slowAccurateCount = counts["slow but accurate"] + 1;
+  userProgress.codingPersonality.greedyCount = counts["greedy thinker"] + 1;
+
+  saveUserData();
+  renderPersonalityCard();
+  
+  // Also re-render problems so that recommended badges update dynamically!
+  if (typeof renderProblems === "function") {
+    const searchInput = document.getElementById("searchInput");
+    const filterActive = document.querySelector(".filter-btn.active");
+    const activeFilter = filterActive ? filterActive.dataset.filter : "all";
+    renderProblems(activeFilter, searchInput ? searchInput.value.toLowerCase() : "");
+  }
+
+  const modal = document.getElementById("personalityQuizModal");
+  if (modal) modal.classList.remove("active");
+
+  showNotification(`Quiz complete! Your coding personality is: ${dominantType.replace("-", " ").toUpperCase()} 🧠`, "success");
+}
+
+function renderPersonalityCard() {
+  const pCard = document.getElementById("personalityCard");
+  if (!pCard) return;
+
+  const cp = userProgress.codingPersonality || {
+    type: "brute-force first",
+    bruteForceCount: 1,
+    slowAccurateCount: 0,
+    greedyCount: 0,
+    overOptimizerCount: 0
+  };
+
+  const total = (cp.bruteForceCount || 0) + (cp.slowAccurateCount || 0) + (cp.greedyCount || 0) + (cp.overOptimizerCount || 0) || 1;
+  const pctBrute = Math.round(((cp.bruteForceCount || 0) / total) * 100);
+  const pctOpt = Math.round(((cp.overOptimizerCount || 0) / total) * 100);
+  const pctSlow = Math.round(((cp.slowAccurateCount || 0) / total) * 100);
+  const pctGreedy = Math.round(((cp.greedyCount || 0) / total) * 100);
+
+  let icon = "🔎";
+  let desc = "";
+  let adaptation = "";
+
+  if (cp.type === "brute-force first") {
+    icon = "🔴";
+    desc = "You jump straight into writing code! You get solutions quickly, but can overlook edge cases or time/space complexities.";
+    adaptation = "Focus: Easy/Medium problems with boundary checks";
+  } else if (cp.type === "over-optimizer") {
+    icon = "🟣";
+    desc = "You love optimal space/time tricks! You always reach for hashes and pointers, sometimes over-complicating simpler tasks.";
+    adaptation = "Focus: Medium/Hard problems, clean code style";
+  } else if (cp.type === "slow but accurate") {
+    icon = "🔵";
+    desc = "You take your time to design solutions. You have low error rates but could practice coding faster under time limits.";
+    adaptation = "Focus: Medium problems, speed practice";
+  } else if (cp.type === "greedy thinker") {
+    icon = "🟢";
+    desc = "You look for immediate local optimizations. You are great at heuristics, but watch out for cases where DP is required.";
+    adaptation = "Focus: Greedy & Dynamic Programming concepts";
+  }
+
+  pCard.innerHTML = `
+    <h3>🧠 Coding Personality</h3>
+    <div class="personality-profile-content">
+      <div class="personality-header-info">
+        <div class="personality-badge-icon">${icon}</div>
+        <div class="personality-type-group">
+          <h4 style="text-transform: capitalize;">${cp.type.replace("-", " ")}</h4>
+          <span class="adaptation-badge">${adaptation}</span>
+        </div>
+      </div>
+      <p class="personality-description">${desc}</p>
+      
+      <div class="style-progress-bars">
+        <div class="style-bar-group">
+          <span class="style-label">Brute-Force First (${pctBrute}%)</span>
+          <div class="style-bar-track"><div class="style-bar-fill" id="barBrute" style="width: ${pctBrute}%;"></div></div>
+        </div>
+        <div class="style-bar-group">
+          <span class="style-label">Over-Optimizer (${pctOpt}%)</span>
+          <div class="style-bar-track"><div class="style-bar-fill" id="barOpt" style="width: ${pctOpt}%;"></div></div>
+        </div>
+        <div class="style-bar-group">
+          <span class="style-label">Slow but Accurate (${pctSlow}%)</span>
+          <div class="style-bar-track"><div class="style-bar-fill" id="barSlow" style="width: ${pctSlow}%;"></div></div>
+        </div>
+        <div class="style-bar-group">
+          <span class="style-label">Greedy Thinker (${pctGreedy}%)</span>
+          <div class="style-bar-track"><div class="style-bar-fill" id="barGreedy" style="width: ${pctGreedy}%;"></div></div>
+        </div>
+      </div>
+      
+      <div class="personality-actions">
+        <button class="btn btn-secondary btn-mini" id="personalityQuizBtn">
+          <i class="fas fa-redo"></i> Retake Profiler Quiz
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Attach event listener to the quiz button
+  document.getElementById("personalityQuizBtn").addEventListener("click", openPersonalityQuiz);
+}
