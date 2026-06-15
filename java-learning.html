@@ -44,7 +44,7 @@
           <a href="index.html#home" class="nav-link">Home</a>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Learn</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -53,6 +53,8 @@
             <a href="index.html#practice" class="dropdown-item" role="menuitem">Practice Problems</a>
             <a href="index.html#quiz" class="dropdown-item" role="menuitem">Quizzes</a>
             <a href="index.html#roadmap" class="dropdown-item" role="menuitem">Learning Roadmap</a>
+            <a href="algorithm-timeline.html" class="dropdown-item" role="menuitem">Algorithm Timeline</a>
+            <a href="concept-bridge.html" class="dropdown-item" role="menuitem">Concept Bridge Trainer</a>
             <a href="array-learning.html" class="dropdown-item active" role="menuitem">Learn Arrays</a>
             <a href="python-learning.html" class="dropdown-item" role="menuitem">Learn Python</a>
             <a href="javascript-learning.html" class="dropdown-item" role="menuitem">Learn JavaScript</a>
@@ -66,8 +68,10 @@
             <a href="prefix-sum-learning.html"  class="dropdown-item" role="menuitem">Learn Prefix Sum</a>
             <a href="powerbi-learning.html" class="dropdown-item" role="menuitem">Learn Power BI</a>
             <a href="php-learning.html" class="dropdown-item" role="menuitem">Learn PHP</a>
-            <a href="divide-and-conquer-learning.html"  class="dropdown-item">Learn Divide &amp; Conquer</a>
-            <a href="bit-manipulation-learning.html"  class="dropdown-item">Learn Bit Manipulation</a>
+            <a href="cpp-editor.html" class="dropdown-item" role="menuitem">C++ Editor</a>
+            <a href="java-editor.html" class="dropdown-item" role="menuitem">Java Editor</a>
+            <a href="divide-and-conquer-learning.html"  class="dropdown-item" role="menuitem">Learn Divide &amp; Conquer</a>
+            <a href="bit-manipulation-learning.html"  class="dropdown-item" role="menuitem">Learn Bit Manipulation</a>
             <a href="recursion-learning.html" class="dropdown-item" role="menuitem">Learn Recursion</a>
             <a href="computer-architecture.html" class="dropdown-item" role="menuitem">Learn Architecture</a>
             <a href="os-learning.html" class="dropdown-item" role="menuitem">Learn OS</a>
@@ -75,7 +79,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Interview</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -87,7 +91,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Community</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -99,7 +103,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown nav-profile-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Profile</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -128,7 +132,7 @@
           </div>
         </li>
         <li class="nav-item nav-cta desktop-only">
-          <a href="index.html#practice" class="btn btn-primary nav-cta-btn">
+          <a href="index.html#practice" class="btn btn-primary nav-cta-btn" aria-label="Start learning practice problems">
             <i class="fas fa-rocket"></i>
             Start Learning
           </a>
@@ -1637,7 +1641,9 @@ myCar.<span class="tok-fn">honk</span>();  <span class="tok-cmt">// Toyota Camry
               <li><a href="tree-traversal.html">Tree Traversal</a></li>
               <li><a href="sorting-visualizer.html">Sorting Visualizer</a></li>
               <li><a href="graph-visualizer.html">Graph Visualizer</a>
-            <a href="pathfinding-visualizer.html">Pathfinding Visualizer</a></li>
+            <a href="pathfinding-visualizer.html">Pathfinding Visualizer</a>
+              <a href="recursion-tree-visualizer.html">Recursion Tree Visualizer</a>
+            <a href="complexity-calculator.html" class="dropdown-item" role="menuitem">Complexity Calculator</a></li>
               <li><a href="resume.html">Coding Resume</a></li>
               <li><a href="support-page/index.html">Support</a></li>
               <li><a href="feedback.html">Feedback</a></li>
@@ -1659,7 +1665,7 @@ myCar.<span class="tok-fn">honk</span>();  <span class="tok-cmt">// Toyota Camry
             <p>Subscribe to get weekly problem sets and tips</p>
             <form class="newsletter-form">
               <input type="email" placeholder="Your email" aria-label="Email address" />
-              <button type="submit"><i class="fas fa-paper-plane"></i></button>
+              <button type="submit" aria-label="Subscribe to newsletter"><i class="fas fa-paper-plane"></i></button>
             </form>
           </div>
         </div>
@@ -1671,6 +1677,7 @@ myCar.<span class="tok-fn">honk</span>();  <span class="tok-cmt">// Toyota Camry
 
     <script src="./auth.js"></script>
     <script src="./script.js"></script>
+    <script src="./theme.js"></script>
     <script src="./java-learning.js"></script>
   </body>
 </html>

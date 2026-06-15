@@ -34,7 +34,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn">
+    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -49,7 +49,7 @@
           <a href="index.html#home" class="nav-link">Home</a>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Learn</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -58,6 +58,8 @@
             <a href="index.html#practice" class="dropdown-item" role="menuitem">Practice Problems</a>
             <a href="index.html#quiz" class="dropdown-item" role="menuitem">Quizzes</a>
             <a href="index.html#roadmap" class="dropdown-item" role="menuitem">Learning Roadmap</a>
+            <a href="algorithm-timeline.html" class="dropdown-item" role="menuitem">Algorithm Timeline</a>
+            <a href="concept-bridge.html" class="dropdown-item" role="menuitem">Concept Bridge Trainer</a>
             <a href="python-learning.html" class="dropdown-item" role="menuitem">Learn Python</a>
             <a href="javascript-learning.html" class="dropdown-item" role="menuitem">Learn JavaScript</a>
             <a href="react-playground.html" class="dropdown-item" role="menuitem">React Playground</a>
@@ -87,10 +89,12 @@
             <a href="sorting-visualizer.html" class="dropdown-item" role="menuitem">Sorting Visualizer</a>
             <a href="graph-visualizer.html" class="dropdown-item" role="menuitem">Graph Visualizer</a>
             <a href="pathfinding-visualizer.html" class="dropdown-item" role="menuitem">Pathfinding Visualizer</a>
+            <a href="recursion-tree-visualizer.html" class="dropdown-item" role="menuitem">Recursion Tree Visualizer</a>
+            <a href="complexity-calculator.html" class="dropdown-item" role="menuitem">Complexity Calculator</a>
           </div>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Interview</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -102,7 +106,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle active" aria-haspopup="true" aria-expanded="true">
+          <button class="nav-link dropdown-toggle active" aria-haspopup="menu" aria-expanded="true">
             <span>Community</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -114,7 +118,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown nav-profile-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button class="nav-link dropdown-toggle" aria-haspopup="menu" aria-expanded="false">
             <span>Profile</span>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
@@ -143,7 +147,7 @@
           </div>
         </li>
         <li class="nav-item nav-cta desktop-only">
-          <a href="index.html#practice" class="btn btn-primary nav-cta-btn">
+          <a href="index.html#practice" class="btn btn-primary nav-cta-btn" aria-label="Start learning practice problems">
             <i class="fas fa-rocket"></i>
             Start Learning
           </a>
@@ -281,10 +285,10 @@
               Algorithms and acing technical interviews.
             </p>
             <div class="social-links">
-              <a href="#"><i class="fa-brands fa-github"></i></a>
-              <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-              <a href="#"><i class="fa-brands fa-youtube"></i></a>
+              <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
             </div>
           </div>
           <div class="footer-section">
@@ -373,6 +377,7 @@
 
     <script src="auth.js"></script>
     <script src="script.js"></script>
+    <script src="theme.js"></script>
     <script src="feedback.js"></script>
   </body>
 </html>
