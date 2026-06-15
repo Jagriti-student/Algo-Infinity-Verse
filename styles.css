@@ -6507,3 +6507,188 @@ flex-direction:column;
   box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
 }
 
+
+/* ===== Mistake DNA Tracker Styles ===== */
+.mistake-dna-card {
+  position: relative;
+  background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 60%) !important;
+}
+
+.mistake-dna-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1rem;
+}
+
+.mistake-dna-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mistake-dna-title-group h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+
+.mistake-dna-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 2px;
+}
+
+/* Helix Visualizer */
+.dna-helix-visualizer {
+  width: 100px;
+  height: 40px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.dna-node-dot {
+  animation: dnaPulse 2s infinite ease-in-out;
+}
+
+@keyframes dnaPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(249, 115, 22, 0.4)); }
+  50% { transform: scale(1.25); filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.8)); }
+}
+
+/* Mistake Map Progress Bars */
+.mistake-map-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mistake-bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.mistake-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.mistake-bar-label .category-name {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.mistake-bar-track {
+  width: 100%;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mistake-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+#barOffByOne { background: linear-gradient(90deg, #f59e0b, #f97316); }
+#barRecursion { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+#barWrongLogic { background: linear-gradient(90deg, #ec4899, #ef4444); }
+
+/* Socratic Recommendation Box */
+.socratic-recommendation-box {
+  background: rgba(249, 115, 22, 0.04);
+  border: 1px dashed rgba(249, 115, 22, 0.2);
+  border-left: 3px solid #f97316;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+  transition: all 0.3s ease;
+}
+
+.socratic-recommendation-box:hover {
+  background: rgba(249, 115, 22, 0.07);
+  border-color: rgba(249, 115, 22, 0.35);
+  transform: translateY(-2px);
+}
+
+.socratic-rec-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fb923c;
+  letter-spacing: 0.5px;
+}
+
+.socratic-rec-text {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Recent Mistakes Logs */
+.recent-mistakes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.recent-mistakes-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.recent-mistake-log-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.82rem;
+}
+
+.recent-mistake-log-item:last-child {
+  border-bottom: none;
+}
+
+.recent-mistake-desc {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.35;
+}
+
+.recent-mistake-source {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 2px;
+}
+
+.recent-mistake-time-badge {
+  font-size: 0.68rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+
