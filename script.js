@@ -961,6 +961,9 @@ function startQuiz(topic) {
         showNotification('No quiz questions available for this topic yet!', 'error');
         return;
     }
+    if (currentQuiz) {
+    console.log("Quiz already running");
+}
 
     currentQuiz = {
         topic: topic,
@@ -969,6 +972,7 @@ function startQuiz(topic) {
         score: 0,
         answers: []
     };
+    
 
     // Set modal header info
     try {
@@ -985,7 +989,30 @@ function startQuiz(topic) {
     }
 
     openQuizModal();
+
+const loadingScreen = document.getElementById('quizLoadingScreen');
+const loadingText = document.getElementById('loadingTopicText');
+
+if (loadingScreen) loadingScreen.classList.remove('hidden');
+if (loadingText) loadingText.textContent = `Loading ${topic.name} Quiz...`;
+
+const safeQuestions = [...questions]; // IMPORTANT FIX
+
+setTimeout(() => {
+
+    if (loadingScreen) loadingScreen.classList.add('hidden');
+
+    currentQuiz = {
+        topic,
+        questions: shuffleArray(safeQuestions),
+        currentQuestionIndex: 0,
+        score: 0,
+        answers: []
+    };
+
     renderQuizQuestion();
+
+}, 1500);
 }
 
 // Fisher-Yates shuffle
@@ -1014,17 +1041,18 @@ function openQuizModal() {
 }
 
 function closeQuizModal() {
-    try {
-        const modal = document.getElementById('quizModal');
-        if (modal) modal.classList.remove('active');
-    } catch (e) {
-        console.error('Error closing quiz modal:', e);
-    }
-    currentQuiz = null;
+    const modal = document.getElementById('quizModal');
+    if (modal) modal.classList.remove('active');
+
+    setTimeout(() => {
+        currentQuiz = null;
+    }, 300); // small delay
 }
 
 function renderQuizQuestion() {
-    if (!currentQuiz || currentQuiz.currentQuestionIndex >= currentQuiz.questions.length) {
+    if (!currentQuiz || !currentQuiz.questions) return;
+
+    if (currentQuiz.currentQuestionIndex >= currentQuiz.questions.length) {
         finishQuiz();
         return;
     }
@@ -1087,6 +1115,7 @@ function selectQuizAnswer(selectedIndex) {
     // Move to next question after delay
     setTimeout(() => {
         currentQuiz.currentQuestionIndex++;
+        console.log("🔥 renderQuizQuestion CALLED");
         renderQuizQuestion();
     }, 1200);
 }
@@ -2216,7 +2245,10 @@ function updateDate() {
     document.getElementById("dashboard-current-date").textContent = formattedDate;
 
     // ✅ FIX: profile date update
-    document.getElementById("profile-current-date").textContent = formattedDate;
+    const el = document.getElementById("current-date");
+if (el) {
+    el.textContent = new Date().toLocaleDateString();
+}
 }
 
 // run immediately

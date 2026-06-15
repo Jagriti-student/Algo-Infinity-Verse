@@ -259,6 +259,7 @@
                         </div>
                         <div class="profile-info">
                             <h3 id="profileSectionName">Learner</h3>
+                            
                             <p id="profileLevel">Level 1 - Beginner</p>
                             <p>Joined: <span id="joinDate"></span></p>
                             
@@ -551,6 +552,13 @@
                 </button>
             </div>
             <div class="quiz-modal-body">
+                <!-- Loading Screen -->
+<div class="quiz-loading hidden" id="quizLoadingScreen">
+    <div class="quiz-loading-content">
+        <div class="spinner"></div>
+        <h3 id="loadingTopicText">Loading Quiz...</h3>
+    </div>
+</div>
                 <div class="quiz-layout">
                     <!-- Quiz Panel -->
                     <div class="quiz-problem-panel">
