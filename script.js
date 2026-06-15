@@ -1826,7 +1826,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
+  });
 document.addEventListener("DOMContentLoaded", () => {
 
   // Apply saved theme only after DOM is ready to avoid touching document.body too early
@@ -4997,175 +4997,110 @@ async function getAuthenticatedSession() {
 function loadUserData() {
 
     try {
-        const saved = localStorage.getItem('algoInfinityVerse');
-        if (saved) {
-            const data = JSON.parse(saved);
-            userProgress = { ...userProgress, ...data };
 
-            // Ensure quizScores exists
+        const saved = localStorage.getItem("algoInfinityVerse");
+
+        if (saved) {
+
+            const data = JSON.parse(saved);
+
+            userProgress = {
+                ...userProgress,
+                ...data
+            };
+
+
             if (!userProgress.quizScores) {
                 userProgress.quizScores = {};
             }
-            
-            // Initialize joinDate if not set
-            if (!userProgress.joinDate) {
-                userProgress.joinDate = new Date().toISOString();
-                saveUserData();
+
+
+            if (!userProgress.completedRoadmapSteps) {
+                userProgress.completedRoadmapSteps = [];
             }
 
-  try {
-    const saved = localStorage.getItem("algoInfinityVerse");
-    if (saved) {
-      const data = JSON.parse(saved);
-      userProgress = { ...userProgress, ...data };
 
-      // Ensure quizScores exists
-      if (!userProgress.quizScores) {
-        userProgress.quizScores = {};
-      }
-
-      // Ensure completedRoadmapSteps exists
-      if (!userProgress.completedRoadmapSteps) {
-        userProgress.completedRoadmapSteps = [];
-      }
-
-      // Sanitize recently viewed problems (can be corrupted in localStorage)
-      const practiceProblemIds = new Set(practiceProblems.map((p) => p.id));
-      const rawRecent = Array.isArray(userProgress.recentProblems)
-        ? userProgress.recentProblems
-        : [];
-
-      const sanitizedRecent = rawRecent
-        .map((id) => Number(id))
-        .filter((id) => Number.isFinite(id) && practiceProblemIds.has(id));
-
-      const hadCorruption =
-        !Array.isArray(userProgress.recentProblems) ||
-        sanitizedRecent.length !== rawRecent.length;
-
-      userProgress.recentProblems = sanitizedRecent.slice(0, 5);
-
-      if (hadCorruption) {
-        saveUserData();
-      }
-      if (!userProgress.activityData) {
-        userProgress.activityData = {};
-      }
+            if (!userProgress.activityData) {
+                userProgress.activityData = {};
+            }
 
 
-      // Backfill activity heatmap from existing completed problems
-      backfillActivityData();
-
-      // Update streak if user was active yesterday
-      if (userProgress.lastActive) {
-        const lastActive = new Date(userProgress.lastActive);
-        const today = new Date();
-        const diffDays = getDaysDifference(lastActive, today);
+            backfillActivityData();
 
 
-        if (diffDays === 0) {
-          // Already active today
         } else {
 
-            // Initialize with some demo data
+
             userProgress.name = "Learner";
             userProgress.avatar = "🚀";
-            userProgress.completedProblems = [1, 2, 10];
+            userProgress.completedProblems = [1,2,10];
             userProgress.xp = 350;
             userProgress.level = 2;
             userProgress.streak = 3;
             userProgress.badges = [1];
-            userProgress.joinDate = new Date().toISOString();
             userProgress.quizScores = {};
+            userProgress.activityData = {};
+
             saveUserData();
+
         }
-    } catch (error) {
-        console.error('Error loading user data, resetting to defaults:', error);
-        // Reset to defaults
+
+
+    } catch(error) {
+
+
+        console.error(
+            "Error loading user data:",
+            error
+        );
+
+
         userProgress = {
-            name: "Learner",
-            avatar: "🚀",
-            completedProblems: [],
-            xp: 0,
-            level: 1,
-            streak: 0,
-            badges: [],
-            lastActive: null,
-            joinDate: new Date().toISOString(),
-            quizScores: {}
+
+            name:"Learner",
+            avatar:"🚀",
+            completedProblems:[],
+            xp:0,
+            level:1,
+            streak:0,
+            badges:[],
+            lastActive:null,
+            quizScores:{},
+            activityData:{}
+
         };
 
-          let daysMissed = diffDays > 0 ? diffDays - 1 : 0;
-          while (daysMissed > 0 && userProgress.freezes > 0) {
-            userProgress.freezes -= 1;
-            daysMissed -= 1;
-            userProgress.freezeHistory.push({
-              date: new Date(today.getTime() - (daysMissed + 1) * 24 * 60 * 60 * 1000).toISOString(),
-              reason: "Missed day automatically frozen"
-            });
-          }
-          if (daysMissed > 0) {
-            userProgress.streak = 0;
-          } else {
-            userProgress.streak += 1;
-            if (userProgress.streak > 0 && userProgress.streak % 7 === 0) {
-              userProgress.freezes += 1;
-              showNotification("Milestone reached! You earned a Streak Freeze!", "success");
-            }
-          }
-        }
 
         saveUserData();
-      }
-    } else {
-      // Initialize with some demo data
-      userProgress.name = "Learner";
-      userProgress.avatar = "🚀";
-      userProgress.completedProblems = [1, 2, 10];
-      userProgress.xp = 350;
-      userProgress.level = 2;
-      userProgress.streak = 3;
-      userProgress.badges = [1];
-      userProgress.quizScores = {};
-      userProgress.activityData = {};
-      backfillActivityData();
-      saveUserData();
-    }
-  } catch (error) {
-    console.error("Error loading user data, resetting to defaults:", error);
-    // Reset to defaults
-    userProgress = {
-      name: "Learner",
-      avatar: "🚀",
-      completedProblems: [],
-      xp: 0,
-      level: 1,
-      streak: 0,
-      favoriteProblems: [],
-      problemNotes: {},
-      badges: [],
-      lastActive: null,
-      quizScores: {},
-      bestQuizTimes: {},
-      activityData: {},
-    };
-    saveUserData();
-  }
-  // Update profile display after loading
-  updateProfile();
-  
-  // Also fetch session to get real name
-  getAuthenticatedSession().then(session => {
-    if (session && session.user && session.user.name) {
-      userProgress.name = session.user.name;
-      updateProfile();
-      saveUserData();
+
     }
 
-    // Update profile display after loading
-    initProfile();
 
-  });
+    updateProfile();
+
+
+    getAuthenticatedSession()
+    .then(session=>{
+
+        if(
+          session &&
+          session.user &&
+          session.user.name
+        ){
+
+            userProgress.name =
+            session.user.name;
+
+            updateProfile();
+
+            saveUserData();
+
+        }
+
+
+        initProfile();
+
+    });
 
 }
 
