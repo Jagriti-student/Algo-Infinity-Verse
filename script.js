@@ -1791,7 +1791,12 @@ let userProgress = {
   quizScores: {}, // topic -> { bestScore, attempts, totalXP }
   bestQuizTimes: {},
   activityData: {}, // date-string -> count (e.g. "2026-06-05" -> 3)
-
+  mistakeDna: {
+    offByOneCount: 0,
+    recursionBaseCaseCount: 0,
+    wrongLogicCount: 0,
+    recentLogs: []
+  }
 };
 
 
@@ -4369,6 +4374,25 @@ function updateDashboard() {
     }
   }
   renderPersonalityCard();
+
+  // Dynamic Mistake DNA Card Injection
+  if (grid && !document.getElementById("mistakeDnaCard")) {
+    const mCard = document.createElement("div");
+    mCard.className = "dashboard-card mistake-dna-card";
+    mCard.id = "mistakeDnaCard";
+    const personalityCard = document.getElementById("personalityCard");
+    if (personalityCard) {
+      personalityCard.after(mCard);
+    } else {
+      const profileCard = grid.querySelector(".profile-card");
+      if (profileCard) {
+        profileCard.after(mCard);
+      } else {
+        grid.prepend(mCard);
+      }
+    }
+  }
+  renderMistakeDnaCard();
 }
 
 function updateCurrentDate() {
@@ -5375,6 +5399,15 @@ function loadUserData() {
                     overOptimizerCount: 0
                 };
             }
+            // Ensure mistakeDna exists
+            if (!userProgress.mistakeDna) {
+                userProgress.mistakeDna = {
+                    offByOneCount: 0,
+                    recursionBaseCaseCount: 0,
+                    wrongLogicCount: 0,
+                    recentLogs: []
+                };
+            }
             backfillActivityData();
         } else {
             userProgress.name = "Learner";
@@ -5392,6 +5425,12 @@ function loadUserData() {
                 slowAccurateCount: 0,
                 greedyCount: 0,
                 overOptimizerCount: 0
+            };
+            userProgress.mistakeDna = {
+                offByOneCount: 0,
+                recursionBaseCaseCount: 0,
+                wrongLogicCount: 0,
+                recentLogs: []
             };
             saveUserData();
         }
@@ -5414,6 +5453,12 @@ function loadUserData() {
                 slowAccurateCount: 0,
                 greedyCount: 0,
                 overOptimizerCount: 0
+            },
+            mistakeDna: {
+                offByOneCount: 0,
+                recursionBaseCaseCount: 0,
+                wrongLogicCount: 0,
+                recentLogs: []
             }
         };
         saveUserData();
@@ -7389,5 +7434,216 @@ function renderPersonalityCard() {
 
   // Attach event listener to the quiz button
   document.getElementById("personalityQuizBtn").addEventListener("click", openPersonalityQuiz);
+}
+
+
+function logMistake(category, details, problemName) {
+  if (!userProgress.mistakeDna) {
+    userProgress.mistakeDna = {
+      offByOneCount: 0,
+      recursionBaseCaseCount: 0,
+      wrongLogicCount: 0,
+      recentLogs: []
+    };
+  }
+
+  const md = userProgress.mistakeDna;
+  
+  if (category === 'off-by-one') {
+    md.offByOneCount = (md.offByOneCount || 0) + 1;
+  } else if (category === 'recursion') {
+    md.recursionBaseCaseCount = (md.recursionBaseCaseCount || 0) + 1;
+  } else if (category === 'logic') {
+    md.wrongLogicCount = (md.wrongLogicCount || 0) + 1;
+  }
+
+  if (!md.recentLogs) {
+    md.recentLogs = [];
+  }
+  
+  md.recentLogs.push({
+    message: details,
+    problem: problemName || "Workspace Practice",
+    date: new Date().toISOString()
+  });
+
+  if (md.recentLogs.length > 5) {
+    md.recentLogs.shift();
+  }
+
+  saveUserData();
+  renderMistakeDnaCard();
+}
+
+function formatMistakeDate(dateStr) {
+  try {
+    const d = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now - d;
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `${diffHours}h ago`;
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  } catch (e) {
+    return "Recently";
+  }
+}
+
+function renderMistakeDnaCard() {
+  const mCard = document.getElementById("mistakeDnaCard");
+  if (!mCard) return;
+
+  const md = userProgress.mistakeDna || {
+    offByOneCount: 0,
+    recursionBaseCaseCount: 0,
+    wrongLogicCount: 0,
+    recentLogs: []
+  };
+
+  const offByOne = md.offByOneCount || 0;
+  const recursion = md.recursionBaseCaseCount || 0;
+  const wrongLogic = md.wrongLogicCount || 0;
+  const total = offByOne + recursion + wrongLogic;
+
+  const pctOff = total > 0 ? Math.round((offByOne / total) * 100) : 0;
+  const pctRec = total > 0 ? Math.round((recursion / total) * 100) : 0;
+  const pctLogic = total > 0 ? Math.round((wrongLogic / total) * 100) : 0;
+
+  // Socratic recommendation
+  let recommendation = "No mistakes logged yet! Run code or analyze reasoning in the Think-Aloud workspace to start tracking your coding DNA.";
+  let recTitle = "DNA Engine Diagnostic";
+  let recColor = "#fb923c"; // default orange
+  let recBorderColor = "#f97316";
+  let maxVal = 0;
+
+  if (total > 0) {
+    maxVal = Math.max(offByOne, recursion, wrongLogic);
+    if (maxVal === offByOne) {
+      recTitle = "Off-by-One / Boundary Alert";
+      recommendation = "Socratic Hint: Have you verified your loop bounds and empty input checks? Before submitting, dry run with null, empty arrays, and single-element bounds.";
+      recColor = "#f59e0b";
+      recBorderColor = "#f59e0b";
+    } else if (maxVal === recursion) {
+      recTitle = "Recursion Base Case Alert";
+      recommendation = "Socratic Hint: Ask yourself: 'Does every execution path reach a valid termination state?' Ensure you have base guards for all input structures before recursing.";
+      recColor = "#06b6d4";
+      recBorderColor = "#06b6d4";
+    } else {
+      recTitle = "Wrong Logic Alert";
+      recommendation = "Socratic Hint: Consider drawing out your process: 'Can we solve this using fewer lookups or with a hash-map rather than nested comparisons?' Plan before coding.";
+      recColor = "#ec4899";
+      recBorderColor = "#ec4899";
+    }
+  }
+
+  // Render recent logs
+  const logs = md.recentLogs || [];
+  let logsHtml = "";
+  if (logs.length === 0) {
+    logsHtml = `<p class="empty-state" style="font-size:0.8rem; color:var(--text-secondary); margin:0;">No recent mistake traces found.</p>`;
+  } else {
+    // Show last 5 logs, newest first
+    const displayLogs = [...logs].reverse().slice(0, 5);
+    logsHtml = displayLogs.map(item => {
+      const timeStr = formatMistakeDate(item.date);
+      return `
+        <div class="recent-mistake-log-item">
+          <div>
+            <span class="recent-mistake-desc">${escapeHtml(item.message)}</span>
+            <span class="recent-mistake-source">Problem: ${escapeHtml(item.problem)}</span>
+          </div>
+          <span class="recent-mistake-time-badge">${timeStr}</span>
+        </div>
+      `;
+    }).join("");
+  }
+
+  mCard.innerHTML = `
+    <h3>🧬 Mistake DNA Tracker</h3>
+    <div class="mistake-dna-content">
+      <div class="mistake-dna-header">
+        <div class="mistake-dna-title-group">
+          <span class="mistake-dna-subtitle" style="margin-top: 0;">Behavior-Based Error Clustering</span>
+        </div>
+        <!-- DNA Helix SVG Visualizer -->
+        <svg class="dna-helix-visualizer" viewBox="0 0 100 40">
+          <g fill="none" stroke-width="2">
+            <!-- Strand 1 (Orange/Cyan gradient) -->
+            <path d="M 10,20 Q 25,5 40,20 T 70,20 T 100,20" stroke="url(#dnaGrad1)" opacity="0.6"/>
+            <!-- Strand 2 (Pink/Blue gradient) -->
+            <path d="M 10,20 Q 25,35 40,20 T 70,20 T 100,20" stroke="url(#dnaGrad2)" opacity="0.6"/>
+            <!-- Connections/Bridges -->
+            <line x1="25" y1="12" x2="25" y2="28" stroke="rgba(249, 115, 22, 0.4)" stroke-dasharray="2,2" />
+            <line x1="55" y1="12" x2="55" y2="28" stroke="rgba(249, 115, 22, 0.4)" stroke-dasharray="2,2" />
+            <line x1="85" y1="12" x2="85" y2="28" stroke="rgba(249, 115, 22, 0.4)" stroke-dasharray="2,2" />
+            <!-- Node dots -->
+            <circle class="dna-node-dot" cx="25" cy="12" r="3" fill="#f59e0b" style="animation-delay: 0s;"/>
+            <circle class="dna-node-dot" cx="25" cy="28" r="3" fill="#ec4899" style="animation-delay: 0.5s;"/>
+            <circle class="dna-node-dot" cx="55" cy="12" r="3" fill="#06b6d4" style="animation-delay: 1s;"/>
+            <circle class="dna-node-dot" cx="55" cy="28" r="3" fill="#f97316" style="animation-delay: 1.5s;"/>
+            <circle class="dna-node-dot" cx="85" cy="12" r="3" fill="#ef4444" style="animation-delay: 0.2s;"/>
+            <circle class="dna-node-dot" cx="85" cy="28" r="3" fill="#3b82f6" style="animation-delay: 0.7s;"/>
+          </g>
+          <defs>
+            <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f97316" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+            <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ec4899" />
+              <stop offset="100%" stop-color="#3b82f6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Mistake Map Progress Bars -->
+      <div class="mistake-map-bars">
+        <div class="mistake-bar-group">
+          <div class="mistake-bar-label">
+            <span class="category-name">Off-by-One / Boundary Errors</span>
+            <span>${offByOne} (${pctOff}%)</span>
+          </div>
+          <div class="mistake-bar-track">
+            <div class="mistake-bar-fill" id="barOffByOne" style="width: ${pctOff}%;"></div>
+          </div>
+        </div>
+        <div class="mistake-bar-group">
+          <div class="mistake-bar-label">
+            <span class="category-name">Recursion Base Case Issues</span>
+            <span>${recursion} (${pctRec}%)</span>
+          </div>
+          <div class="mistake-bar-track">
+            <div class="mistake-bar-fill" id="barRecursion" style="width: ${pctRec}%;"></div>
+          </div>
+        </div>
+        <div class="mistake-bar-group">
+          <div class="mistake-bar-label">
+            <span class="category-name">Wrong Logic Patterns</span>
+            <span>${wrongLogic} (${pctLogic}%)</span>
+          </div>
+          <div class="mistake-bar-track">
+            <div class="mistake-bar-fill" id="barWrongLogic" style="width: ${pctLogic}%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Socratic Recommendation Box -->
+      <div class="socratic-recommendation-box" style="border-left-color: ${recBorderColor}; border-color: rgba(${total > 0 ? (maxVal === offByOne ? '245, 158, 11' : maxVal === recursion ? '6, 182, 212' : '236, 72, 153') : '249, 115, 22'}, 0.2)">
+        <span class="socratic-rec-title" style="color: ${recColor};">${recTitle}</span>
+        <p class="socratic-rec-text">${recommendation}</p>
+      </div>
+
+      <!-- Recent Mistake Logs -->
+      <div class="recent-mistakes-section">
+        <span class="recent-mistakes-title">Recent Mistake Traces</span>
+        <div class="recent-mistakes-list">
+          ${logsHtml}
+        </div>
+      </div>
+    </div>
+  `;
 }
 

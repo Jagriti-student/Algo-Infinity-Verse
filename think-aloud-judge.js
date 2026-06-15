@@ -723,6 +723,30 @@ function initThinkAloudJudge() {
       });
       runStatusBadge.textContent = "Error";
       runStatusBadge.className = "status-badge status-error";
+
+      if (typeof logMistake === "function") {
+        const errText = errors.join("\n").toLowerCase();
+        let category = "logic";
+        let message = "Compilation/Syntax Error: " + errors[0];
+        
+        if (errText.includes("indexerror") || errText.includes("outofbounds") || errText.includes("out of bounds") || errText.includes("index out of range") || errText.includes("cannot read properties of undefined") || errText.includes("cannot read property") || errText.includes("nullpointerexception") || errText.includes("nullpointer")) {
+          category = "off-by-one";
+          message = "Index/Boundary Exception: " + errors[0];
+        } else if (errText.includes("recursionerror") || errText.includes("stackoverflow") || errText.includes("stack overflow") || errText.includes("maximum call stack size exceeded")) {
+          category = "recursion";
+          message = "Recursion/Stack Overflow: " + errors[0];
+        }
+
+        let activeProblemTitle = "Workspace Practice";
+        const problemSelect = document.getElementById("problemSelect");
+        if (problemSelect) {
+          const activeOption = problemSelect.options[problemSelect.selectedIndex];
+          if (activeOption) {
+            activeProblemTitle = activeOption.text;
+          }
+        }
+        logMistake(category, message, activeProblemTitle);
+      }
     } else {
       terminalOutput.innerHTML = "";
       if (output.length > 0) {
@@ -913,6 +937,31 @@ function updateCodingPersonalityFromJudge(analysis, thoughts, code) {
   }
 
   cp.type = dominantType;
+
+  // Loop through misconceptions and log them into the Mistake DNA Tracker
+  if (typeof logMistake === "function" && analysis && Array.isArray(analysis.misconceptions)) {
+    analysis.misconceptions.forEach(m => {
+      let category = "logic";
+      if (m.title.includes("Empty Array") || m.title.includes("Null Pointer")) {
+        category = "off-by-one";
+      } else if (m.title.includes("Infinite Recursion") || m.title.includes("Exponential")) {
+        category = "recursion";
+      } else if (m.title.includes("Brute-Force") || m.title.includes("Lookup") || m.title.includes("Unchecked Growth")) {
+        category = "logic";
+      }
+      
+      let activeProblemTitle = "Workspace Practice";
+      const problemSelect = document.getElementById("problemSelect");
+      if (problemSelect) {
+        const activeOption = problemSelect.options[problemSelect.selectedIndex];
+        if (activeOption) {
+          activeProblemTitle = activeOption.text;
+        }
+      }
+      
+      logMistake(category, m.title + ": " + m.desc.split(".")[0] + ".", activeProblemTitle);
+    });
+  }
 
   // Persist the changes
   if (typeof saveUserData === "function") {
