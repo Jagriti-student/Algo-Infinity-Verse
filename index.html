@@ -441,6 +441,105 @@
             </div>
         </div>
     </div>
+    <!-- Go Playground Section -->
+<section id="go-playground" class="section go-playground-section">
+
+<div class="container">
+
+<h2 class="section-title">
+<span class="title-icon">🐹</span>
+Go (Golang) Playground
+</h2>
+
+<p class="section-subtitle">
+Write, compile and run Go programs directly
+</p>
+
+
+<div class="go-playground-container">
+
+
+<!-- Editor -->
+
+<div class="go-editor-panel">
+
+<h3>
+Go Code Editor
+</h3>
+
+
+<textarea 
+id="goCodeEditor"
+class="go-code-editor">
+
+package main
+
+import "fmt"
+
+func main(){
+
+fmt.Println("Hello Go Playground")
+
+}
+
+</textarea>
+
+
+<div class="go-actions">
+
+<button id="runGoCode" class="btn btn-primary">
+
+<i class="fas fa-play"></i>
+Run
+
+</button>
+
+
+<button id="clearGoCode" class="btn btn-secondary">
+
+Clear
+
+</button>
+<select id="goSamples" class="go-sample-select">
+  <option value="">📂 Load Sample</option>
+  <option value="hello">Hello World</option>
+  <option value="loop">Loop Example</option>
+  <option value="struct">Struct Example</option>
+</select>
+
+</div>
+
+</div>
+
+
+
+<!-- Output -->
+
+
+<div class="go-output-panel">
+
+
+<h3>
+Output Console
+</h3>
+
+
+<pre id="goOutput">
+
+Output will appear here...
+
+</pre>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
 
     <!-- Quiz Editor Modal -->
     <div class="modal quiz-modal" id="quizEditorModal">

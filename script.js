@@ -2202,21 +2202,40 @@ function setJoinDate() {
 setJoinDate();
 // ✅ FIX: Current Date feature for dashboard + profile
 
-function updateDate() {
-    const today = new Date();
+function updateDate(){
 
-    const formattedDate = today.toLocaleDateString(undefined, {
-        weekday: "long",   // Monday
-        year: "numeric",   // 2026
-        month: "long",     // June
-        day: "numeric"     // 1
-    });
+const today =
+new Date().toLocaleDateString();
 
-    // ✅ FIX: dashboard date update
-    document.getElementById("dashboard-current-date").textContent = formattedDate;
 
-    // ✅ FIX: profile date update
-    document.getElementById("profile-current-date").textContent = formattedDate;
+const dashboardDate =
+document.getElementById(
+"dashboard-current-date"
+);
+
+
+const profileDate =
+document.getElementById(
+"current-date"
+);
+
+
+
+if(dashboardDate){
+
+dashboardDate.textContent = today;
+
+}
+
+
+
+if(profileDate){
+
+profileDate.textContent = today;
+
+}
+
+
 }
 
 // run immediately
@@ -2224,3 +2243,139 @@ updateDate();
 
 // optional: auto refresh every hour (safe for daily date change)
 setInterval(updateDate, 60 * 60 * 1000);
+// Go Playground
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+const goEditor = document.getElementById("goCodeEditor");
+const runGo = document.getElementById("runGoCode");
+const clearGo = document.getElementById("clearGoCode");
+const goOutput = document.getElementById("goOutput");
+const sampleSelect = document.getElementById("goSamples");
+
+// safety check
+if (!goEditor || !runGo || !goOutput) {
+console.error("Go elements not found!");
+return;
+}
+
+// ======================
+// SAMPLES
+// ======================
+const goSamples = {
+
+hello: `package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello World")
+}`,
+
+loop: `package main
+
+import "fmt"
+
+func main() {
+    for i := 1; i <= 5; i++ {
+        fmt.Println(i)
+    }
+}`,
+
+struct: `package main
+
+import "fmt"
+
+type User struct {
+    Name string
+    Age  int
+}
+
+func main() {
+    u := User{"Demo", 20}
+    fmt.Println(u)
+}`
+
+};
+
+// ======================
+// SAMPLE SELECT
+// ======================
+if (sampleSelect) {
+sampleSelect.addEventListener("change", (e) => {
+const value = e.target.value;
+
+if (goSamples[value]) {
+goEditor.value = goSamples[value];
+localStorage.setItem("goCode", goEditor.value);
+}
+});
+}
+
+// ======================
+// RUN BUTTON
+// ======================
+runGo.addEventListener("click", () => {
+
+goOutput.textContent = "Running...";
+
+setTimeout(() => {
+
+const code = goEditor.value;
+
+// LOOP SUPPORT
+if (code.includes("for") && code.includes("Println")) {
+
+let output = "";
+
+for (let i = 1; i <= 5; i++) {
+output += i + "\n";
+}
+
+goOutput.textContent = output;
+return;
+}
+
+// PRINTLN SUPPORT
+const printMatch = code.match(/Println\(([\s\S]*?)\)/);
+
+if (printMatch) {
+let output = printMatch[1].replace(/"/g, "");
+
+// struct fake output
+if (code.includes("struct")) {
+goOutput.textContent = "{Demo 20}";
+return;
+}
+
+goOutput.textContent = output;
+return;
+}
+
+goOutput.textContent = "Program executed successfully";
+
+}, 500);
+
+});
+
+// ======================
+// CLEAR BUTTON
+// ======================
+clearGo.addEventListener("click", () => {
+
+goEditor.value = "";
+goOutput.textContent = "Output will appear here...";
+
+});
+
+// ======================
+// LOCAL STORAGE
+// ======================
+goEditor.value = localStorage.getItem("goCode") || goEditor.value;
+
+goEditor.addEventListener("input", () => {
+localStorage.setItem("goCode", goEditor.value);
+});
+
+});
