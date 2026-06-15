@@ -1,24 +1,5 @@
-
-document.addEventListener("submit", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  return false;
-}, true);
-window.addEventListener("load", () => {
-  document.addEventListener("submit", (e) => {
-    e.preventDefault();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.ctrlKey) {
-      if (document.activeElement.tagName === "TEXTAREA") {
-        e.stopPropagation();
-      }
-    }
-  });
-});
-
 // ===== QUIZ DATA =====
+
 const quizQuestions = {
   arrays: [
     {
@@ -2536,6 +2517,7 @@ function startQuiz(topic) {
     }
     if (currentQuiz) {
     console.log("Quiz already running");
+    return;
 }
 
 
@@ -2546,6 +2528,9 @@ function startQuiz(topic) {
         score: 0,
         answers: []
     };
+    if (quizTimeout) {
+    clearTimeout(quizTimeout);
+}
     
 
 
@@ -2686,7 +2671,7 @@ function closeQuizModal() {
     const modal = document.getElementById('quizModal');
     if (modal) modal.classList.remove('active');
 
-    setTimeout(() => {
+    const quizTimeout = setTimeout(() => {
         currentQuiz = null;
     }, 300); // small delay
 }
@@ -7279,43 +7264,32 @@ function finishPersonalityQuiz() {
 window.addEventListener('load', () => {
     console.log('Algo Infinity Verse loaded successfully! 🚀');
 });
-function setJoinDate() {
-    const joinElement = document.getElementById("joinDate");
 
-    if (!joinElement) return;
+// ❌ REMOVE setJoinDate() completely (CodeRabbit was correct)
+// It is redundant and breaks returning users
 
-    const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-
-    const today = new Date().toLocaleDateString(undefined, options);
-
-    joinElement.innerText = today;
-}
-
-setJoinDate();
-// ✅ FIX: Current Date feature for dashboard + profile
-
+// ✅ Current Date feature for dashboard + profile
 function updateDate() {
     const today = new Date();
 
     const formattedDate = today.toLocaleDateString(undefined, {
-        weekday: "long",   // Monday
-        year: "numeric",   // 2026
-        month: "long",     // June
-        day: "numeric"     // 1
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
     });
 
-    // ✅ FIX: dashboard date update
-    document.getElementById("dashboard-current-date").textContent = formattedDate;
+    // ✅ dashboard date (SAFE check)
+    const dashboardEl = document.getElementById("dashboard-current-date");
+    if (dashboardEl) {
+        dashboardEl.textContent = formattedDate;
+    }
 
-    // ✅ FIX: profile date update
-    const el = document.getElementById("current-date");
-if (el) {
-    el.textContent = new Date().toLocaleDateString();
-}
+    // ✅ profile date (SAFE check)
+    const profileEl = document.getElementById("current-date");
+    if (profileEl) {
+        profileEl.textContent = formattedDate;
+    }
 }
 
 // run immediately
@@ -7323,327 +7297,3 @@ updateDate();
 
 // optional: auto refresh every hour (safe for daily date change)
 setInterval(updateDate, 60 * 60 * 1000);
-
-  }
-
-  // Update counts in userProgress
-  if (!userProgress.codingPersonality) {
-    userProgress.codingPersonality = {};
-  }
-  userProgress.codingPersonality.type = dominantType;
-  userProgress.codingPersonality.bruteForceCount = counts["brute-force first"] + 1;
-  userProgress.codingPersonality.overOptimizerCount = counts["over-optimizer"] + 1;
-  userProgress.codingPersonality.slowAccurateCount = counts["slow but accurate"] + 1;
-  userProgress.codingPersonality.greedyCount = counts["greedy thinker"] + 1;
-
-  saveUserData();
-  renderPersonalityCard();
-  
-  // Also re-render problems so that recommended badges update dynamically!
-  if (typeof renderProblems === "function") {
-    const searchInput = document.getElementById("searchInput");
-    const filterActive = document.querySelector(".filter-btn.active");
-    const activeFilter = filterActive ? filterActive.dataset.filter : "all";
-    renderProblems(activeFilter, searchInput ? searchInput.value.toLowerCase() : "");
-  }
-
-  const modal = document.getElementById("personalityQuizModal");
-  if (modal) modal.classList.remove("active");
-
-  showNotification(`Quiz complete! Your coding personality is: ${dominantType.replace("-", " ").toUpperCase()} 🧠`, "success");
-}
-
-function renderPersonalityCard() {
-  const pCard = document.getElementById("personalityCard");
-  if (!pCard) return;
-
-  const cp = userProgress.codingPersonality || {
-    type: "brute-force first",
-    bruteForceCount: 1,
-    slowAccurateCount: 0,
-    greedyCount: 0,
-    overOptimizerCount: 0
-  };
-
-  const total = (cp.bruteForceCount || 0) + (cp.slowAccurateCount || 0) + (cp.greedyCount || 0) + (cp.overOptimizerCount || 0) || 1;
-  const pctBrute = Math.round(((cp.bruteForceCount || 0) / total) * 100);
-  const pctOpt = Math.round(((cp.overOptimizerCount || 0) / total) * 100);
-  const pctSlow = Math.round(((cp.slowAccurateCount || 0) / total) * 100);
-  const pctGreedy = Math.round(((cp.greedyCount || 0) / total) * 100);
-
-  let icon = "🔎";
-  let desc = "";
-  let adaptation = "";
-
-  if (cp.type === "brute-force first") {
-    icon = "🔴";
-    desc = "You jump straight into writing code! You get solutions quickly, but can overlook edge cases or time/space complexities.";
-    adaptation = "Focus: Easy/Medium problems with boundary checks";
-  } else if (cp.type === "over-optimizer") {
-    icon = "🟣";
-    desc = "You love optimal space/time tricks! You always reach for hashes and pointers, sometimes over-complicating simpler tasks.";
-    adaptation = "Focus: Medium/Hard problems, clean code style";
-  } else if (cp.type === "slow but accurate") {
-    icon = "🔵";
-    desc = "You take your time to design solutions. You have low error rates but could practice coding faster under time limits.";
-    adaptation = "Focus: Medium problems, speed practice";
-  } else if (cp.type === "greedy thinker") {
-    icon = "🟢";
-    desc = "You look for immediate local optimizations. You are great at heuristics, but watch out for cases where DP is required.";
-    adaptation = "Focus: Greedy & Dynamic Programming concepts";
-  }
-
-  pCard.innerHTML = `
-    <h3>🧠 Coding Personality</h3>
-    <div class="personality-profile-content">
-      <div class="personality-header-info">
-        <div class="personality-badge-icon">${icon}</div>
-        <div class="personality-type-group">
-          <h4 style="text-transform: capitalize;">${cp.type.replace("-", " ")}</h4>
-          <span class="adaptation-badge">${adaptation}</span>
-        </div>
-      </div>
-      <p class="personality-description">${desc}</p>
-      
-      <div class="style-progress-bars">
-        <div class="style-bar-group">
-          <span class="style-label">Brute-Force First (${pctBrute}%)</span>
-          <div class="style-bar-track"><div class="style-bar-fill" id="barBrute" style="width: ${pctBrute}%;"></div></div>
-        </div>
-        <div class="style-bar-group">
-          <span class="style-label">Over-Optimizer (${pctOpt}%)</span>
-          <div class="style-bar-track"><div class="style-bar-fill" id="barOpt" style="width: ${pctOpt}%;"></div></div>
-        </div>
-        <div class="style-bar-group">
-          <span class="style-label">Slow but Accurate (${pctSlow}%)</span>
-          <div class="style-bar-track"><div class="style-bar-fill" id="barSlow" style="width: ${pctSlow}%;"></div></div>
-        </div>
-        <div class="style-bar-group">
-          <span class="style-label">Greedy Thinker (${pctGreedy}%)</span>
-          <div class="style-bar-track"><div class="style-bar-fill" id="barGreedy" style="width: ${pctGreedy}%;"></div></div>
-        </div>
-      </div>
-      
-      <div class="personality-actions">
-        <button class="btn btn-secondary btn-mini" id="personalityQuizBtn">
-          <i class="fas fa-redo"></i> Retake Profiler Quiz
-        </button>
-      </div>
-    </div>
-  `;
-
-  // Attach event listener to the quiz button
-  document.getElementById("personalityQuizBtn").addEventListener("click", openPersonalityQuiz);
-}
-
-
-function logMistake(category, details, problemName) {
-  if (!userProgress.mistakeDna) {
-    userProgress.mistakeDna = {
-      offByOneCount: 0,
-      recursionBaseCaseCount: 0,
-      wrongLogicCount: 0,
-      recentLogs: []
-    };
-  }
-
-  const md = userProgress.mistakeDna;
-  
-  if (category === 'off-by-one') {
-    md.offByOneCount = (md.offByOneCount || 0) + 1;
-  } else if (category === 'recursion') {
-    md.recursionBaseCaseCount = (md.recursionBaseCaseCount || 0) + 1;
-  } else if (category === 'logic') {
-    md.wrongLogicCount = (md.wrongLogicCount || 0) + 1;
-  }
-
-  if (!md.recentLogs) {
-    md.recentLogs = [];
-  }
-  
-  md.recentLogs.push({
-    message: details,
-    problem: problemName || "Workspace Practice",
-    date: new Date().toISOString()
-  });
-
-  if (md.recentLogs.length > 5) {
-    md.recentLogs.shift();
-  }
-
-  saveUserData();
-  renderMistakeDnaCard();
-}
-
-function formatMistakeDate(dateStr) {
-  try {
-    const d = new Date(dateStr);
-    const now = new Date();
-    const diffMs = now - d;
-    const diffMins = Math.floor(diffMs / 60000);
-    if (diffMins < 1) return "Just now";
-    if (diffMins < 60) return `${diffMins}m ago`;
-    const diffHours = Math.floor(diffMins / 60);
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  } catch (e) {
-    return "Recently";
-  }
-}
-
-function renderMistakeDnaCard() {
-  const mCard = document.getElementById("mistakeDnaCard");
-  if (!mCard) return;
-
-  const md = userProgress.mistakeDna || {
-    offByOneCount: 0,
-    recursionBaseCaseCount: 0,
-    wrongLogicCount: 0,
-    recentLogs: []
-  };
-
-  const offByOne = md.offByOneCount || 0;
-  const recursion = md.recursionBaseCaseCount || 0;
-  const wrongLogic = md.wrongLogicCount || 0;
-  const total = offByOne + recursion + wrongLogic;
-
-  const pctOff = total > 0 ? Math.round((offByOne / total) * 100) : 0;
-  const pctRec = total > 0 ? Math.round((recursion / total) * 100) : 0;
-  const pctLogic = total > 0 ? Math.round((wrongLogic / total) * 100) : 0;
-
-  // Socratic recommendation
-  let recommendation = "No mistakes logged yet! Run code or analyze reasoning in the Think-Aloud workspace to start tracking your coding DNA.";
-  let recTitle = "DNA Engine Diagnostic";
-  let recColor = "#fb923c"; // default orange
-  let recBorderColor = "#f97316";
-  let maxVal = 0;
-
-  if (total > 0) {
-    maxVal = Math.max(offByOne, recursion, wrongLogic);
-    if (maxVal === offByOne) {
-      recTitle = "Off-by-One / Boundary Alert";
-      recommendation = "Socratic Hint: Have you verified your loop bounds and empty input checks? Before submitting, dry run with null, empty arrays, and single-element bounds.";
-      recColor = "#f59e0b";
-      recBorderColor = "#f59e0b";
-    } else if (maxVal === recursion) {
-      recTitle = "Recursion Base Case Alert";
-      recommendation = "Socratic Hint: Ask yourself: 'Does every execution path reach a valid termination state?' Ensure you have base guards for all input structures before recursing.";
-      recColor = "#06b6d4";
-      recBorderColor = "#06b6d4";
-    } else {
-      recTitle = "Wrong Logic Alert";
-      recommendation = "Socratic Hint: Consider drawing out your process: 'Can we solve this using fewer lookups or with a hash-map rather than nested comparisons?' Plan before coding.";
-      recColor = "#ec4899";
-      recBorderColor = "#ec4899";
-    }
-  }
-
-  // Render recent logs
-  const logs = md.recentLogs || [];
-  let logsHtml = "";
-  if (logs.length === 0) {
-    logsHtml = `<p class="empty-state" style="font-size:0.8rem; color:var(--text-secondary); margin:0;">No recent mistake traces found.</p>`;
-  } else {
-    // Show last 5 logs, newest first
-    const displayLogs = [...logs].reverse().slice(0, 5);
-    logsHtml = displayLogs.map(item => {
-      const timeStr = formatMistakeDate(item.date);
-      return `
-        <div class="recent-mistake-log-item">
-          <div>
-            <span class="recent-mistake-desc">${escapeHtml(item.message)}</span>
-            <span class="recent-mistake-source">Problem: ${escapeHtml(item.problem)}</span>
-          </div>
-          <span class="recent-mistake-time-badge">${timeStr}</span>
-        </div>
-      `;
-    }).join("");
-  }
-
-  mCard.innerHTML = `
-    <h3>🧬 Mistake DNA Tracker</h3>
-    <div class="mistake-dna-content">
-      <div class="mistake-dna-header">
-        <div class="mistake-dna-title-group">
-          <span class="mistake-dna-subtitle" style="margin-top: 0;">Behavior-Based Error Clustering</span>
-        </div>
-        <!-- DNA Helix SVG Visualizer -->
-        <svg class="dna-helix-visualizer" viewBox="0 0 100 40">
-          <g fill="none" stroke-width="2">
-            <!-- Strand 1 (Orange/Cyan gradient) -->
-            <path d="M 10,20 Q 25,5 40,20 T 70,20 T 100,20" stroke="url(#dnaGrad1)" opacity="0.6"/>
-            <!-- Strand 2 (Pink/Blue gradient) -->
-            <path d="M 10,20 Q 25,35 40,20 T 70,20 T 100,20" stroke="url(#dnaGrad2)" opacity="0.6"/>
-            <!-- Connections/Bridges -->
-            <line x1="25" y1="12" x2="25" y2="28" stroke="rgba(249, 115, 22, 0.4)" stroke-dasharray="2,2" />
-            <line x1="55" y1="12" x2="55" y2="28" stroke="rgba(249, 115, 22, 0.4)" stroke-dasharray="2,2" />
-            <line x1="85" y1="12" x2="85" y2="28" stroke="rgba(249, 115, 22, 0.4)" stroke-dasharray="2,2" />
-            <!-- Node dots -->
-            <circle class="dna-node-dot" cx="25" cy="12" r="3" fill="#f59e0b" style="animation-delay: 0s;"/>
-            <circle class="dna-node-dot" cx="25" cy="28" r="3" fill="#ec4899" style="animation-delay: 0.5s;"/>
-            <circle class="dna-node-dot" cx="55" cy="12" r="3" fill="#06b6d4" style="animation-delay: 1s;"/>
-            <circle class="dna-node-dot" cx="55" cy="28" r="3" fill="#f97316" style="animation-delay: 1.5s;"/>
-            <circle class="dna-node-dot" cx="85" cy="12" r="3" fill="#ef4444" style="animation-delay: 0.2s;"/>
-            <circle class="dna-node-dot" cx="85" cy="28" r="3" fill="#3b82f6" style="animation-delay: 0.7s;"/>
-          </g>
-          <defs>
-            <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#f97316" />
-              <stop offset="100%" stop-color="#06b6d4" />
-            </linearGradient>
-            <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#ec4899" />
-              <stop offset="100%" stop-color="#3b82f6" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-      <!-- Mistake Map Progress Bars -->
-      <div class="mistake-map-bars">
-        <div class="mistake-bar-group">
-          <div class="mistake-bar-label">
-            <span class="category-name">Off-by-One / Boundary Errors</span>
-            <span>${offByOne} (${pctOff}%)</span>
-          </div>
-          <div class="mistake-bar-track">
-            <div class="mistake-bar-fill" id="barOffByOne" style="width: ${pctOff}%;"></div>
-          </div>
-        </div>
-        <div class="mistake-bar-group">
-          <div class="mistake-bar-label">
-            <span class="category-name">Recursion Base Case Issues</span>
-            <span>${recursion} (${pctRec}%)</span>
-          </div>
-          <div class="mistake-bar-track">
-            <div class="mistake-bar-fill" id="barRecursion" style="width: ${pctRec}%;"></div>
-          </div>
-        </div>
-        <div class="mistake-bar-group">
-          <div class="mistake-bar-label">
-            <span class="category-name">Wrong Logic Patterns</span>
-            <span>${wrongLogic} (${pctLogic}%)</span>
-          </div>
-          <div class="mistake-bar-track">
-            <div class="mistake-bar-fill" id="barWrongLogic" style="width: ${pctLogic}%;"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Socratic Recommendation Box -->
-      <div class="socratic-recommendation-box" style="border-left-color: ${recBorderColor}; border-color: rgba(${total > 0 ? (maxVal === offByOne ? '245, 158, 11' : maxVal === recursion ? '6, 182, 212' : '236, 72, 153') : '249, 115, 22'}, 0.2)">
-        <span class="socratic-rec-title" style="color: ${recColor};">${recTitle}</span>
-        <p class="socratic-rec-text">${recommendation}</p>
-      </div>
-
-      <!-- Recent Mistake Logs -->
-      <div class="recent-mistakes-section">
-        <span class="recent-mistakes-title">Recent Mistake Traces</span>
-        <div class="recent-mistakes-list">
-          ${logsHtml}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
