@@ -1,35 +1,25 @@
 {
   "name": "algo-infinity-verse",
   "version": "1.0.0",
-
-  "description": "**Master Data Structures & Algorithms and Crack Technical Interviews**",
-  "main": "script.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1"
-
   "description": "Interactive DSA learning platform with secure local authentication.",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "build": "echo 'No build step required'"
+    "build": "echo 'No build step required'",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "dsa",
     "algorithms",
     "authentication"
   ],
+  "author": "",
   "license": "MIT",
   "dependencies": {
-   "firebase-admin": "^12.0.0"
-
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "firebase-admin": "^12.0.0"
   }
 }
