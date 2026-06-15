@@ -3193,7 +3193,7 @@ function initProfile() {
     }
     
     // Set joined date
-    var joinDate = document.getElementById("joinDate");
+    var joinDate = document.getElementById("profile-join-Date");
     if (joinDate) {
         let joinDateObj;
         if (userProgress.joinDate) {
@@ -4089,23 +4089,25 @@ function initProfile() {
     }
     
     // Set joined date
-    var joinDate = document.getElementById("joinDate");
-    if (joinDate) {
-        let joinDateObj;
-        if (userProgress.joinDate) {
-            joinDateObj = new Date(userProgress.joinDate);
-        } else {
-            joinDateObj = new Date();
-            userProgress.joinDate = joinDateObj.toISOString();
-            saveUserData();
-        }
-        joinDate.textContent = joinDateObj.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric"
-        });
+    var joinDate = document.getElementById("profile-join-date");
+
+if (joinDate) {
+    let joinDateObj;
+
+    if (userProgress.joinDate) {
+        joinDateObj = new Date(userProgress.joinDate);
+    } else {
+        joinDateObj = new Date();
+        userProgress.joinDate = joinDateObj.toISOString();
+        saveUserData();
     }
-    
+
+    joinDate.textContent = joinDateObj.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    });
+}
     // Set current date in dashboard
     var currentDateElement = document.getElementById("current-date");
     if (currentDateElement) {
@@ -6570,7 +6572,7 @@ function updateDate() {
 // run immediately
 updateDate();
 
-
+        try {
             // Ensure quizScores exists
             if (!userProgress.quizScores) {
                 userProgress.quizScores = {};
@@ -6597,7 +6599,7 @@ updateDate();
                 }
                 saveUserData();
             }
-        } else {
+        else {
             // Initialize with some demo data
             userProgress.name = "Learner";
             userProgress.avatar = "🚀";
@@ -7257,7 +7259,8 @@ function finishPersonalityQuiz() {
       dominantType = type;
     }
 
-});
+};
+}
 
 // ===== FOOTER QUESTION HANDLERS =====
 // Initialize some animations after page load
