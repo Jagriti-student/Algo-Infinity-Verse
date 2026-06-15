@@ -1,28 +1,32 @@
-# Algo Infinity Verse
+<div align="center">
 
-**Master Data Structures & Algorithms and Crack Technical Interviews**
+# 🧮 Algo Infinity Verse 🌌
 
-[![GitHub repo size](https://img.shields.io/github/repo-size/Algo-Infinity-Verse/Algo-Infinity-Verse)](https://github.com/Algo-Infinity-Verse/Algo-Infinity-Verse)
-[![GitHub last commit](https://img.shields.io/github/last-commit/Algo-Infinity-Verse/Algo-Infinity-Verse)](https://github.com/Algo-Infinity-Verse/Algo-Infinity-Verse)
+### ⚙️ Master Data Structures & Algorithms and Crack Technical Interviews
 
-A modern, interactive web application for learning and practicing DSA concepts with a gamified learning experience.
+[![GitHub repo size](https://img.shields.io/github/repo-size/Eshajha19/Algo-Infinity-Verse)](https://github.com/Eshajha19/Algo-Infinity-Verse)
+[![GitHub last commit](https://img.shields.io/github/last-commit/Algo-Infinity-Verse/Algo-Infinity-Verse)](https://github.com/Eshajha19/Algo-Infinity-Verse)
+
+**A modern, interactive web application for learning and practicing DSA concepts with a gamified learning experience.**
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://www.w3.org/TR/CSS/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://www.ecma-international.org/)
 
-[![GitHub issues](https://img.shields.io/github/issues/Algo-Infinity-Verse/Algo-Infinity-Verse)](https://github.com/Algo-Infinity-Verse/Algo-Infinity-Verse/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/Algo-Infinity-Verse/Algo-Infinity-Verse)](https://github.com/Algo-Infinity-Verse/Algo-Infinity-Verse/pulls)
-[![Contributors](https://img.shields.io/github/contributors/Algo-Infinity-Verse/Algo-Infinity-Verse)](https://github.com/Algo-Infinity-Verse/Algo-Infinity-Verse/graphs/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/Eshajha19/Algo-Infinity-Verse)](https://github.com/Eshajha19/Algo-Infinity-Verse/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/Eshajha19/Algo-Infinity-Verse)](https://github.com/Eshajha19/Algo-Infinity-Verse/pulls)
+[![Contributors](https://img.shields.io/github/contributors/Eshajha19/Algo-Infinity-Verse)](https://github.com/Eshajha19/Algo-Infinity-Verse/graphs/contributors)
+
+</div>
 
 ---
 
-## Features
+## 🎯 Features
 
 ### Core Learning Resources
 
-#### DSA Topics
+#### 🧮 DSA Topics
 - **6 Comprehensive Topics**: Arrays, Strings, Linked Lists, Trees, Graphs, Dynamic Programming
 - Each topic includes:
   - Detailed theory explanations
@@ -31,7 +35,7 @@ A modern, interactive web application for learning and practicing DSA concepts w
   - Difficulty ratings (Easy-Medium-Hard)
   - Sample problem lists
 
-#### Practice Problems
+#### ✍ Practice Problems
 - **15+ curated problems** spanning all DSA topics
 - Filterable by difficulty (Easy, Medium, Hard)
 - Real-time search functionality
@@ -39,7 +43,20 @@ A modern, interactive web application for learning and practicing DSA concepts w
 - Acceptance rate tracking
 - Visual completion badges
 
-### Quiz System
+#### ❤️ Favorite Problems (New Feature)
+
+Users can now:
+- Mark practice problems as favorites
+- Filter favorite problems
+- Persist favorites using localStorage
+
+**How it works:**
+- Click the heart icon on any practice problem
+- Use the "Favorites" filter to view saved problems
+
+----
+
+### 🏆 Quiz System
 
 **60 Topic-Specific Questions** (10 per topic covering key concepts)
 
@@ -61,7 +78,28 @@ A modern, interactive web application for learning and practicing DSA concepts w
 - Attempt counter
 - Randomized question order
 
-### Profile & Gamification
+#### 🖧 Quiz Architecture 
+
+**Flow**
+1. User clicks "Start Quiz" on topic card
+2. Questions are shuffled randomly
+3. Modal displays one question at a time
+4. User selects an answer → immediate feedback
+5. Correct answer highlighted in green; user's wrong choice in red
+6. Auto-advance after 1.2 second delay
+7. After 10 questions: score calculation
+8. Results modal shows percentage, XP earned, performance message
+9. Progress bars and statistics update
+
+**Scoring**
+- 10 XP per correct answer
+- Best score saved per topic (max percentage)
+- Total attempts tracked
+- Progress bar fills on first attempt
+
+----
+
+### 👤 Profile & Gamification
 
 **Customizable Profile:**
 - Edit display name
@@ -88,14 +126,30 @@ A modern, interactive web application for learning and practicing DSA concepts w
 - 👑 Master (100 problems)
 - 🎯 Sharpshooter (25 problems + 2,500 XP)
 
-### Dashboard
+**Badge tooltips:** Hover or tap any badge on the dashboard to see the badge name, description, and unlock criteria.
+
+----
+
+### 📊 Dashboard
 - Complete statistics overview
 - Recent activity feed
 - Achievement badges display
 - Leaderboard comparison
 - Roadmap progress visualization
 
-### Interactive Code Editor
+----
+
+### 🛡️ Authentication
+- Secure signup and login pages
+- PBKDF2 password hashing with per-user salts
+- Signed JWT-style sessions stored in HTTP-only cookies
+- Logout endpoint that clears the session cookie
+- Protected community and support pages
+- Dashboard/profile hash routes redirected to login when unauthenticated
+
+----
+
+### </> Interactive Code Editor
 - Multi-language support (JavaScript, Python, Java, C++)
 - Line numbers and syntax highlighting
 - Code snippets insertion
@@ -104,14 +158,18 @@ A modern, interactive web application for learning and practicing DSA concepts w
 - Run and submit simulation
 - Test case validation
 
-### AI Chatbot Assistant
+----
+
+### 🤖 AI Chatbot Assistant
 - Instant DSA concept explanations
 - Time/space complexity queries
 - Problem-solving strategy hints
 - Quick question buttons
 - Context-aware responses
 
-### User Experience
+----
+
+### 🎨 User Experience / UX
 
 **Visual Design:**
 - Dark/Light theme toggle
@@ -127,24 +185,26 @@ A modern, interactive web application for learning and practicing DSA concepts w
 - Scroll-to-top button
 - Section-based navigation
 
----
+----
 
-## Technology Stack
+## 🛠️ Technology Stack
 
-- **HTML5**: Semantic markup
-- **CSS3**: Custom properties, Flexbox, Grid, animations
-- **JavaScript (ES6+)**: Vanilla JS, no frameworks
-- **LocalStorage**: Persistent user data
-- **Font Awesome**: Icon library
-- **Google Fonts**: Orbitron, Poppins, Fira Code
+- ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) **HTML5**: Semantic markup
+- ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) **CSS3**: Custom properties, Flexbox, Grid, animations
+- ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) **JavaScript (ES6+)**: Vanilla JS, no frameworks
+- ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) **Node.js**: Local HTTP server and authentication APIs
+- ![Node Crypto](https://img.shields.io/badge/Node_Crypto-339933?style=flat-square&logo=nodedotjs&logoColor=white) **Node Crypto**: Password hashing and signed session tokens
+- ![LocalStorage](https://img.shields.io/badge/LocalStorage-4B32C3?style=flat-square&logo=webauthn&logoColor=white) **LocalStorage**: Persistent user data
+- ![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=flat-square&logo=font-awesome&logoColor=white) **Font Awesome**: Icon library
+- ![Google Fonts](https://img.shields.io/badge/Google_Fonts-4285F4?style=flat-square&logo=googlefonts&logoColor=white) **Google Fonts**: Orbitron, Poppins, Fira Code
 
----
+----
 
-## Getting Started
+## 🚀 How to Run
 
 ### Prerequisites
 - Modern web browser (Chrome, Firefox, Safari, Edge)
-- Local web server (optional, can open directly)
+- Node.js 18+ for authentication
 
 ### Installation
 
@@ -154,17 +214,24 @@ A modern, interactive web application for learning and practicing DSA concepts w
    cd Algo-Infinity-Verse
    ```
 
-2. **Open the application**
-   - Simply open `index.html` in your browser
-   - Or use a local server:
+2. **Start the authenticated app**
+   Create your local environment file:
    ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve
+   cp .env.example .env
    ```
-   Then visit `http://localhost:8000`
+
+   Generate a session secret and paste it into `.env`:
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+   ```
+
+   Start the server:
+   ```bash
+   npm start
+   ```
+   Then visit `http://127.0.0.1:3000`
+
+   You can still open `index.html` directly for static browsing, but signup, login, protected routes, and HTTP-only sessions require the Node server.
 
 3. **Start learning!**
    - Create your profile
@@ -173,13 +240,17 @@ A modern, interactive web application for learning and practicing DSA concepts w
    - Practice problems
    - Track your progress
 
----
+----
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 Algo-Infinity-Verse/
 ├── index.html          # Main HTML structure
+├── login.html          # Login page
+├── signup.html         # Registration page
+├── server.js           # Static server and authentication API
+├── auth.js             # Client-side auth UI and route guards
 ├── styles.css          # All CSS styles and responsive design
 ├── script.js           # JavaScript logic, data, and interactivity
 └── README.md           # Project documentation
@@ -187,9 +258,9 @@ Algo-Infinity-Verse/
 
 ---
 
-## Key Scripts
+## ✅ Key Scripts
 
-### Data Structures
+### 🧬 Data Structures
 
 **`dsaTopics`** - Topic information including:
 - ID, name, icon, description
@@ -213,7 +284,7 @@ Algo-Infinity-Verse/
 - Complexity definitions
 - Algorithm overviews
 
-### State Management
+### 🟢 State Management
 
 `userProgress` object tracks:
 - User name and avatar
@@ -226,30 +297,9 @@ Algo-Infinity-Verse/
 
 Persisted to `localStorage` under key `algoInfinityVerse`.
 
----
+----
 
-## Quiz Architecture
-
-### Flow
-1. User clicks "Start Quiz" on topic card
-2. Questions are shuffled randomly
-3. Modal displays one question at a time
-4. User selects an answer → immediate feedback
-5. Correct answer highlighted in green; user's wrong choice in red
-6. Auto-advance after 1.2 second delay
-7. After 10 questions: score calculation
-8. Results modal shows percentage, XP earned, performance message
-9. Progress bars and statistics update
-
-### Scoring
-- 10 XP per correct answer
-- Best score saved per topic (max percentage)
-- Total attempts tracked
-- Progress bar fills on first attempt
-
----
-
-## Extending the Project
+## ✚ Extending the Project
 
 ### Adding New Quiz Questions
 
@@ -293,9 +343,9 @@ const quizQuestions = {
 
 **XP Values**: Modify `getXPForDifficulty()` function for practice problems or quiz XP calculation.
 
----
+----
 
-## Browser Support
+## 🌐 Browser Support
 
 - Chrome 90+
 - Firefox 88+
@@ -304,9 +354,9 @@ const quizQuestions = {
 
 Uses modern ES6+ features and CSS Grid/Flexbox.
 
----
+----
 
-## Future Enhancements
+## 🔮 Future Enhancements
 
 Potential features for expansion:
 - Database backend for multi-user support
@@ -320,11 +370,11 @@ Potential features for expansion:
 
 ---
 
-## 🤝 Community & Contributing
+## 🤝 Contributing & Community
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### How to Contribute
+### ❓ How to Contribute
 
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
@@ -332,7 +382,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 4. **Push** to the branch (`git push origin feature/amazing-feature`)
 5. **Open** a Pull Request
 
-### Code of Conduct
+### ❤️ Code of Conduct
 
 Be respectful and constructive. See our [Code of Conduct](CODE_OF_CONDUCT.md) for guidelines.
 
@@ -346,13 +396,13 @@ Be respectful and constructive. See our [Code of Conduct](CODE_OF_CONDUCT.md) fo
 
 ---
 
-## License
+## ⚖️ License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
-## Acknowledgments
+## 📜 Acknowledgments
 
 - Inspired by LeetCode, HackerRank, and freeCodeCamp
 - Built with ❤️ for the DSA learning community
