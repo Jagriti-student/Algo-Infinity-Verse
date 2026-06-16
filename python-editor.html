@@ -39,6 +39,7 @@
             <a href="index.html#practice" class="dropdown-item" role="menuitem">Practice Problems</a>
 <a href="algorithm-timeline.html" class="dropdown-item" role="menuitem">Algorithm Timeline</a>
             <a href="python-learning.html" class="dropdown-item" role="menuitem">Learn Python</a>
+            <a href="linkedlist-learning.html" class="dropdown-item active" role="menuitem">Learn Linked Lists</a>
             <a href="javascript-learning.html" class="dropdown-item" role="menuitem">Learn JavaScript</a>
             <a href="java-learning.html" class="dropdown-item" role="menuitem">Learn Java</a>
             <a href="php-learning.html" class="dropdown-item" role="menuitem">Learn PHP</a>
@@ -60,6 +61,7 @@
             <a href="cheat-sheets.html" class="dropdown-item" role="menuitem">DSA Cheat Sheets</a>
             <a href="system-design.html" class="dropdown-item" role="menuitem">System Design</a>
             <a href="behavioral-questions.html" class="dropdown-item" role="menuitem">Behavioral Questions</a>
+            <a href="interview-experience.html" class="dropdown-item" role="menuitem">Interview Experiences</a>
           </div>
         </li>
         <li class="nav-item has-dropdown">
@@ -278,6 +280,7 @@
             <a href="cheat-sheets.html" class="dropdown-item" role="menuitem">DSA Cheat Sheets</a>
             <a href="system-design.html" class="dropdown-item" role="menuitem">System Design</a>
             <a href="behavioral-questions.html" class="dropdown-item" role="menuitem">Behavioral Questions</a>
+            <a href="interview-experience.html" class="dropdown-item" role="menuitem">Interview Experiences</a>
           </div>
         </li>
         <li class="nav-item has-dropdown">
@@ -338,7 +341,13 @@
 
     <section id="editor" class="section py-section">
       <div class="py-container">
-        <div class="py-toolbar">
+        <div id="intentHintBanner" class="intent-hint-banner hidden" role="status" aria-live="polite">
+                  <span class="intent-hint-text"></span>
+                 <button class="intent-hint-dismiss" aria-label="Dismiss hint">
+                 <i class="fas fa-times"></i>
+                 </button>
+                </div>
+                <div class="py-toolbar">
           <div class="py-toolbar-left">
             <span class="py-label"><i class="fab fa-python py-python-icon"></i> Python Editor</span>
             <select id="pyExampleSelect" class="py-select" aria-label="Load example">
@@ -423,7 +432,8 @@
     </footer>
 
     <script src="./auth.js"></script>
-    <script src="./script.js"></script>
-    <script src="./python-editor.js"></script>
+        <script src="./script.js"></script>
+       <script src="./intent-detector.js"></script>
+       <script src="./python-editor.js"></script>
   </body>
 </html>
