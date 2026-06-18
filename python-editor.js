@@ -202,6 +202,7 @@ function initPythonEditor() {
             intentBanner.classList.add("hidden");
             return;
           }
+          intentDismissed = false;
           if (intentDismissed) return; // Respect user's dismiss action
           intentBannerText.innerHTML = INTENT_HINTS[state];
           intentBanner.className = `intent-hint-banner intent-${state}`;

@@ -1735,6 +1735,7 @@ const chatbotResponses = {
 };
 
 // ===== STATE MANAGEMENT =====
+
 let userProgress = {
 
   name: "Learner",
@@ -1748,6 +1749,11 @@ let userProgress = {
   joinDate: null, // Will be set on first load
   quizScores: {}, // topic -> { bestScore, attempts, totalXP }
 
+// ==========================================
+// USER PROGRESS STATE & STORAGE INITIALIZATION
+
+
+let userProgress = {
   name: "Learner",
   avatar: "🚀",
   completedProblems: [],
@@ -1759,9 +1765,8 @@ let userProgress = {
     greedyCount: 0,
     overOptimizerCount: 0
   },
-
-  favoriteProblems: [], //here i have added a new property to store the user's favorite problems
-  recentProblems: [], //here i have added a new property to store the user's recent problems
+  favoriteProblems: [], 
+  recentProblems: [], 
   problemNotes: {},
   xp: 0,
   level: 1,
@@ -1769,18 +1774,164 @@ let userProgress = {
   freezes: 0,
   freezeHistory: [],
   badges: [],
-  completedRoadmapSteps: [], // Store completed roadmap step IDs (e.g., [1] for Step 1)
+  completedRoadmapSteps: [], 
   lastActive: null,
-  quizScores: {}, // topic -> { bestScore, attempts, totalXP }
+  quizScores: {}, 
   bestQuizTimes: {},
-  activityData: {}, // date-string -> count (e.g. "2026-06-05" -> 3)
+  activityData: {}, 
   mistakeDna: {
     offByOneCount: 0,
     recursionBaseCaseCount: 0,
     wrongLogicCount: 0,
     recentLogs: []
+  },
+  
+  // ======= SPACED REPETITION STATE =======
+  revisionSchedule: {
+    arrays: { currentStage: 0, nextReviewDate: null, history: [] },
+    strings: { currentStage: 0, nextReviewDate: null, history: [] },
+    linkedlist: { currentStage: 0, nextReviewDate: null, history: [] },
+    trees: { currentStage: 0, nextReviewDate: null, history: [] },
+    graphs: { currentStage: 0, nextReviewDate: null, history: [] },
+    dp: { currentStage: 0, nextReviewDate: null, history: [] }
   }
 };
+
+if (localStorage.getItem("algoInfinityVerse")) {
+  try {
+    const loadedProgress = JSON.parse(localStorage.getItem("algoInfinityVerse"));
+    if (loadedProgress && typeof loadedProgress === "object") {
+      
+      Object.assign(userProgress, loadedProgress);
+      
+      if (loadedProgress.quizScores) {
+        userProgress.quizScores = { 
+          ...(userProgress.quizScores || {}), 
+          ...loadedProgress.quizScores 
+        };
+      }
+      
+      if (!userProgress.revisionSchedule) {
+        userProgress.revisionSchedule = {};
+      }
+
+      const defaultTopics = ["arrays", "strings", "linkedlist", "trees", "graphs", "dp"];
+      defaultTopics.forEach(topic => {
+        if (!userProgress.revisionSchedule[topic] || typeof userProgress.revisionSchedule[topic] !== 'object') {
+          userProgress.revisionSchedule[topic] = { 
+            currentStage: 0, 
+            nextReviewDate: null, 
+            history: [] 
+          };
+        }
+      });
+
+    }
+  } catch (error) {
+    console.error("Error parsing local storage progress initialization:", error);
+  }
+}
+
+// ==========================================
+// SPACED REPETITION CORE ENGINE (PHASE 2)
+// ==========================================
+
+const REVISION_INTERVALS = [1, 3, 7, 14]; // Intervals in days
+
+/**
+ * Calculates and schedules the next review date for a given DSA topic.
+ * @param {string} topicId - The ID of the topic (e.g., 'arrays', 'strings', 'linkedlist')
+ */
+function scheduleNextRevision(topicId) {
+  // Guard clause to prevent errors if the schema isn't found
+  if (!userProgress.revisionSchedule || !userProgress.revisionSchedule[topicId]) {
+    console.error(`Topic ID "${topicId}" was not found in the revision schedule schema.`);
+    return;
+  }
+
+  const now = new Date();
+  const schedule = userProgress.revisionSchedule[topicId];
+  
+  // // Look up how many days to add based on the user's current repetition tier
+// FIX: Clamp currentStage using Math.min to prevent out-of-bounds array index errors
+const maxIntervalIndex = REVISION_INTERVALS.length - 1;
+const safeStageIndex = Math.min(Math.max(0, schedule.currentStage), maxIntervalIndex);
+
+const daysToAdd = REVISION_INTERVALS[safeStageIndex] || 1;
+
+// // Compute the exact calendar target date
+const nextDate = new Date();
+// Ensure 'now' or a fallback Date object is cleanly accessible for calculation math stability
+const referenceDate = (typeof now !== 'undefined' && now instanceof Date) ? now : new Date();
+nextDate.setDate(referenceDate.getDate() + daysToAdd);
+
+  // Build a timestamped audit log for the review history requirement
+  const logEntry = {
+    reviewedAt: now.toISOString(),
+    stageCompleted: schedule.currentStage,
+    daysCalculated: daysToAdd,
+    nextReviewDueDate: nextDate.toISOString()
+  };
+  
+  // Mutate state updates
+  schedule.nextReviewDate = nextDate.toISOString();
+  schedule.history.push(logEntry);
+
+  // Cycle to the next interval tier, capping at index 3 (14 days max)
+  if (schedule.currentStage < REVISION_INTERVALS.length - 1) {
+    schedule.currentStage++;
+  }
+
+  // Centralized profile save path execution
+if (typeof saveUserData === "function") {
+  saveUserData();
+} else {
+  // Safe local browser fallback if execution context changes
+  localStorage.setItem("algoInfinityVerse", JSON.stringify(userProgress));
+}
+  
+  console.log(`[Scheduler] ${topicId} successfully scheduled. Next review in ${daysToAdd} days (${nextDate.toLocaleDateString()}).`);
+}
+
+// ==========================================
+// UI INJECTION & EVENT HANDLING (PHASE 3)
+// ==========================================
+
+/**
+ * Automatically injects a Spaced Repetition status badge next to the problem container headers.
+ * @param {string} topicId - The active page topic (e.g., 'arrays', 'strings')
+ */
+
+/**
+ * Hook to execute whenever a user finishes a quiz successfully.
+ * Call this inside your existing quiz completion logic handlers!
+ */
+function handleQuizCompletionForRevision(topicId, scorePercentage) {
+  // If user passes with a safe margin (e.g., 70% or higher), advance their schedule
+  if (scorePercentage >= 70) {
+    scheduleNextRevision(topicId);
+    // Refresh the UI to reflect the immediate date changes
+    injectRevisionSchedulerUI(topicId);
+  }
+}
+
+// Automatically scan and run the UI injection on page load
+window.addEventListener("DOMContentLoaded", () => {
+  // Automatically identify the active topic context from the window path URL string
+  const currentPath = window.location.pathname.toLowerCase();
+  let detectedTopic = null;
+
+  if (currentPath.includes("array")) detectedTopic = "arrays";
+  else if (currentPath.includes("string")) detectedTopic = "strings";
+  else if (currentPath.includes("linkedlist")) detectedTopic = "linkedlist";
+  else if (currentPath.includes("tree")) detectedTopic = "trees";
+  else if (currentPath.includes("graph")) detectedTopic = "graphs";
+  else if (currentPath.includes("dp") || currentPath.includes("dynamic")) detectedTopic = "dp";
+
+  if (detectedTopic) {
+    injectRevisionSchedulerUI(detectedTopic);
+  }
+});
 
 
 // ===== QUIZ EDITOR (state) =====
@@ -2449,6 +2600,7 @@ function initQuizSection() {
       console.warn("Quiz grid element not found");
       return;
     }
+    quizGrid.innerHTML = "";
 
     dsaTopics.forEach((topic, index) => {
       const topicKey = getQuizTopicKey(topic);
@@ -2621,7 +2773,7 @@ function startQuiz(topic) {
   document.getElementById("topicQuizCounter").style.display = "block";
   currentQuiz = {
     topic: topicKey,
-    questions: [...topicQuiz],
+    questions: shuffleArray([...questions]),
     currentQuestionIndex: 0,
     score: 0,
     answers: [],
@@ -2894,6 +3046,9 @@ function finishQuiz() {
 
   record.totalXP += xpEarned;
 
+  if (typeof handleQuizCompletionForRevision === "function") {
+    handleQuizCompletionForRevision(topicKey, percentage);
+  }
   saveUserData();
   document.getElementById("topicQuizQuestionText").style.display = "none";
   document.getElementById("topicQuizOptions").style.display = "none";
@@ -6954,12 +7109,34 @@ print "Welcome $name\\n";`;
           element.id?.toLowerCase().includes('assistant')) {
           element.style.display = 'none';
         }
+
         // B. If it's a main structural container that was hidden, bring it back
         else if (element.classList.contains('hidden') && element.id !== 'loading-screen') {
           element.classList.remove('hidden');
           element.style.display = ''; // Resets style to default stylesheet value
         }
       });
+
+    }
+});
+// ===== GAME SYSTEM =====
+let currentGame = {
+  type: null,
+  topic: null,
+  questions: [],
+  currentIndex: 0,
+  score: 0,
+  correct: 0,
+  total: 0,
+  timer: null,
+  timeLeft: 30,
+  xpEarned: 0,
+  level: 1,
+  memoryCards: [],
+  flippedMemoryCards: [],
+  matchedMemoryPairs: 0,
+  memoryMoves: 0,
+};
 
       // 2. Clear any active runtime quiz instances safely
       if (typeof tQuiz !== 'undefined') {
@@ -6975,6 +7152,7 @@ print "Welcome $name\\n";`;
     currentIndex: 0,
     score: 0,
     correct: 0,
+
     total: 0,
     timer: null,
     timeLeft: 30,
@@ -7045,6 +7223,78 @@ print "Welcome $name\\n";`;
     },
   ];
 
+    explanation: "Hash map provides O(1) average access time"
+  },
+];
+
+const gameLevels = [
+  { name: "Beginner", topic: "Arrays", difficulty: "Easy", icon: "🌱" },
+  { name: "Novice", topic: "Strings", difficulty: "Easy", icon: "🔤" },
+  { name: "Intermediate", topic: "Linked Lists", difficulty: "Medium", icon: "🔗" },
+  { name: "Advanced", topic: "Trees", difficulty: "Medium", icon: "🌳" },
+  { name: "Expert", topic: "Graphs", difficulty: "Hard", icon: "🕸️" },
+  { name: "Master", topic: "Dynamic Programming", difficulty: "Hard", icon: "🎯" },
+  { name: "Grandmaster", topic: "Mixed DSA", difficulty: "Expert", icon: "⚔️" },
+  { name: "Legend", topic: "Interview Mix", difficulty: "Expert", icon: "🏆" },
+];
+
+const memoryCardPairs = [
+  { term: "Array", definition: "Contiguous indexed collection" },
+  { term: "Stack", definition: "Last In, First Out structure" },
+  { term: "Queue", definition: "First In, First Out structure" },
+  { term: "Hash Map", definition: "Key-value lookup table" },
+  { term: "Recursion", definition: "Function calls itself" },
+  { term: "Binary Search", definition: "Halves sorted search space" },
+  { term: "BFS", definition: "Level-order graph traversal" },
+  { term: "DP", definition: "Overlapping subproblems cache" },
+];
+
+const codeCompletionQuestions = [
+  {
+    snippet: "function twoSum(nums, target) {\n  const seen = new Map();\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n    if (seen.has(complement)) {\n      return [seen.get(complement), i];\n    }\n\n    ____;\n  }\n}",
+    options: ["seen.set(nums[i], i)", "seen.push(nums[i], i)", "seen.add(i, nums[i])", "seen[nums[i]] = true"],
+    correct: 0,
+    explanation: "Store each value with its index so a future complement can find it in O(1)."
+  },
+  {
+    snippet: "function isValidParentheses(s) {\n  const stack = [];\n  const pairs = { ')': '(', ']': '[', '}': '{' };\n\n  for (const ch of s) {\n    if (ch === '(' || ch === '[' || ch === '{') {\n      stack.push(ch);\n    } else if (____ !== stack.pop()) {\n      return false;\n    }\n  }\n\n  return stack.length === 0;\n}",
+    options: ["pairs[ch]", "stack[ch]", "ch", "pairs[stack.pop()]"],
+    correct: 0,
+    explanation: "pairs[ch] gives the expected opening bracket for the current closing bracket."
+  },
+  {
+    snippet: "function binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) return mid;\n    if (nums[mid] < target) left = mid + 1;\n    else ____;\n  }\n\n  return -1;\n}",
+    options: ["right = mid - 1", "left = mid - 1", "right = left + 1", "mid = right - 1"],
+    correct: 0,
+    explanation: "When nums[mid] is greater than target, discard the right half by moving right left."
+  },
+  {
+    snippet: "function maxSubArray(nums) {\n  let best = nums[0];\n  let current = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    current = Math.max(nums[i], ____);\n    best = Math.max(best, current);\n  }\n\n  return best;\n}",
+    options: ["current + nums[i]", "best + nums[i]", "nums[i - 1] + nums[i]", "current - nums[i]"],
+    correct: 0,
+    explanation: "Kadane's algorithm either extends the previous subarray or starts fresh at nums[i]."
+  },
+  {
+    snippet: "function reverseLinkedList(head) {\n  let prev = null;\n  let current = head;\n\n  while (current) {\n    const next = current.next;\n    ____;\n    prev = current;\n    current = next;\n  }\n\n  return prev;\n}",
+    options: ["current.next = prev", "prev.next = current", "current = prev", "head.next = prev"],
+    correct: 0,
+    explanation: "Reverse each node's next pointer to point to the previous node."
+  },
+];
+
+function openGameModal() {
+  const modal = document.getElementById("gameModal");
+  const level = userProgress.level || 1;
+  const levelData = gameLevels[level - 1] || gameLevels[0];
+
+  document.getElementById("gameModalTitle").textContent =
+    `🎮 Level ${level} - ${levelData.name} Games`;
+  currentGame.level = level;
+  showLevelSelector();
+  modal.classList.add("active");
+}
+
+
   function openGameModal() {
     const modal = document.getElementById("gameModal");
     const level = userProgress.level || 1;
@@ -7054,6 +7304,7 @@ print "Welcome $name\\n";`;
     showGameTypeSelector();
     modal.classList.add("active");
   }
+
 
   function closeGameModal() {
     document.getElementById("gameModal").classList.remove("active");
@@ -7073,6 +7324,96 @@ print "Welcome $name\\n";`;
     const topics = ["arrays", "strings", "linkedlist", "trees", "graphs", "dp", "arrays", "strings"];
     return topics[level - 1] || "arrays";
   }
+=======
+function showLevelSelector() {
+  clearInterval(currentGame.timer);
+  document.getElementById("levelSelector").style.display = "block";
+  document.getElementById("gameTypeSelector").style.display = "none";
+  document.getElementById("memoryGameArea").style.display = "none";
+  document.getElementById("codeGameArea").style.display = "none";
+  document.getElementById("gamePlayArea").style.display = "none";
+  document.getElementById("gameResults").style.display = "none";
+  renderLevelSelectionGrid();
+}
+
+function showGameTypeSelector() {
+  clearInterval(currentGame.timer);
+  document.getElementById("levelSelector").style.display = "none";
+  document.getElementById("memoryGameArea").style.display = "none";
+  document.getElementById("codeGameArea").style.display = "none";
+  document.getElementById("gamePlayArea").style.display = "none";
+  document.getElementById("gameResults").style.display = "none";
+  document.getElementById("gameTypeSelector").style.display = "block";
+  updateGameLevelInfo();
+}
+
+function renderLevelSelectionGrid() {
+  const grid = document.getElementById("levelSelectionGrid");
+  const unlockedLevels = userProgress.level || 1;
+
+  grid.innerHTML = gameLevels
+    .map((level, index) => {
+      const levelNumber = index + 1;
+      const isUnlocked = levelNumber <= unlockedLevels;
+      const isCurrent = levelNumber === (userProgress.level || 1);
+
+      return `
+        <div class="level-selection-card ${isUnlocked ? "unlocked" : "locked"}" onclick="${isUnlocked ? `selectGameLevel(${levelNumber})` : "showNotification('Complete earlier levels to unlock this game mode.', 'error')"}">
+          <span class="level-card-status ${isCurrent ? "current-status" : isUnlocked ? "unlocked-status" : "locked-status"}">${isCurrent ? "Current" : isUnlocked ? "Unlocked" : "Locked"}</span>
+          <div class="level-card-icon">${level.icon}</div>
+          <div class="level-card-name">Level ${levelNumber}: ${level.name}</div>
+          <div class="level-card-topic">${level.topic}</div>
+          <div class="level-card-xp">${level.difficulty} • ${level.topic}</div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function selectGameLevel(level) {
+  currentGame.level = level;
+  const levelData = gameLevels[level - 1] || gameLevels[0];
+  document.getElementById("gameModalTitle").textContent =
+    `🎮 Level ${level} - ${levelData.name} Games`;
+  showGameTypeSelector();
+}
+
+function getTopicForLevel(level = currentGame.level || userProgress.level || 1) {
+  const topics = ["arrays", "strings", "linkedlist", "trees", "graphs", "dp", "arrays", "strings"];
+  return topics[level - 1] || "arrays";
+}
+
+function getDifficultyForLevel(level = currentGame.level || userProgress.level || 1) {
+  return gameLevels[level - 1]?.difficulty || "Easy";
+}
+
+function updateGameLevelInfo() {
+  const level = currentGame.level || userProgress.level || 1;
+  const levelData = gameLevels[level - 1] || gameLevels[0];
+
+  document.getElementById("gameLevelTopic").textContent = `📚 Topic: ${levelData.topic}`;
+  document.getElementById("gameLevelDifficulty").textContent = `⚡ Difficulty: ${levelData.difficulty}`;
+}
+
+function startGame(type, level = currentGame.level) {
+  if (level) currentGame.level = level;
+  currentGame.type = type;
+
+  if (type === "memory") {
+    startMemoryGame();
+    return;
+  }
+
+  if (type === "code") {
+    startCodeGame();
+    return;
+  }
+
+  currentGame.score = 0;
+  currentGame.correct = 0;
+  currentGame.xpEarned = 0;
+  currentGame.currentIndex = 0;
+
 
   function startGame(type) {
     currentGame.type = type;
@@ -7090,7 +7431,16 @@ print "Welcome $name\\n";`;
       currentGame.questions = [...topicQuestions].sort(() => Math.random() - 0.5).slice(0, 10);
     }
 
+
     currentGame.total = currentGame.questions.length;
+
+  document.getElementById("gameTypeSelector").style.display = "none";
+  document.getElementById("levelSelector").style.display = "none";
+  document.getElementById("memoryGameArea").style.display = "none";
+  document.getElementById("codeGameArea").style.display = "none";
+  document.getElementById("gamePlayArea").style.display = "block";
+  document.getElementById("gameResults").style.display = "none";
+
 
     document.getElementById("gameTypeSelector").style.display = "none";
     document.getElementById("gamePlayArea").style.display = "block";
@@ -7116,13 +7466,19 @@ print "Welcome $name\\n";`;
       `<button class="game-option" onclick="selectGameAnswer(${i})">${opt}</button>`
     ).join("");
 
+
     // Start timer
     clearInterval(currentGame.timer);
     currentGame.timeLeft = currentGame.type === "speed" ? 60 : 30;
 
+  clearInterval(currentGame.timer);
+  currentGame.timeLeft = currentGame.type === "speed" ? 60 : 30;
+
+
     if (currentGame.type === "speed" && currentGame.currentIndex === 0) {
       currentGame.timeLeft = 60;
     }
+
 
     document.getElementById("gameTimer").textContent = currentGame.timeLeft;
 
@@ -7149,7 +7505,31 @@ print "Welcome $name\\n";`;
     const options = document.querySelectorAll(".game-option");
     const xpPerQ = currentGame.type === "quiz" ? 20 : currentGame.type === "speed" ? 10 : 15;
 
+  currentGame.timer = setInterval(() => {
+    currentGame.timeLeft--;
+    document.getElementById("gameTimer").textContent = currentGame.timeLeft;
+    if (currentGame.timeLeft <= 0) {
+      clearInterval(currentGame.timer);
+      if (currentGame.type === "speed") {
+        endGame();
+      } else {
+        selectGameAnswer(-1);
+      }
+    }
+  }, 1000);
+}
+
+function selectGameAnswer(index) {
+  clearInterval(currentGame.timer);
+  const q = currentGame.questions[currentGame.currentIndex];
+  const options = document.querySelectorAll(".game-option");
+  const xpPerQ = currentGame.type === "quiz" ? 20 : currentGame.type === "speed" ? 10 : 15;
+
+  options.forEach((opt) => (opt.style.pointerEvents = "none"));
+
+
     options.forEach(opt => opt.style.pointerEvents = "none");
+
 
     if (index === q.correct) {
       if (options[index]) options[index].classList.add("correct");
@@ -7162,12 +7542,18 @@ print "Welcome $name\\n";`;
       if (options[q.correct]) options[q.correct].classList.add("correct");
     }
 
+  const expEl = document.getElementById("gameExplanation");
+  expEl.textContent = `💡 ${q.explanation}`;
+  expEl.style.display = "block";
+
+
     // Show explanation
     const expEl = document.getElementById("gameExplanation");
     expEl.textContent = `💡 ${q.explanation}`;
     expEl.style.display = "block";
 
     currentGame.currentIndex++;
+
 
     setTimeout(() => {
       loadGameQuestion();
@@ -7207,6 +7593,261 @@ print "Welcome $name\\n";`;
   function restartGame() {
     startGame(currentGame.type);
   }
+
+function startMemoryGame() {
+  currentGame.score = 0;
+  currentGame.correct = 0;
+  currentGame.xpEarned = 0;
+  currentGame.currentIndex = 0;
+  currentGame.total = memoryCardPairs.length;
+  currentGame.memoryCards = [];
+  currentGame.flippedMemoryCards = [];
+  currentGame.matchedMemoryPairs = 0;
+  currentGame.memoryMoves = 0;
+  currentGame.timeLeft = 60;
+
+  document.getElementById("gameTypeSelector").style.display = "none";
+  document.getElementById("levelSelector").style.display = "none";
+  document.getElementById("gamePlayArea").style.display = "none";
+  document.getElementById("codeGameArea").style.display = "none";
+  document.getElementById("memoryGameArea").style.display = "block";
+  document.getElementById("gameResults").style.display = "none";
+  document.getElementById("memoryTimer").textContent = currentGame.timeLeft;
+  document.getElementById("memoryMatches").textContent = "0";
+  document.getElementById("memoryMoves").textContent = "0";
+
+  memoryCardPairs.forEach((pair, index) => {
+    currentGame.memoryCards.push({ id: index, value: pair.term, type: "term" });
+    currentGame.memoryCards.push({ id: index, value: pair.definition, type: "definition" });
+  });
+
+  currentGame.memoryCards = shuffleArray(currentGame.memoryCards);
+  renderMemoryCards();
+
+  clearInterval(currentGame.timer);
+  currentGame.timer = setInterval(() => {
+    currentGame.timeLeft--;
+    document.getElementById("memoryTimer").textContent = currentGame.timeLeft;
+    if (currentGame.timeLeft <= 0) {
+      endGame();
+    }
+  }, 1000);
+}
+
+function renderMemoryCards() {
+  const grid = document.getElementById("memoryGrid");
+
+  grid.innerHTML = currentGame.memoryCards
+    .map((card, index) => `
+      <div class="memory-card" data-index="${index}" onclick="flipMemoryCard(${index})" tabindex="0" role="button" aria-label="Memory card ${index + 1}">
+        <div class="memory-card-inner">
+          <div class="memory-card-front">∞</div>
+          <div class="memory-card-back">${card.value}</div>
+        </div>
+      </div>
+    `)
+    .join("");
+}
+
+function flipMemoryCard(index) {
+  const cardEl = document.querySelector(`.memory-card[data-index="${index}"]`);
+  const card = currentGame.memoryCards[index];
+
+  if (!cardEl || card.matched || card.flipped || currentGame.flippedMemoryCards.length >= 2) {
+    return;
+  }
+
+  card.flipped = true;
+  cardEl.classList.add("flipped");
+  currentGame.flippedMemoryCards.push(index);
+
+  if (currentGame.flippedMemoryCards.length === 2) {
+    currentGame.memoryMoves++;
+    document.getElementById("memoryMoves").textContent = currentGame.memoryMoves;
+
+    const [firstIndex, secondIndex] = currentGame.flippedMemoryCards;
+    const firstCard = currentGame.memoryCards[firstIndex];
+    const secondCard = currentGame.memoryCards[secondIndex];
+
+    if (firstCard.id === secondCard.id && firstCard.type !== secondCard.type) {
+      firstCard.matched = true;
+      secondCard.matched = true;
+      document.querySelector(`.memory-card[data-index="${firstIndex}"]`).classList.add("matched");
+      document.querySelector(`.memory-card[data-index="${secondIndex}"]`).classList.add("matched");
+      currentGame.matchedMemoryPairs++;
+      currentGame.correct++;
+      currentGame.flippedMemoryCards = [];
+      currentGame.score += 25;
+      currentGame.xpEarned += 25;
+      document.getElementById("memoryMatches").textContent = currentGame.matchedMemoryPairs;
+
+      if (currentGame.matchedMemoryPairs === currentGame.total) {
+        endGame();
+      }
+    } else {
+      setTimeout(() => {
+        firstCard.flipped = false;
+        secondCard.flipped = false;
+        document.querySelector(`.memory-card[data-index="${firstIndex}"]`)?.classList.remove("flipped");
+        document.querySelector(`.memory-card[data-index="${secondIndex}"]`)?.classList.remove("flipped");
+        currentGame.flippedMemoryCards = [];
+      }, 1000);
+    }
+  }
+}
+
+function startCodeGame() {
+  currentGame.score = 0;
+  currentGame.correct = 0;
+  currentGame.xpEarned = 0;
+  currentGame.currentIndex = 0;
+  currentGame.total = codeCompletionQuestions.length;
+  currentGame.timeLeft = 30;
+
+  document.getElementById("gameTypeSelector").style.display = "none";
+  document.getElementById("levelSelector").style.display = "none";
+  document.getElementById("gamePlayArea").style.display = "none";
+  document.getElementById("memoryGameArea").style.display = "none";
+  document.getElementById("codeGameArea").style.display = "block";
+  document.getElementById("gameResults").style.display = "none";
+
+  loadCodeQuestion();
+}
+
+function loadCodeQuestion() {
+  if (currentGame.currentIndex >= currentGame.total) {
+    endGame();
+    return;
+  }
+
+  const q = codeCompletionQuestions[currentGame.currentIndex];
+  currentGame.timeLeft = 30;
+
+  document.getElementById("codeTimer").textContent = currentGame.timeLeft;
+  document.getElementById("codeScore").textContent = currentGame.score;
+  document.getElementById("codeQuestion").textContent = currentGame.currentIndex + 1;
+  document.getElementById("codeSnippet").innerHTML = q.snippet.replace("____", '<span class="code-blank">____</span>');
+  document.getElementById("codeExplanation").style.display = "none";
+
+  const optionsGrid = document.getElementById("codeOptionsGrid");
+  optionsGrid.innerHTML = q.options
+    .map((opt, index) => `<button class="game-option" onclick="selectCodeAnswer(${index})">${opt}</button>`)
+    .join("");
+
+  clearInterval(currentGame.timer);
+  currentGame.timer = setInterval(() => {
+    currentGame.timeLeft--;
+    document.getElementById("codeTimer").textContent = currentGame.timeLeft;
+    if (currentGame.timeLeft <= 0) {
+      clearInterval(currentGame.timer);
+      selectCodeAnswer(-1);
+    }
+  }, 1000);
+}
+
+function selectCodeAnswer(index) {
+  clearInterval(currentGame.timer);
+  const q = codeCompletionQuestions[currentGame.currentIndex];
+  const options = document.querySelectorAll("#codeOptionsGrid .game-option");
+  const xpPerQ = 30;
+
+  options.forEach((opt) => (opt.style.pointerEvents = "none"));
+
+  if (index === q.correct) {
+    if (options[index]) options[index].classList.add("correct");
+    currentGame.score += 30;
+    currentGame.correct++;
+    currentGame.xpEarned += xpPerQ;
+    document.getElementById("codeScore").textContent = currentGame.score;
+  } else {
+    if (options[index]) options[index].classList.add("wrong");
+    if (options[q.correct]) options[q.correct].classList.add("correct");
+  }
+
+  const expEl = document.getElementById("codeExplanation");
+  expEl.textContent = `💡 ${q.explanation}`;
+  expEl.style.display = "block";
+
+  currentGame.currentIndex++;
+
+  setTimeout(() => {
+    loadCodeQuestion();
+  }, 1500);
+}
+
+function endGame(type = currentGame.type) {
+  clearInterval(currentGame.timer);
+
+  if (type === "memory") {
+    const accuracy = Math.round((currentGame.matchedMemoryPairs / currentGame.total) * 100);
+    showGameResults("Memory Master! 🧠", currentGame.score, currentGame.xpEarned, accuracy);
+    return;
+  }
+
+  if (type === "code") {
+    const accuracy = Math.round((currentGame.correct / currentGame.total) * 100);
+    showGameResults("Code Completion Complete! ✍️", currentGame.score, currentGame.xpEarned, accuracy);
+    return;
+  }
+
+  const accuracy = Math.round((currentGame.correct / currentGame.total) * 100);
+  showGameResults(getGameTitle(type), currentGame.score, currentGame.xpEarned, accuracy);
+}
+
+function showGameResults(title, score, xpEarned, accuracy) {
+  addXP(xpEarned);
+  updateGamification();
+
+  document.getElementById("gamePlayArea").style.display = "none";
+  document.getElementById("memoryGameArea").style.display = "none";
+  document.getElementById("codeGameArea").style.display = "none";
+  document.getElementById("gameResults").style.display = "block";
+
+  document.getElementById("gameResultsTitle").textContent = title;
+  document.getElementById("resultScore").textContent = score;
+  document.getElementById("resultXP").textContent = `+${xpEarned}`;
+  document.getElementById("resultAccuracy").textContent = `${accuracy}%`;
+
+  showNotification(
+    `🎮 Game Over! Score: ${score} | +${xpEarned} XP earned!`,
+    "success"
+  );
+}
+
+function getGameTitle(type) {
+  const titles = {
+    quiz: "Quiz Complete! 🧩",
+    speed: "Speed Round Over! ⚡",
+    complexity: "Complexity Master! 🎯"
+  };
+
+  return titles[type] || "Game Complete! 🎮";
+}
+
+function restartGame() {
+  startGame(currentGame.type, currentGame.level);
+}
+
+function resetGame() {
+  currentGame = {
+    type: null,
+    topic: null,
+    questions: [],
+    currentIndex: 0,
+    score: 0,
+    correct: 0,
+    total: 0,
+    timer: null,
+    timeLeft: 30,
+    xpEarned: 0,
+    level: userProgress.level || 1,
+    memoryCards: [],
+    flippedMemoryCards: [],
+    matchedMemoryPairs: 0,
+    memoryMoves: 0,
+  };
+}
+
 
   function resetGame() {
     currentGame = {
@@ -7494,6 +8135,7 @@ if (topics) {
   topics.style.position = "relative";
   topics.style.zIndex = "1";
 }
+
 document.querySelectorAll("*").forEach(el => {
   const style = getComputedStyle(el);
 
@@ -7504,3 +8146,63 @@ document.querySelectorAll("*").forEach(el => {
     el.style.display = "none";
   }
 });
+
+/**
+ * Automatically injects a Spaced Repetition status badge into the main learning context header.
+ * @param {string} topicId - The active page topic (e.g., 'arrays', 'strings')
+ */
+function injectRevisionSchedulerUI(topicId) {
+  if (!userProgress.revisionSchedule || !userProgress.revisionSchedule[topicId]) return;
+
+  // Exact target identification for your custom UI layout structure
+  const targetHeader = document.querySelector(".arr-lesson-header") || 
+                       document.querySelector("h3") || 
+                       document.querySelector("h2");
+
+  if (!targetHeader) {
+    console.warn("[Scheduler UI] Learning title target element not found on this view layer.");
+    return;
+  }
+
+  // Prevent multiple badge components from stacking up
+  const existingCard = document.getElementById("revision-scheduler-badge");
+  if (existingCard) existingCard.remove();
+
+  const schedule = userProgress.revisionSchedule[topicId];
+  const now = new Date();
+  let dynamicStatusHTML = "";
+
+  if (!schedule.nextReviewDate) {
+    dynamicStatusHTML = `<span class="rev-badge rev-new">🆕 Not Scheduled Yet</span>`;
+  } else {
+    const nextDate = new Date(schedule.nextReviewDate);
+    if (now >= nextDate) {
+      dynamicStatusHTML = `<span class="rev-badge rev-due">⚡ Review Due Now!</span>`;
+    } else {
+      const formattedDate = nextDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      dynamicStatusHTML = `<span class="rev-badge rev-waiting">📅 Next Review: ${formattedDate}</span>`;
+    }
+  }
+
+  // Render container with inline utility margin overrides to look native on the header array grid
+  const schedulerContainer = document.createElement("div");
+  schedulerContainer.id = "revision-scheduler-badge";
+  schedulerContainer.className = "revision-scheduler-card";
+  schedulerContainer.setAttribute("aria-live", "polite");
+  schedulerContainer.style.maxWidth = "600px";
+  schedulerContainer.style.marginTop = "1rem";
+  schedulerContainer.innerHTML = `
+    <div class="rev-card-content">
+      <div class="rev-info">
+        <span class="rev-title">🔄 Spaced Repetition Scheduler</span>
+        <span class="rev-stage">Stage ${schedule.currentStage}/4</span>
+      </div>
+      ${dynamicStatusHTML}
+    </div>
+    <div class="rev-history-text">History Track: ${schedule.history.length} completion checkpoints verified</div>
+  `;
+
+  // Mount cleanly directly right beneath your main page introduction title!
+  targetHeader.parentNode.insertBefore(schedulerContainer, targetHeader.nextSibling);
+}
+
