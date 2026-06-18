@@ -116,12 +116,20 @@
       if (!logoutButton) return;
       event.preventDefault();
       logoutButton.disabled = true;
-
       if (location.protocol !== "file:") {
-        await fetch("/api/logout", { method: "POST", credentials: "include" });
+        try {
+          const response = await fetch(apiUrl("/api/logout"), {
+            method: "POST",
+            credentials: "include"
+          });
+          if (!response.ok) throw new Error("Logout failed.");
+        } catch (error) {
+          console.warn("Logout failed", error);
+          logoutButton.disabled = false;
+          return;
+        }
       }
       location.href = authUrl("/login");
-    });
   }
 
   function passwordStrength(password) {
