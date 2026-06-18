@@ -79,9 +79,7 @@ body {
 
 #loading-screen.hidden {
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  transition: all 0.3s ease;
 }
 
 .loader {
@@ -671,13 +669,11 @@ body {
   transition: opacity 0.3s ease, visibility 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
-  pointer-events: none;
 }
 
 .nav-overlay.active {
   opacity: 1;
   visibility: visible;
-  pointer-events: auto;
 }
 
 /* Mobile Navigation */
@@ -697,7 +693,6 @@ body {
     padding: 5rem 1.5rem 2rem;
     gap: 0;
     transform: translateX(100%);
-    pointer-events: none;
     transition: transform 0.3s ease;
     z-index: 9995;
     overflow-y: auto;
@@ -706,20 +701,12 @@ body {
 
   .nav-links.active {
     transform: translateX(0);
-    pointer-events: auto;
   }
 
   .nav-item {
     width: 100%;
     border-bottom: 1px solid var(--glass-border);
   }
-  .nav-overlay {
-  pointer-events: none;
-}
-
-.nav-overlay.active {
-  pointer-events: auto;
-}
 
   .nav-item:last-child {
     border-bottom: none;
@@ -6300,55 +6287,6 @@ body.light-mode .nav-auth-link:hover {
   margin-top: 0.5rem;
 }
 
-
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
-.quiz-loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-.quiz-loading-content {
-    text-align: center;
-}
-
-.spinner {
-    width: 45px;
-    height: 45px;
-    border: 4px solid `#ddd`;
-    border-top: 4px solid `#333`;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-}
-
-`@keyframes` spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-`@media` (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation: none;
-  }
-}
-
-.hidden {
-    display: none;
-}
-
 .btn-mini {
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
@@ -6465,7 +6403,6 @@ body.light-mode .nav-auth-link:hover {
   margin-right: 8px;
   box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
 }
-
 
 /* ===== Mistake DNA Tracker Styles ===== */
 .mistake-dna-card {
@@ -6649,14 +6586,6 @@ body.light-mode .nav-auth-link:hover {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
-.hidden {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
 
 /* ==========================================
    SPACED REPETITION SCHEDULER THEME
