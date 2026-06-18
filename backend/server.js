@@ -1,45 +1,3 @@
-
-const express = require("express");
-const cors = require("cors");
-const multer = require("multer");
-const { exec } = require("child_process");
-const fs = require("fs");
-
-const {
-  extractResumeText
-} = require("./resume-analyzer/parser");
-
-const {
-  calculateATS
-} = require("./resume-analyzer/atsScore");
-
-const {
-  findMissingSkills
-} = require("./resume-analyzer/skills");
-
-const {
-  getSuggestions
-} = require("./resume-analyzer/suggestions");
-
-
-const app = express();
-
-
-// Middleware
-const corsOptions = {
-    origin: "http://127.0.0.1:5505",
-    credentials: true
-};
-
-app.use(cors(corsOptions));
-app.use(express.json());
-
-
-// Resume upload configuration
-const upload = multer({
-  storage: multer.memoryStorage()
-});
-
 import crypto from "crypto";
 import fs from "fs/promises";
 import http from "http";
@@ -92,7 +50,6 @@ const TRUSTED_PROXIES = new Set(
     .map((s) => s.trim())
     .filter(Boolean)
 );
-
 
 function getClientIdentifier(req) {
   const remoteAddress = req.socket?.remoteAddress || "unknown";
