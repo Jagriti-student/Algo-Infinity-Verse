@@ -79,7 +79,9 @@ body {
 
 #loading-screen.hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  transition: all 0.3s ease;
 }
 
 .loader {
@@ -669,11 +671,13 @@ body {
   transition: opacity 0.3s ease, visibility 0.3s ease;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
+  pointer-events: none;
 }
 
 .nav-overlay.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* Mobile Navigation */
@@ -693,6 +697,7 @@ body {
     padding: 5rem 1.5rem 2rem;
     gap: 0;
     transform: translateX(100%);
+    pointer-events: none;
     transition: transform 0.3s ease;
     z-index: 9995;
     overflow-y: auto;
@@ -701,12 +706,20 @@ body {
 
   .nav-links.active {
     transform: translateX(0);
+    pointer-events: auto;
   }
 
   .nav-item {
     width: 100%;
     border-bottom: 1px solid var(--glass-border);
   }
+  .nav-overlay {
+  pointer-events: none;
+}
+
+.nav-overlay.active {
+  pointer-events: auto;
+}
 
   .nav-item:last-child {
     border-bottom: none;
@@ -6627,4 +6640,10 @@ body.light-mode .nav-auth-link:hover {
   padding: 1px 6px;
   border-radius: 4px;
   flex-shrink: 0;
+}
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }

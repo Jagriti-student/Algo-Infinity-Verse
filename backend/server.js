@@ -25,7 +25,12 @@ const app = express();
 
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+    origin: "http://127.0.0.1:5505",
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 

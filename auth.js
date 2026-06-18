@@ -20,15 +20,40 @@
   }
 
   async function getSession() {
-    if (location.protocol === "file:") return { authenticated: false, user: null };
-    try {
-      const response = await fetch("/api/session", { credentials: "include" });
-      if (!response.ok) return { authenticated: false, user: null };
-      return response.json();
-    } catch {
-      return { authenticated: false, user: null };
-    }
+  if (location.protocol === "file:") {
+    return {
+      authenticated: false,
+      user: null
+    };
   }
+
+  try {
+    response = await fetch("http://127.0.0.1:5000/api/session", {
+    credentials:"include"
+});
+
+    if (!response.ok) {
+      console.warn(
+        `Session API unavailable (${response.status}), using guest session`
+      );
+
+      return {
+        authenticated: false,
+        user: null
+      };
+    }
+
+    return await response.json();
+
+  } catch (error) {
+    console.warn("Backend unavailable, using guest session");
+
+    return {
+      authenticated: false,
+      user: null
+    };
+  }
+}
 
   function loginRedirect() {
     location.href = `${authUrl("/login")}?next=${encodeURIComponent(nextUrl())}`;
@@ -118,7 +143,7 @@
       logoutButton.disabled = true;
 
       if (location.protocol !== "file:") {
-        await fetch("/api/logout", { method: "POST", credentials: "include" });
+        await fetch("http://127.0.0.1:5000/api/logout", { method: "POST", credentials: "include" });
       }
       location.href = authUrl("/login");
     });
@@ -176,7 +201,7 @@
       setFormMessage(form, "Working...", "info");
 
       try {
-        const response = await fetch(`/api/${mode}`, {
+        const response = await fetch(`http://127.0.0.1:5000/api/${mode}`,  {
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
